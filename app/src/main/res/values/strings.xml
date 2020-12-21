@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SeCoCo</string>
-    <string name="main_txt_email_hint">Ingrese su Email</string>
+    <string name="main_txt_email_hint">Ingrese su Usuario</string>
     <string name="main_txt_contrasena_hint">Ingrese su Contraseña</string>
     <string name="main_txt_bienvenido">Bienvenido a SeCoCo</string>
     <string name="main_btn_login">Ingresar</string>
