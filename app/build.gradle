@@ -39,4 +39,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation platform('com.google.firebase:firebase-bom:26.1.1')
+    implementation('com.mapbox.mapboxsdk:mapbox-android-navigation-ui:0.42.6')
 }
