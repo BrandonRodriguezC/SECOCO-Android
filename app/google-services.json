@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "464644838812",
+    "firebase_url": "https://secoco-f7448-default-rtdb.firebaseio.com",
+    "project_id": "secoco-f7448",
+    "storage_bucket": "secoco-f7448.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464644838812:android:0a319c5c41f86cc88ae459",
+        "android_client_info": {
+          "package_name": "com.example.secoco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "464644838812-thmgqv8506k28krnndlc7uhr93qoenng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRIIVvX_ZvK1IySmYhLyqtyD6WkmXwqG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "464644838812-thmgqv8506k28krnndlc7uhr93qoenng.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
