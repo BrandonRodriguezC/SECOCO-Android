@@ -66,7 +66,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Mapbox
             // Toca que revise como tomar la ubicacion ya propia del gps porque lo que hace este metodo es
             // que la toma de manera implicita (segun entiendo) y le aplica estilo en el mapa, logicamente
             // no se está agregando una latitud o longitud exacta, literalmente despues de aprobar el
-            // permiso solo se ejecutan estas 4 lineas.
+            // permiso solo se ejecutan estas 4 lineas. xd
 
             locationComponent = mapboxMap.getLocationComponent();
             locationComponent.activateLocationComponent(LocationComponentActivationOptions.builder(this, mapboxMap.getStyle()).build());

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SeCoCo</string>
-    <string name="main_txt_email_hint">Ingrese su Email</string>
-    <string name="main_txt_contrasena_hint">Ingrese su Contraseña</string>
+    <string name="main_txt_email_hint">Email</string>
+    <string name="main_txt_contrasena_hint">Contraseña</string>
     <string name="main_txt_bienvenido">Bienvenido a SeCoCo</string>
     <string name="main_btn_login">Ingresar</string>
     <string name="main_lbl_registro"><u>Registro</u></string>
@@ -9,4 +9,9 @@
     <string name="access_token" translatable="false">pk.eyJ1IjoiYnJhbmRvbnJvZHJpZ3VleiIsImEiOiJjazkwZDh1MTUwMGpyM2hvMGo1a2p5bnQzIn0.T-GzUebrNkyoXWR7v9u4qQ</string>
     <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>
     <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>
+    <string name="registrate">Regístrate</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="numero_id">No. id</string>
+    <string name="fecha_nacimiento">Fecha de nacimiento</string>
 </resources>
