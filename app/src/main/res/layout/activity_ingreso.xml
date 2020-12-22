@@ -16,7 +16,7 @@
             android:id="@+id/textView"
             android:layout_width="304dp"
             android:layout_height="91dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="52dp"
             android:gravity="center"
             android:text="@string/main_txt_bienvenido"
             android:textSize="40sp"
@@ -40,11 +40,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+
         <EditText
             android:id="@+id/txt_contrasena"
             android:layout_width="311dp"
             android:layout_height="45dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="44dp"
             android:autofillHints="password"
             android:ems="10"
             android:hint="@string/main_txt_contrasena_hint"
@@ -57,7 +58,7 @@
             android:id="@+id/btn_ingresar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="36dp"
             android:text="@string/main_btn_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -68,16 +69,30 @@
             android:id="@+id/lbl_registrar"
             android:layout_width="137dp"
             android:layout_height="26dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="28dp"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
             android:text="@string/main_lbl_registro"
             android:textColor="@color/purple_700"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_ingresar" />
+
+        <TextView
+            android:id="@+id/lbl_cambioContrasena"
+            android:layout_width="137dp"
+            android:layout_height="26dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/main_lbl_cambio_contrasena"
+            android:textColor="@color/purple_700"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_registrar"
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

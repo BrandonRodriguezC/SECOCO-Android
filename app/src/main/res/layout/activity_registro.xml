@@ -17,12 +17,11 @@
             android:layout_height="120dp"
             android:layout_marginTop="32dp"
             android:gravity="center"
-            android:text="@string/registrate"
+            android:text="@string/registro_lbl_registrate"
             android:textSize="40sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/editTextTextPersonName"
@@ -31,7 +30,7 @@
             android:layout_marginTop="10dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="@string/nombre"
+            android:hint="@string/registro_txt_nombre"
             android:inputType="textPersonName"
             android:textAllCaps="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +44,7 @@
             android:layout_marginTop="16dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="@string/apellido"
+            android:hint="@string/registro_txt_apellido"
             android:inputType="textPersonName"
             android:textAllCaps="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +84,7 @@
             android:layout_marginTop="12dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="@string/numero_id"
+            android:hint="@string/registro_txt_numero_id"
             android:inputType="number"
             android:textAllCaps="true"
             android:textColorHint="?android:attr/textColorHint"
@@ -101,7 +100,7 @@
             android:layout_height="55dp"
             android:layout_marginTop="16dp"
             android:ems="10"
-            android:hint="@string/fecha_nacimiento"
+            android:hint="@string/registro_txt_fecha_nacimiento"
             android:inputType="date"
             android:textAllCaps="true"
             android:textColorHint="?android:attr/textColorHint"
@@ -114,4 +113,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+</ScrollView>
