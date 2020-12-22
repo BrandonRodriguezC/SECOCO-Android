@@ -1,4 +1,4 @@
-package com.example.secoco;
+package com.example.secoco.usuarios.persona;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.secoco.R;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.directions.v5.models.DirectionsRoute;

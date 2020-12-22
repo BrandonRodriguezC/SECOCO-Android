@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SeCoCo">
 
-        <activity android:name=".Map"></activity>
+        <activity android:name=".usuarios.persona.Map"></activity>
         <activity android:name=".Registro" />
         <activity android:name=".Ingreso">
 
