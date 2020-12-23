@@ -18,6 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Registro extends AppCompatActivity {
 
     //atributos
@@ -27,7 +30,7 @@ public class Registro extends AppCompatActivity {
     private Spinner spinner,spinner2,spinner3;
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference ref = database.getReference("server/saving-data/fireblog");
+    DatabaseReference ref = database.getReference("usuarios");
 
 
     @Override
@@ -87,6 +90,12 @@ public class Registro extends AppCompatActivity {
         Toast.makeText(this, nombre+apellido+correo+id+contraseña+contraseñaV
                 +direccion+tipo_id+localidad+estado, Toast.LENGTH_SHORT).show();
 
+        DatabaseReference usuarios = ref;
+       // Map<String, Usuario> users = new HashMap<String,Usuario>();
+        //users.put(correo.split("@")[0],
+         //       new Usuario(nombre,apellido,correo,id ,contraseña,direccion, tipo_id , localidad, estado));
+
+        usuarios.child(correo.split("@")[0]).setValue(new Usuario(nombre,apellido,correo,id ,contraseña,direccion, tipo_id , localidad, estado));
     }
 
 }
