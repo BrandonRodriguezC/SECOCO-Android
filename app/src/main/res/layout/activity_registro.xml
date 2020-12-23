@@ -67,19 +67,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
 
+
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="50dp"
+            android:layout_width="94dp"
             android:layout_height="55dp"
-            android:layout_marginStart="52dp"
-            android:layout_marginLeft="52dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginLeft="56dp"
             android:layout_marginTop="12dp"
+            android:entries="@array/Cedula"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress2" />
 
         <EditText
             android:id="@+id/editTextNumber"
-            android:layout_width="230dp"
+            android:layout_width="181dp"
             android:layout_height="55dp"
             android:layout_marginTop="12dp"
             android:autofillHints=""
@@ -95,11 +97,17 @@
             tools:ignore="MissingConstraints" />
 
         <EditText
-            android:id="@+id/editTextDate6"
+            android:id="@+id/txt_fecha_nacimiento"
             android:layout_width="300dp"
             android:layout_height="55dp"
             android:layout_marginTop="16dp"
+            android:autofillHints=""
             android:ems="10"
+
+            android:focusable="false"
+            android:clickable="true"
+            android:maxLines="1"
+
             android:hint="@string/registro_txt_fecha_nacimiento"
             android:inputType="date"
             android:textAllCaps="true"
@@ -107,8 +115,81 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner"
-            tools:ignore="MissingConstraints"
-            android:autofillHints="" />
+            tools:ignore="MissingConstraints" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName3"
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/registro_txt_contrasena"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_fecha_nacimiento"
+            tools:ignore="MissingConstraints" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName4"
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/registro_txt_verificacion_contrasena"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3"
+            tools:ignore="MissingConstraints" />
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:prompt="@string/registro_txt_localidad"
+            android:entries="@array/Localidades"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+
+
+        <EditText
+            android:id="@+id/editTextTextPersonName5"
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="12dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/registro_txt_direccion"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner2"
+            tools:ignore="MissingConstraints" />
+
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:entries="@array/Estado"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/registro_txt_boton_registrar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner3" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

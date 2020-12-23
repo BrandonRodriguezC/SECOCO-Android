@@ -7,8 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.secoco.usuarios.erccovid.ERCInicio;
 import com.example.secoco.usuarios.erecovid.EREInicio;
 import com.example.secoco.usuarios.etdacovid.ETDAInicio;
