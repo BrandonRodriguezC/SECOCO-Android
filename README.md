@@ -21,4 +21,4 @@ Los tipos de usuario son
 - ETDA-COVID (Entidad que Toma las Decisiones de Aislamiento)
 
 # Estructura y diccionario de Firebase
-![alt text](https://64.media.tumblr.com/e2802a5c4617acdb7057fce35e0ecfb4/669b12baca980b03-c0/s1280x1920/ffc8780c1d24f9a8bd13b909dedf346c969c11bf.png)
+![alt text](https://64.media.tumblr.com/c2c9568db420b84875bbbf901dc5bf2c/029650257ce90f11-8a/s1280x1920/9cd6bc5d54e960523c2ec99ad10dc8eb71be9d31.jpg)
