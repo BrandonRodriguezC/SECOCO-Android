@@ -12,28 +12,62 @@
     <string name="registro_lbl_registrate">Regístrate</string>
     <string name="registro_txt_nombre">Nombre</string>
     <string name="registro_txt_apellido">Apellido</string>
+    <string-array name="Cedula">
+        <item>C.C.</item>
+        <item>C.E.</item>
+        <item>T.I.</item>
+        <item>R.C.</item>
+    </string-array>
     <string name="registro_txt_numero_id">No. id</string>
     <string name="registro_txt_fecha_nacimiento">Fecha de nacimiento</string>
 
-    <!-- Etiquetas para CambioContraseña-->
+    <string name="registro_txt_contrasena">Contraseña</string>
+    <string name="registro_txt_verificacion_contrasena">Verificación de Contraseña</string>
+    <string name="registro_txt_localidad">Localidad</string>
+    <string-array name="Localidades">
+        <item>Antonio Nariño</item>
+        <item>Barrios Unidos</item>
+        <item>Bosa</item>
+        <item>Chapinero</item>
+        <item>Ciudad Bolívar</item>
+        <item>Engativá</item>
+        <item>Fontibón</item>
+        <item>Kennedy</item>
+        <item>La Candelaria</item>
+        <item>Los Mártires</item>
+        <item>Puente Aranda</item>
+        <item>Rafael Uribe Uribe</item>
+        <item>San Cristóbal</item>
+        <item>Santa Fe</item>
+        <item>Suba</item>
+        <item>Sumapaz</item>
+        <item>Teusaquillo</item>
+        <item>Tunjuelito</item>
+        <item>Usaquén</item>
+        <item>Usme</item>
+    </string-array>
+    <string name="registro_txt_direccion">Dirección</string>
+    <string-array name="Estado">
+        <item>Activo</item>
+        <item>Inactivo</item>
+        <item>Sospechoso</item>
+    </string-array>
+    <string name="registro_txt_boton_registrar">Regístrate</string>
 
-    <!-- Etiquetas para usuarios.erccovid.ERCInicio-->
+    <!-- Etiquetas para usuarios.ERCInicio-->
     <string name="ercInicio_nombre">ERC-COVID (Entidad que Reporta Contactos Covid)</string>
 
-    <!-- Etiquetas para usuarios.erecovid.EREInicio-->
+    <!-- Etiquetas para usuarios.EREInicio-->
     <string name="ereInicio_nombre">ERE-COVID (Entidad que Reporta Examenes (Diagnosticos) Covid)</string>
 
-    <!-- Etiquetas para usuarios.etdacovid.ETDAInicio-->
+    <!-- Etiquetas para usuarios.ETDAInicio-->
     <string name="etdaInicio_nombre">ETDA-COVID (Entidad que Toma las Decisiones de Aislamiento)</string>
 
-    <!-- Etiquetas para usuarios.persona.PersonaInicio-->
-    <string name="persona_btn_ubicacion">Tomar Ubicación</string>
-    <string name="persona_btn_mapa">Abrir Mapa</string>
-
-    <!-- Etiquetas para usuarios.persona.Map -->
+    <!-- Etiquetas para usuarios.Map -->
     <string name="access_token" translatable="false">pk.eyJ1IjoiYnJhbmRvbnJvZHJpZ3VleiIsImEiOiJjazkwZDh1MTUwMGpyM2hvMGo1a2p5bnQzIn0.T-GzUebrNkyoXWR7v9u4qQ</string>
     <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>
     <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>
+
 
 
 </resources>
