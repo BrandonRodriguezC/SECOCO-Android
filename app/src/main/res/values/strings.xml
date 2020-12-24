@@ -15,16 +15,22 @@
     <string name="registro_txt_numero_id">No. id</string>
     <string name="registro_txt_fecha_nacimiento">Fecha de nacimiento</string>
 
-    <!-- Etiquetas para usuarios.ERCInicio-->
+    <!-- Etiquetas para CambioContraseña-->
+
+    <!-- Etiquetas para usuarios.erccovid.ERCInicio-->
     <string name="ercInicio_nombre">ERC-COVID (Entidad que Reporta Contactos Covid)</string>
 
-    <!-- Etiquetas para usuarios.EREInicio-->
+    <!-- Etiquetas para usuarios.erecovid.EREInicio-->
     <string name="ereInicio_nombre">ERE-COVID (Entidad que Reporta Examenes (Diagnosticos) Covid)</string>
 
-    <!-- Etiquetas para usuarios.ETDAInicio-->
+    <!-- Etiquetas para usuarios.etdacovid.ETDAInicio-->
     <string name="etdaInicio_nombre">ETDA-COVID (Entidad que Toma las Decisiones de Aislamiento)</string>
 
-    <!-- Etiquetas para usuarios.Map -->
+    <!-- Etiquetas para usuarios.persona.PersonaInicio-->
+    <string name="persona_btn_ubicacion">Tomar Ubicación</string>
+    <string name="persona_btn_mapa">Abrir Mapa</string>
+
+    <!-- Etiquetas para usuarios.persona.Map -->
     <string name="access_token" translatable="false">pk.eyJ1IjoiYnJhbmRvbnJvZHJpZ3VleiIsImEiOiJjazkwZDh1MTUwMGpyM2hvMGo1a2p5bnQzIn0.T-GzUebrNkyoXWR7v9u4qQ</string>
     <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>
     <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>

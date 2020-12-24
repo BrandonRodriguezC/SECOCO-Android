@@ -15,7 +15,7 @@ public class ETDAInicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_etdainicio);
+        setContentView(R.layout.activity_etda_inicio);
 
         //Inicialización atributos
         this.lblUsuario = (TextView) findViewById(R.id.lbl_usuario);

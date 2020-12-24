@@ -14,7 +14,7 @@ public class ERCInicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ercinicio);
+        setContentView(R.layout.activity_erc_inicio);
 
         //Inicialización atributos
         this.lblUsuario = (TextView) findViewById(R.id.lbl_usuario);

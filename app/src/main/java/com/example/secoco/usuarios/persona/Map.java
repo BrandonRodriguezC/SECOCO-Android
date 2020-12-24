@@ -1,12 +1,12 @@
 package com.example.secoco.usuarios.persona;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.secoco.R;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
@@ -20,7 +20,6 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
-
 import java.util.List;
 
 // classes needed to initialize map
@@ -34,6 +33,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Mapbox
     private LocationComponent locationComponent;
     private Button button;
     private DirectionsRoute currentRoute;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +43,18 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Mapbox
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
+        button = (Button) findViewById(R.id.startButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nuevaActividad = new Intent(Map.this, PersonaInicio.class);
+                startActivity(nuevaActividad);
+                finish();
+            }
+        });
+
     }
+
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
@@ -54,7 +65,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Mapbox
                 enableLocationComponent(mapboxMap.getStyle());
             }
         });
-
     }
 
     @SuppressWarnings( {"MissingPermission"})
@@ -141,7 +151,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Mapbox
         super.onLowMemory();
         mapView.onLowMemory();
     }
-
 
     @Override
     public boolean onMapClick(@NonNull LatLng point) {
