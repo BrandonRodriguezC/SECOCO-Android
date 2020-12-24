@@ -20,4 +20,5 @@ Los tipos de usuario son
 - ERC-COVID (Entidad que Reporta Contactos Covid)
 - ETDA-COVID (Entidad que Toma las Decisiones de Aislamiento)
 
-  
+# Estructura y diccionario de Firebase
+![alt text](https://64.media.tumblr.com/dba8642da6b8b2a9c29825cf2b36d922/23d6f7ac24a18df4-46/s1280x1920/05b659b7d059a984bb5d70ec0e8d8d8b2d97faa8.png)
