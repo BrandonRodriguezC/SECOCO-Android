@@ -14,9 +14,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.secoco.usuarios.erccovid.ERCInicio;
-import com.example.secoco.usuarios.erecovid.EREInicio;
-import com.example.secoco.usuarios.etdacovid.ETDAInicio;
+import com.example.secoco.usuarios.erc_covid.ERCInicio;
+import com.example.secoco.usuarios.ere_covid.EREInicio;
+import com.example.secoco.usuarios.etda_covid.ETDAInicio;
 import com.example.secoco.usuarios.persona.PersonaInicio;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -136,6 +136,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
             if (txt_contrasena.equals(""))
                 txtContrasena.setError("Contraseña Requerida");
             //Toast.makeText(this, "Favor Ingrese los Campos", Toast.LENGTH_SHORT).show();
+
         }
     }
 

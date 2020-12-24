@@ -25,7 +25,7 @@ import java.util.List;
 // classes needed to initialize map
 // classes needed to initialize map
 
-public class Map extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener {
+public class Mapa extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener {
     // variables for adding location layer
     private MapView mapView;
     private MapboxMap mapboxMap;
@@ -47,7 +47,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Mapbox
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent nuevaActividad = new Intent(Map.this, PersonaInicio.class);
+                Intent nuevaActividad = new Intent(Mapa.this, PersonaInicio.class);
                 startActivity(nuevaActividad);
                 finish();
             }
@@ -61,7 +61,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, Mapbox
         mapboxMap.setStyle(getString(R.string.navigation_guidance_day), new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
-                mapboxMap.addOnMapClickListener(Map.this);
+                mapboxMap.addOnMapClickListener(Mapa.this);
                 enableLocationComponent(mapboxMap.getStyle());
             }
         });

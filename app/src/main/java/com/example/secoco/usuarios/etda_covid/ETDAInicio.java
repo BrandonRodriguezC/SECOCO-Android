@@ -1,4 +1,4 @@
-package com.example.secoco.usuarios.etdacovid;
+package com.example.secoco.usuarios.etda_covid;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -63,6 +63,9 @@
     <!-- Etiquetas para usuarios.ETDAInicio-->
     <string name="etdaInicio_nombre">ETDA-COVID (Entidad que Toma las Decisiones de Aislamiento)</string>
 
+    <!-- Etiquetas para usuario.persona.PersonaInicio -->
+    <string name="persona_btn_ubicacion">Tomar Ubicación</string>
+    <string name="persona_btn_mapa">Abrir Mapa</string>
     <!-- Etiquetas para usuarios.Map -->
     <string name="access_token" translatable="false">pk.eyJ1IjoiYnJhbmRvbnJvZHJpZ3VleiIsImEiOiJjazkwZDh1MTUwMGpyM2hvMGo1a2p5bnQzIn0.T-GzUebrNkyoXWR7v9u4qQ</string>
     <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>

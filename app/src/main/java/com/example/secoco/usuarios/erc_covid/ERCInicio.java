@@ -1,4 +1,4 @@
-package com.example.secoco.usuarios.erccovid;
+package com.example.secoco.usuarios.erc_covid;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
