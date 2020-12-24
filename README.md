@@ -12,6 +12,8 @@ Version 29
 # Base de Datos
 (Temp) Firebase - secocoda@gmail.com 
   - Dependencias y JSON adjuntas al proyecto
+# Estructura y diccionario de Firebase
+![alt text](https://64.media.tumblr.com/31c3652b622b6d43e65e29ecd0947901/7af7d824d504e7e6-3c/s2048x3072/bc689e5c5859e40637f615d84a98f211e377a9ca.jpg )
 
 # Tipo de Usuarios
 Los tipos de usuario son
@@ -20,5 +22,3 @@ Los tipos de usuario son
 - ERC-COVID (Entidad que Reporta Contactos Covid)
 - ETDA-COVID (Entidad que Toma las Decisiones de Aislamiento)
 
-# Estructura y diccionario de Firebase
-![alt text](https://64.media.tumblr.com/c2c9568db420b84875bbbf901dc5bf2c/029650257ce90f11-8a/s1280x1920/9cd6bc5d54e960523c2ec99ad10dc8eb71be9d31.jpg )
