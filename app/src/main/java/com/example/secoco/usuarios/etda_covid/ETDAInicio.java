@@ -1,4 +1,4 @@
-package com.example.secoco.usuarios.erecovid;
+package com.example.secoco.usuarios.etda_covid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.example.secoco.R;
 
-public class EREInicio extends AppCompatActivity {
+public class ETDAInicio extends AppCompatActivity {
 
     //Atributos
     private TextView lblUsuario;
@@ -15,7 +15,7 @@ public class EREInicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ereinicio);
+        setContentView(R.layout.activity_etda_inicio);
 
         //Inicialización atributos
         this.lblUsuario = (TextView) findViewById(R.id.lbl_usuario);

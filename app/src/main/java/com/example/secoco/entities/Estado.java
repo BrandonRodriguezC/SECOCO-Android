@@ -1,7 +1,9 @@
-package com.example.secoco;
+package com.example.secoco.entities;
 
 public class Estado {
-    Boolean dificultad_respirar,fatiga,fiebre,tos;
+
+    public Boolean dificultad_respirar, fatiga, fiebre, tos;
+
     public Estado(){
         dificultad_respirar=false;
         fatiga=false;
