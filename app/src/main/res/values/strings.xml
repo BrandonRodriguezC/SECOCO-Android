@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SeCoCo</string>
     <!-- Etiquetas para Ingreso -->
-    <string name="main_txt_email_hint">Ingrese su Email</string>
+    <string name="main_txt_usuario_hint">Ingrese su Usuario</string>
     <string name="main_txt_contrasena_hint">Ingrese su Contraseña</string>
     <string name="main_txt_bienvenido">Bienvenido a SeCoCo</string>
     <string name="main_btn_login">Ingresar</string>
@@ -12,6 +12,7 @@
     <string name="registro_lbl_registrate">Regístrate</string>
     <string name="registro_txt_nombre">Nombre</string>
     <string name="registro_txt_apellido">Apellido</string>
+    <string name="registro_txt_email_hint">Ingrese su e-mail</string>
     <string-array name="Cedula">
         <item>C.C.</item>
         <item>C.E.</item>
@@ -20,6 +21,7 @@
     </string-array>
     <string name="registro_txt_numero_id">No. id</string>
     <string name="registro_txt_fecha_nacimiento">Fecha de nacimiento</string>
+    <string name="registro_txt_usuario">Nombre de Usuario</string>
 
     <string name="registro_txt_contrasena">Contraseña</string>
     <string name="registro_txt_verificacion_contrasena">Verificación de Contraseña</string>
@@ -69,6 +71,7 @@
         <item>5</item>
     </string-array>
     <string name="registro_txt_direccion">Dirección</string>
+    <string name="registro_txt_pregunta">¿Cuál es su estado actual de salud referente al COVID-19?</string>
     <string-array name="Estado">
         <item>Activo</item>
         <item>Inactivo</item>
@@ -86,9 +89,10 @@
     <string name="etdaInicio_nombre">ETDA-COVID (Entidad que Toma las Decisiones de Aislamiento)</string>
 
     <!-- Etiquetas para usuario.persona.PersonaInicio -->
-    <string name="persona_btn_ubicacion">Tomar Ubicación</string>
+    <string name="persona_btn_ubicacion">Cancelar La Busqueda de Ubicación</string>
     <string name="persona_btn_mapa">Abrir Mapa</string>
-    <!-- Etiquetas para usuarios.Map -->
+
+    <!-- Etiquetas para usuarios.persona.Mapa -->
     <string name="access_token" translatable="false">pk.eyJ1IjoiYnJhbmRvbnJvZHJpZ3VleiIsImEiOiJjazkwZDh1MTUwMGpyM2hvMGo1a2p5bnQzIn0.T-GzUebrNkyoXWR7v9u4qQ</string>
     <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>
     <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>

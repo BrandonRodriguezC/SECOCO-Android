@@ -10,10 +10,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.secoco.usuarios.erc_covid.ERCInicio;
 import com.example.secoco.usuarios.ere_covid.EREInicio;
 import com.example.secoco.usuarios.etda_covid.ETDAInicio;
@@ -59,7 +57,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
         this.lblContrasena.setOnClickListener(this);
 
         //Inicialización de Base de Datos
-        this.baseDatos = FirebaseDatabase.getInstance().getReference();
+        this.baseDatos = FirebaseDatabase.getInstance().getReference("usuarios");
     }
 
     @Override
@@ -86,7 +84,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
 
         if (!txt_usuario.equals("") && !txt_contrasena.equals("")) {
             try {
-                this.baseDatos.child("usuarios").child(txt_tipo_usuario).child(txt_usuario).addValueEventListener(new ValueEventListener() {
+                this.baseDatos.child(txt_tipo_usuario).child(txt_usuario).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
@@ -110,7 +108,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
                                 if (nuevaActividad != null) {
                                     nuevaActividad.putExtra("USUARIO", txt_usuario);
                                     startActivity(nuevaActividad);
-                                    guardarCredenciales(txt_usuario,txt_contrasena, txt_tipo_usuario);
+                                    guardarCredenciales(txt_usuario, txt_contrasena, txt_tipo_usuario);
                                     //Para cerrar la activity y que no puedan volver al LOGIN despues de LOGGEARSE
                                     //finish();
                                 }
@@ -140,22 +138,22 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private void guardarCredenciales(String txt_usuario, String txt_contrasena, String txt_tipo_usuario){
+    private void guardarCredenciales(String txt_usuario, String txt_contrasena, String txt_tipo_usuario) {
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("usuario",txt_usuario);
+        editor.putString("usuario", txt_usuario);
         editor.putString("contraseña", txt_contrasena);
         editor.putString("tipoUsuario", txt_tipo_usuario);
         editor.commit();
     }
 
-    private void cargarCredenciales(){
+    private void cargarCredenciales() {
         SharedPreferences preferences = getSharedPreferences("credenciales", MODE_PRIVATE);
         txtUsuario.setText(preferences.getString("usuario", ""));
         txtContrasena.setText(preferences.getString("contraseña", ""));
         String tipoUsuario = preferences.getString("tipoUsuario", "");
-        for (int i=0; i< opcionesSpinner.length; i++){
-            if(opcionesSpinner[i].equals(tipoUsuario)){
+        for (int i = 0; i < opcionesSpinner.length; i++) {
+            if (opcionesSpinner[i].equals(tipoUsuario)) {
                 spTipoUsuario.setSelection(i);
                 break;
             }
@@ -166,7 +164,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
         Toast.makeText(this, "Registrar", Toast.LENGTH_SHORT).show();
         Intent registro = new Intent(this, Registro.class);
         startActivity(registro);
-        //finish();
+        finish();
     }
 
     public void cambioContrasena() {

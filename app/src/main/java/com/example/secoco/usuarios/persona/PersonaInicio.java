@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
@@ -69,7 +70,7 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     CODIGO_REQUEST_EXITOSO);
-        }else{
+        } else {
             iniciarServicio();
         }
     }
@@ -79,20 +80,20 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == CODIGO_REQUEST_EXITOSO && grantResults.length > 0) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-               iniciarServicio();
+                iniciarServicio();
             } else {
                 Toast.makeText(PersonaInicio.this, "Permisos Denegados", Toast.LENGTH_SHORT);
             }
         }
     }
 
-    private boolean estaEjecutandoseReporteUbicacion(){
+    private boolean estaEjecutandoseReporteUbicacion() {
         ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        if (activityManager != null){
-            for (ActivityManager.RunningServiceInfo servicio:
-                    activityManager.getRunningServices(Integer.MAX_VALUE)){
-                if(ServicioUbicacion.class.getName().equals(servicio.service.getClassName())){
-                    if(servicio.foreground){
+        if (activityManager != null) {
+            for (ActivityManager.RunningServiceInfo servicio :
+                    activityManager.getRunningServices(Integer.MAX_VALUE)) {
+                if (ServicioUbicacion.class.getName().equals(servicio.service.getClassName())) {
+                    if (servicio.foreground) {
                         return true;
                     }
                 }
@@ -101,19 +102,19 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         return false;
     }
 
-    private void iniciarServicio(){
-        if(!estaEjecutandoseReporteUbicacion()){
+    private void iniciarServicio() {
+        if (!estaEjecutandoseReporteUbicacion()) {
             Intent intent = new Intent(getApplicationContext(), ServicioUbicacion.class);
             intent.setAction(VariablesServicio.ACCION_INICIO);
-            intent.putExtra("intervalo", 1L);
+            intent.putExtra("intervalo", 5L);
             intent.putExtra("rangoMaximo", 0.00009);
             intent.putExtra("usuario", getIntent().getStringExtra("USUARIO"));
             startService(intent);
         }
     }
 
-    private void finalizarServicio(){
-        if(estaEjecutandoseReporteUbicacion()){
+    private void finalizarServicio() {
+        if (estaEjecutandoseReporteUbicacion()) {
             Intent intent = new Intent(getApplicationContext(), ServicioUbicacion.class);
             intent.setAction(VariablesServicio.ACCION_FINAL);
             startService(intent);
