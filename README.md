@@ -29,7 +29,7 @@ Version 29
 (Temp) Firebase - secocoda@gmail.com 
   - Dependencias y JSON adjuntas al proyecto
 ### Estructura y diccionario de Firebase
-![alt text](https://64.media.tumblr.com/31c3652b622b6d43e65e29ecd0947901/7af7d824d504e7e6-3c/s2048x3072/bc689e5c5859e40637f615d84a98f211e377a9ca.jpg )
+![alt text](https://64.media.tumblr.com/f828051dfa9d8a174ab564f8247c2619/297b8bdb6480845f-42/s1280x1920/d3a2d57f1a7c1906820cf0281ac57344cfa11b98.jpg )
 
 ### Tipo de Usuarios
 Los tipos de usuario disponibles en el aplicativo son:

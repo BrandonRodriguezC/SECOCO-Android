@@ -46,6 +46,28 @@
         <item>Usaquén</item>
         <item>Usme</item>
     </string-array>
+    <string-array name="LocalidadesIdentificador">
+        <item>15</item>
+        <item>12</item>
+        <item>7</item>
+        <item>2</item>
+        <item>19</item>
+        <item>10</item>
+        <item>9</item>
+        <item>8</item>
+        <item>17</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>4</item>
+        <item>3</item>
+        <item>11</item>
+        <item>20</item>
+        <item>13</item>
+        <item>6</item>
+        <item>1</item>
+        <item>5</item>
+    </string-array>
     <string name="registro_txt_direccion">Dirección</string>
     <string-array name="Estado">
         <item>Activo</item>
@@ -70,7 +92,8 @@
     <string name="access_token" translatable="false">pk.eyJ1IjoiYnJhbmRvbnJvZHJpZ3VleiIsImEiOiJjazkwZDh1MTUwMGpyM2hvMGo1a2p5bnQzIn0.T-GzUebrNkyoXWR7v9u4qQ</string>
     <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>
     <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>
-
+    <string name="Error_Base_de_Datos">Hubo un error con la base de datos, por favor intenta mas tarde</string>
+    <string name="Error_Nombre_de_Usuario">Lo sentimos, ese nombre de usuario ya está en uso</string>
 
 
 </resources>
