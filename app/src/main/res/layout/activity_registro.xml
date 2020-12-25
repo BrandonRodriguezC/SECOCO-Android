@@ -119,6 +119,19 @@
             tools:ignore="MissingConstraints" />
 
         <EditText
+            android:id="@+id/txt_nombre_usuario"
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Nombre de usuario"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_fecha_nacimiento"
+            tools:ignore="MissingConstraints" />
+
+        <EditText
             android:id="@+id/txt_contrasena_r"
             android:layout_width="300dp"
             android:layout_height="55dp"
@@ -129,7 +142,7 @@
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_fecha_nacimiento"
+            app:layout_constraintTop_toBottomOf="@+id/txt_nombre_usuario"
             tools:ignore="MissingConstraints" />
 
         <EditText

@@ -1,5 +1,7 @@
 package com.example.secoco;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,26 +12,32 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.secoco.entities.Usuario;
+import com.example.secoco.usuarios.persona.PersonaInicio;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class Registro extends AppCompatActivity {
 
     //atributos
     private EditText txt_nombre,txt_apellido,txt_correo,txt_id,
-                     txt_fecha_nacimiento,txt_contrasena_r,txt_contrasena_rv,txt_direccion;
+                     txt_fecha_nacimiento,txt_contrasena_r,txt_contrasena_rv,txt_direccion, txt_nombre_usuario;
     private Button boton_registro;
     private Spinner spinner,spinner2,spinner3;
+    private Context context;
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference ref = database.getReference("usuarios");
+    DatabaseReference ref = database.getReference("usuarios/Naturales");
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context= this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
         getSupportActionBar().setTitle("Registro");
@@ -64,6 +72,8 @@ public class Registro extends AppCompatActivity {
         txt_contrasena_r=(EditText) findViewById(R.id.txt_contrasena_r);
         txt_contrasena_rv=(EditText) findViewById(R.id.txt_contrasena_rv);
         txt_direccion=(EditText) findViewById(R.id.txt_direccion);
+        txt_nombre_usuario = (EditText) findViewById(R.id.txt_nombre_usuario);
+        txt_fecha_nacimiento= (EditText) findViewById(R.id.txt_fecha_nacimiento);
 
         spinner=(Spinner) findViewById(R.id.spinner);
         spinner2=(Spinner) findViewById(R.id.spinner2);
@@ -76,21 +86,42 @@ public class Registro extends AppCompatActivity {
         String id = txt_id.getText().toString();
         String contraseña = txt_contrasena_r.getText().toString();
         String contraseñaV = txt_contrasena_rv.getText().toString();
+        String fechaNacimiento = txt_fecha_nacimiento.getText().toString();
         String direccion = txt_direccion.getText().toString();
+        String nombreUsuario = txt_nombre_usuario.getText().toString();
         //spinners
         String tipo_id = spinner.getSelectedItem().toString();
-        String localidad = spinner2.getSelectedItem().toString();
+        String localidad = getResources().getStringArray(R.array.LocalidadesIdentificador)[spinner2.getSelectedItemPosition()];
         String estado = spinner3.getSelectedItem().toString();
 
-        Toast.makeText(this, nombre+apellido+correo+id+contraseña+contraseñaV
-                +direccion+tipo_id+localidad+estado, Toast.LENGTH_SHORT).show();
-
         DatabaseReference usuarios = ref;
-       // Map<String, Usuario> users = new HashMap<String,Usuario>();
-        //users.put(correo.split("@")[0],
-         //       new Usuario(nombre,apellido,correo,id ,contraseña,direccion, tipo_id , localidad, estado));
+        if(contraseña.equals(contraseñaV)){
+            Query queryToGetData = ref.child(nombreUsuario);
 
-        usuarios.child(correo.split("@")[0]).setValue(new Usuario(nombre,apellido,correo,id ,contraseña,direccion, tipo_id , localidad, estado));
+            queryToGetData.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(!dataSnapshot.exists()){
+                        usuarios.child(nombreUsuario).setValue(new Usuario(nombre,apellido,correo,id ,contraseña,direccion, tipo_id , localidad, estado, fechaNacimiento));
+                        Intent inicio = new Intent(Registro.this, PersonaInicio.class);
+                        startActivity(inicio);
+                        finish();
+                    }else{
+                        Toast.makeText(Registro.this.context, R.string.Error_Nombre_de_Usuario, Toast.LENGTH_SHORT);
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(Registro.this.context, R.string.Error_Base_de_Datos, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            Toast.makeText(context, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();   
+        }
+
+
     }
+
+    
 
 }
