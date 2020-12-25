@@ -146,7 +146,7 @@ public class ServicioUbicacion extends Service {
                     if (Math.abs(latitudNueva - latitudVieja) > rangoMaximo || Math.abs(longitudNueva - longitudVieja) > rangoMaximo) {
                         int tiempo = (int) (minutos * this.intervalo / 60000);
                         //System.out.println("Tiempo De Resta " + tiempo);
-                        baseDatos.child("ubicaciones").child(usuario).child(obtenerFecha(tiempo)).setValue(
+                        baseDatos.child(usuario).child(obtenerFecha(tiempo)).setValue(
                                 new Ubicacion(latitudNueva, longitudNueva, tiempo, 0));
                         latitudVieja = latitudNueva;
                         longitudVieja = longitudNueva;
