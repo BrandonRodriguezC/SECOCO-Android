@@ -110,6 +110,7 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
             intent.putExtra("rangoMaximo", 0.00009);
             intent.putExtra("usuario", getIntent().getStringExtra("USUARIO"));
             startService(intent);
+            Toast.makeText(PersonaInicio.this, "Servicio de Analisis de Ubicación Activado", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -118,6 +119,7 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
             Intent intent = new Intent(getApplicationContext(), ServicioUbicacion.class);
             intent.setAction(VariablesServicio.ACCION_FINAL);
             startService(intent);
+            Toast.makeText(PersonaInicio.this, "Servicio de Analisis de Ubicación Terminado", Toast.LENGTH_LONG).show();
         }
     }
 
