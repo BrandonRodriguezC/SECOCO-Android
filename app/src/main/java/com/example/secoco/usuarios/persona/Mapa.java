@@ -2,12 +2,20 @@ package com.example.secoco.usuarios.persona;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.example.secoco.R;
+import com.google.android.material.navigation.NavigationView;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.directions.v5.models.DirectionsRoute;
@@ -25,7 +33,7 @@ import java.util.List;
 // classes needed to initialize map
 // classes needed to initialize map
 
-public class Mapa extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener {
+public class Mapa extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener,NavigationView.OnNavigationItemSelectedListener {
     // variables for adding location layer
     private MapView mapView;
     private MapboxMap mapboxMap;
@@ -33,6 +41,11 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
     private LocationComponent locationComponent;
     private Button button;
     private DirectionsRoute currentRoute;
+
+    //barra
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +65,13 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
                 finish();
             }
         });
+
+        drawerLayout=findViewById(R.id.drawer_layout);
+        navigationView=(NavigationView) findViewById(R.id.nav_view);
+
+        //navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_mapa);
 
     }
 
@@ -155,5 +175,17 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
     @Override
     public boolean onMapClick(@NonNull LatLng point) {
         return false;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        MenuItem sintomas=(MenuItem)findViewById(R.id.nav_sintomas);
+        Toast.makeText(this, "imprimio", Toast.LENGTH_SHORT).show();
+        if (item.getItemId()== sintomas.getItemId())
+        {
+            Intent sintomasActivity = new Intent(Mapa.this, Sintomas.class);
+            startActivity(sintomasActivity);
+        }
+        return true;
     }
 }

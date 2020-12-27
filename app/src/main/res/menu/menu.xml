@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_sintomas"
+        android:icon="@drawable/icon_sintomas"
+        android:title="Sintomas" />
     <group>
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/icon_sintomas"
-            android:title="Sintomas" />
+
 
         <item
             android:id="@+id/nav_cycle"
@@ -12,7 +13,7 @@
             android:title="Tu zona" />
 
         <item
-            android:id="@+id/nav_bus"
+            android:id="@+id/nav_mapa"
             android:icon="@drawable/icon_mapa"
             android:title="Mapa" />
 
