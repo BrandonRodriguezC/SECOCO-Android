@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/icon_sintomas"
+            android:title="Sintomas" />
+
+        <item
+            android:id="@+id/nav_cycle"
+            android:icon="@drawable/icbn_zona"
+            android:title="Tu zona" />
+
+        <item
+            android:id="@+id/nav_bus"
+            android:icon="@drawable/icon_mapa"
+            android:title="Mapa" />
+
+        <item
+            android:id="@+id/nav_plane"
+            android:icon="@drawable/icon_historial"
+            android:title="Historial" />
+    </group>
+    <item android:title="Perfil">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_login"
+                    android:icon="@drawable/icon_login"
+                    android:title="Cerrar sesion" />
+
+                <item
+                    android:id="@+id/nav_profile"
+                    android:icon="@drawable/icon_perfil"
+                    android:title="Perfil" />
+
+            </group>
+        </menu>
+    </item>
+</menu>
