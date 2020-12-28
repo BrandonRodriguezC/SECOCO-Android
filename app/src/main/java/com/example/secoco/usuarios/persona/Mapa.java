@@ -7,10 +7,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -28,12 +26,13 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+
 import java.util.List;
 
 // classes needed to initialize map
 // classes needed to initialize map
 
-public class Mapa extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener,NavigationView.OnNavigationItemSelectedListener {
+public class Mapa extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener, NavigationView.OnNavigationItemSelectedListener {
     // variables for adding location layer
     private MapView mapView;
     private MapboxMap mapboxMap;
@@ -66,11 +65,13 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
             }
         });
 
-        drawerLayout=findViewById(R.id.drawer_layout);
-        navigationView=(NavigationView) findViewById(R.id.nav_view);
-
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView =(NavigationView) findViewById(R.id.nav_view);
+        navigationView.bringToFront();
+        if(navigationView!=null){
+            navigationView.setNavigationItemSelectedListener(this);
+        }
         //navigationView.bringToFront();
-        navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_mapa);
 
     }
@@ -179,13 +180,11 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        MenuItem sintomas=(MenuItem)findViewById(R.id.nav_sintomas);
-        Toast.makeText(this, "imprimio", Toast.LENGTH_SHORT).show();
-        if (item.getItemId()== sintomas.getItemId())
-        {
-            Intent sintomasActivity = new Intent(Mapa.this, Sintomas.class);
-            startActivity(sintomasActivity);
+        if (item.toString().equals("Sintomas")){
+            Toast.makeText(this, "Sintomas", Toast.LENGTH_SHORT).show();
+            Intent sintomas = new Intent(this, Sintomas.class);
+            startActivity(sintomas);
         }
-        return true;
+        return false;
     }
 }

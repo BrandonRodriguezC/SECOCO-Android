@@ -1,13 +1,12 @@
 package com.example.secoco.usuarios.persona;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.secoco.R;
 
@@ -19,7 +18,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sintomas);
+        setContentView(R.layout.activity_sintomas);
 
         //Inicialización de Atributos
         this.button = (Button) findViewById(R.id.button);
@@ -75,12 +74,10 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener{
                 resultado+=0;
             }
 
-            Toast.makeText(this,resultado,Toast.LENGTH_SHORT);
+            Toast.makeText(this,resultado,Toast.LENGTH_SHORT).show();
+
+            //Envio
+
         }
     }
-
 }
-
-
-
-

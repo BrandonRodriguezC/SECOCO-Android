@@ -11,19 +11,19 @@
         android:layout_height="wrap_content"
         >
 
-    <TextView
-        android:id="@+id/pregunta1"
-        android:layout_width="304dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="16dp"
+        <TextView
+            android:id="@+id/pregunta1"
+            android:layout_width="304dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="16dp"
 
-        android:gravity="center"
-        android:text="@string/sintomas_dificultadR"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:gravity="center"
+            android:text="@string/sintomas_dificultadR"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
             android:id="@+id/spinner4"
@@ -35,19 +35,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pregunta1" />
 
-    <TextView
-        android:id="@+id/pregunta2"
-        android:layout_width="304dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="24dp"
+        <TextView
+            android:id="@+id/pregunta2"
+            android:layout_width="304dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
 
-        android:gravity="center"
-        android:text="@string/sintomas_fatiga"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner4" />
+            android:gravity="center"
+            android:text="@string/sintomas_fatiga"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner4" />
 
         <Spinner
             android:id="@+id/spinner5"
@@ -59,19 +59,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pregunta2" />
 
-    <TextView
-        android:id="@+id/pregunta3"
-        android:layout_width="304dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="24dp"
+        <TextView
+            android:id="@+id/pregunta3"
+            android:layout_width="304dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
 
-        android:gravity="center"
-        android:text="@string/sintomas_fiebre"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner5" />
+            android:gravity="center"
+            android:text="@string/sintomas_fiebre"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner5" />
 
         <Spinner
             android:id="@+id/spinner6"
@@ -83,7 +83,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pregunta3" />
 
-    <TextView
+        <TextView
             android:id="@+id/pregunta4"
             android:layout_width="304dp"
             android:layout_height="70dp"

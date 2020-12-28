@@ -1,35 +1,21 @@
 package com.example.secoco.usuarios.persona;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.secoco.entities.Ubicacion;
-import com.example.secoco.R;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Set;
+import com.example.secoco.R;
 
 public class PersonaInicio extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,7 +34,7 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         this.btnMapa = (Button) findViewById(R.id.btn_mapa);
 
         //Inicia a tomar y validar las coordenadas (latitud y longitud)
-        iniciarReporteUbicacion();
+        //iniciarReporteUbicacion();
 
         //Acción de Botones
         this.btnUbicación.setOnClickListener(this);
