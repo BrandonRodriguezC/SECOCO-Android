@@ -99,5 +99,18 @@
     <string name="Error_Base_de_Datos">Hubo un error con la base de datos, por favor intenta mas tarde</string>
     <string name="Error_Nombre_de_Usuario">Lo sentimos, ese nombre de usuario ya está en uso</string>
 
+    <!-- Etiquetas para Sintomas -->
+    <string name="sintomas_dificultadR">¿Le ha faltado el aire o ha tenido dificultad para respirar?</string>
+    <string name="sintomas_fatiga">¿Se ha sentido últimamente más fatigado de lo usual?</string>
+    <string name="sintomas_fiebre">¿Ha tenido fiebre o temperatura mayor a 38*C en los últimos dias?</string>
+    <string name="sintomas_tos">¿Ha tenido tos en los últimos dias?</string>
+    <string name="sintomas_sentidos">¿Ha notado disminución del olfato o del sabor de los alimentos?</string>
+    <string name="sintomas_cercania">¿Ha estado en contacto con alguien diagnosticado o sospechoso de covid-19 en los últimos días?</string>
+    <string name="button">Enviar síntomas</string>
+    <string-array name="si_no">
+        <item>Si</item>
+        <item>No</item>
+
+    </string-array>
 
 </resources>

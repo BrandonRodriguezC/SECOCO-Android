@@ -10,8 +10,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.secoco.usuarios.erc_covid.ERCInicio;
 import com.example.secoco.usuarios.ere_covid.EREInicio;
 import com.example.secoco.usuarios.etda_covid.ETDAInicio;
@@ -166,6 +168,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
         startActivity(registro);
         finish();
     }
+
 
     public void cambioContrasena() {
         //Toca Agregarlo

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/pregunta1"
+            android:layout_width="304dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="16dp"
+
+            android:gravity="center"
+            android:text="@string/sintomas_dificultadR"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinner4"
+            android:layout_width="94dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:entries="@array/si_no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pregunta1" />
+
+        <TextView
+            android:id="@+id/pregunta2"
+            android:layout_width="304dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
+
+            android:gravity="center"
+            android:text="@string/sintomas_fatiga"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner4" />
+
+        <Spinner
+            android:id="@+id/spinner5"
+            android:layout_width="94dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:entries="@array/si_no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pregunta2" />
+
+        <TextView
+            android:id="@+id/pregunta3"
+            android:layout_width="304dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
+
+            android:gravity="center"
+            android:text="@string/sintomas_fiebre"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner5" />
+
+        <Spinner
+            android:id="@+id/spinner6"
+            android:layout_width="94dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:entries="@array/si_no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pregunta3" />
+
+        <TextView
+            android:id="@+id/pregunta4"
+            android:layout_width="304dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
+
+            android:gravity="center"
+            android:text="@string/sintomas_tos"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner6" />
+
+        <Spinner
+            android:id="@+id/spinner7"
+            android:layout_width="94dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:entries="@array/si_no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pregunta4" />
+
+        <TextView
+            android:id="@+id/pregunta5"
+            android:layout_width="304dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
+
+            android:gravity="center"
+            android:text="@string/sintomas_sentidos"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner7" />
+
+        <Spinner
+            android:id="@+id/spinner8"
+            android:layout_width="94dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:entries="@array/si_no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pregunta5" />
+        <TextView
+            android:id="@+id/pregunta6"
+            android:layout_width="304dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
+
+            android:gravity="center"
+            android:text="@string/sintomas_cercania"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner8" />
+
+        <Spinner
+            android:id="@+id/spinner9"
+            android:layout_width="94dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:entries="@array/si_no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pregunta6" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner9" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
