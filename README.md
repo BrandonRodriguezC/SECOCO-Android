@@ -5,13 +5,15 @@ Bienvenidos perros :D
 ## Información General
 
 ### Ingreso
-Se agregaron los paquetes respectivos para cada usuario del aplicativo, de igual forma se estableció
-relación con la base de datos para permitir o denegar el acceso a SeCoCo
+Funcionalidad completa para el ingreso de los diferentes usuarios del aplicativo, con lo cual según
+sus permisos acceden a sus respectivas Activities. Por otro lado, esta funciona como intermediario para
+que el usuario pueda registrarse y cambiar su contraseña.
+
 
 ### Reporte Ubicación
 Se implementó prototipo de la historia de usuario **Reporte Ubicación**, en donde al entrar al Activity
 de Persona Natural (PersonaInicio) automáticamente el aplicativo solicita permisos para acceder a la
-ubicación y cada 5 minutos revisa si su posición sobrepasa el límite establecido (0.00009) tanto para
+ubicación y cada 5 minutos revisa si su posición sobrepasa el límite establecido de 5 metros tanto para
 la latitud como longitud; de ser así ingresa a la base de datos la fecha (dd-MM-yyyy HH:mm:ss), latitud,
 longitud, zona (código postal de la zona) y tiempo (periodo que transcurrió en el rango establecido).
 
