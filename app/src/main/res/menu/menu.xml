@@ -8,7 +8,7 @@
 
 
         <item
-            android:id="@+id/nav_cycle"
+            android:id="@+id/nav_zona"
             android:icon="@drawable/icbn_zona"
             android:title="Tu zona" />
 
@@ -18,7 +18,7 @@
             android:title="Mapa" />
 
         <item
-            android:id="@+id/nav_plane"
+            android:id="@+id/nav_historial"
             android:icon="@drawable/icon_historial"
             android:title="Historial" />
     </group>
@@ -34,7 +34,7 @@
                     android:title="Cerrar sesion" />
 
                 <item
-                    android:id="@+id/nav_profile"
+                    android:id="@+id/nav_perfil"
                     android:icon="@drawable/icon_perfil"
                     android:title="Perfil" />
 

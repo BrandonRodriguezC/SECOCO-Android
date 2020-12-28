@@ -9,10 +9,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.secoco.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Sintomas extends AppCompatActivity implements View.OnClickListener{
     private Button button;
     private Spinner spinner4, spinner5, spinner6, spinner7, spinner8, spinner9;
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private  String resultado;
 
 
     @Override
@@ -35,7 +42,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener{
         spinner7 = (Spinner) findViewById(R.id.spinner7);
         spinner8 = (Spinner) findViewById(R.id.spinner8);
         spinner9 = (Spinner) findViewById(R.id.spinner9);
-        String resultado="";
+        resultado="";
         if (view.getId() == this.button.getId()) {
             //pregunta1
             if ( spinner4.getSelectedItemPosition()==0 ){
@@ -77,7 +84,19 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener{
             Toast.makeText(this,resultado,Toast.LENGTH_SHORT).show();
 
             //Envio
-
+            String usuario= getIntent().getStringExtra("USUARIO");
+            //Toast.makeText(this, "Sintomas: "+getIntent().getStringExtra("USUARIO"), Toast.LENGTH_SHORT).show();
+            DatabaseReference ref = database.getReference("usuarios/Naturales/"+usuario+"/E");
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    ref.setValue(resultado);
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(Sintomas.this, R.string.Error_Base_de_Datos, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }

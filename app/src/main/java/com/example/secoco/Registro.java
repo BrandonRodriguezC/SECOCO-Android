@@ -1,6 +1,5 @@
 package com.example.secoco;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +28,6 @@ public class Registro extends AppCompatActivity {
             txt_fecha_nacimiento, txt_contrasena_r, txt_contrasena_rv, txt_direccion, txt_nombre_usuario;
     private Button boton_registro;
     private Spinner spinner, spinner2, spinner3;
-    private Context context;
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("usuarios/Naturales");
@@ -37,7 +35,6 @@ public class Registro extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        context = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
         getSupportActionBar().setTitle("Registro");
@@ -113,17 +110,17 @@ public class Registro extends AppCompatActivity {
                         startActivity(inicio);
                         finish();
                     } else {
-                        Toast.makeText(Registro.this.context, R.string.Error_Nombre_de_Usuario, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Registro.this, R.string.Error_Nombre_de_Usuario, Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    Toast.makeText(Registro.this.context, R.string.Error_Base_de_Datos, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Registro.this, R.string.Error_Base_de_Datos, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
-            Toast.makeText(context, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
         }
 
 

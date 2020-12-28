@@ -47,6 +47,7 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
             finalizarServicio();
         } else if (view.getId() == this.btnMapa.getId()) {
             Intent nuevaActividad = new Intent(PersonaInicio.this, Mapa.class);
+            nuevaActividad.putExtra("USUARIO",getIntent().getStringExtra("USUARIO"));
             startActivity(nuevaActividad);
         }
     }

@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -22,6 +22,7 @@
         <activity android:name=".usuarios.erc_covid.ERCInicio" />
         <activity android:name=".usuarios.persona.Mapa" />
         <activity android:name=".Registro" />
+        <activity android:name=".usuarios.persona.Sintomas"/>
         <activity android:name=".Ingreso">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

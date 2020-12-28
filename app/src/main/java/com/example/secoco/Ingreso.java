@@ -11,18 +11,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.secoco.usuarios.erc_covid.ERCInicio;
-import com.example.secoco.usuarios.ere_covid.EREInicio;
-import com.example.secoco.usuarios.etda_covid.ETDAInicio;
 import com.example.secoco.usuarios.persona.PersonaInicio;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class Ingreso extends AppCompatActivity implements View.OnClickListener {
 
@@ -85,7 +78,19 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
         String txt_tipo_usuario = spTipoUsuario.getSelectedItem().toString();
 
         if (!txt_usuario.equals("") && !txt_contrasena.equals("")) {
-            try {
+
+            //EVITAR CONSUMO DE RECURSOS
+            Intent nuevaActividad = new Intent(Ingreso.this, PersonaInicio.class);
+            nuevaActividad.putExtra("USUARIO", txt_usuario);
+            startActivity(nuevaActividad);
+            guardarCredenciales(txt_usuario, txt_contrasena, txt_tipo_usuario);
+            //Para cerrar la activity y que no puedan volver al LOGIN despues de LOGGEARSE
+            //finish();
+
+
+
+
+            /*try {
                 this.baseDatos.child(txt_tipo_usuario).child(txt_usuario).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -129,7 +134,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
                 });
             } catch (Exception e) {
                 txtUsuario.setError("Caracteres Ingresados Invalidos ('.', '#', '$', '[', o ']')");
-            }
+            }*/
         } else {
             if (txt_usuario.equals(""))
                 txtUsuario.setError("Usuario Requerido");
@@ -164,7 +169,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
 
     public void registrar() {
         Toast.makeText(this, "Registrar", Toast.LENGTH_SHORT).show();
-        Intent registro = new Intent(this, Registro.class);
+       Intent registro = new Intent(this, Registro.class);
         startActivity(registro);
         finish();
     }

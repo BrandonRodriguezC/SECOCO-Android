@@ -2,7 +2,6 @@ package com.example.secoco.usuarios.persona;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -44,7 +43,6 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
     //barra
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +63,8 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
             }
         });
 
+
+        //MENU LATERAL - RECORDAR IMPLEMENTS NavigationView.OnNavigationItemSelectedListener
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView =(NavigationView) findViewById(R.id.nav_view);
         navigationView.bringToFront();
@@ -178,11 +178,15 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
         return false;
     }
 
+
+    //LISTENER MENU LATERAL
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        //Toast.makeText(this, "Sintomas"+getIntent().getStringExtra("USUARIO"), Toast.LENGTH_SHORT).show();
         if (item.toString().equals("Sintomas")){
-            Toast.makeText(this, "Sintomas", Toast.LENGTH_SHORT).show();
+
             Intent sintomas = new Intent(this, Sintomas.class);
+            sintomas.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
             startActivity(sintomas);
         }
         return false;
