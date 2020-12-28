@@ -53,8 +53,9 @@ public class ServicioUbicacion extends Service {
     }
 
     private void inicializarAtributos(Intent intent) {
-        this.intervalo = intent.getLongExtra("intervalo", 5) * 60000;
-        double rangoMaximo = intent.getDoubleExtra("rangoMaximo", 0.005);
+        this.intervalo = intent.getIntExtra("intervalo", 5) * 60000;
+        double rangoMaximo = intent.getIntExtra("rangoMaximo", 5) *  0.00001  / 1.11;
+
         String usuario = intent.getStringExtra("usuario");
         ubicacionUsuario = new UbicacionUsuario(this.intervalo, rangoMaximo, usuario);
 
@@ -97,8 +98,8 @@ public class ServicioUbicacion extends Service {
         }
 
         LocationRequest ubicacion = new LocationRequest();
-        ubicacion.setInterval(this.intervalo - 1000);
-        ubicacion.setFastestInterval(this.intervalo - 1000);
+        ubicacion.setInterval(this.intervalo + 2000);
+        ubicacion.setFastestInterval(this.intervalo);
         ubicacion.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -145,37 +146,33 @@ public class ServicioUbicacion extends Service {
         @Override
         public void run() {
             double latitudNueva = 0, latitudVieja = 0, longitudNueva = 0, longitudVieja = 0;
-            int minutos = 0, segundos = 0;
+            int minutos = 0;
             DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference("ubicaciones");
             while (estaVivo) {
-                latitudNueva = latitud;
-                longitudNueva = longitud;
-                if (minutos % this.intervalo / 60000 == 0 && segundos == 0) {
+                try {
+                    Thread.sleep(60000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                minutos++;
+
+                if (minutos % (this.intervalo / 60000) == 0) {
+                    latitudNueva = latitud;
+                    longitudNueva = longitud;
                     //Verificar Los minutos (tiempo) que se sube a la base de datos
                     //System.out.println("Dif Lat " + (Math.abs(latitudNueva - latitudVieja)) + " " + (Math.abs(latitudNueva - latitudVieja) > rangoMaximo));
                     //System.out.println("Dif Lon " + (Math.abs(longitudNueva - longitudVieja)) + " " + (Math.abs(longitudNueva - longitudVieja) > rangoMaximo));
                     //System.out.println("Entro " + minutos);
                     if (Math.abs(latitudNueva - latitudVieja) > rangoMaximo || Math.abs(longitudNueva - longitudVieja) > rangoMaximo) {
-                        int tiempo = (int) (minutos * this.intervalo / 60000);
                         //System.out.println("Tiempo De Resta " + tiempo);
-                        baseDatos.child(usuario).child(obtenerFecha(tiempo)).setValue(
-                                new Ubicacion(latitudNueva, longitudNueva, tiempo, 0));
+                        baseDatos.child(usuario).child(obtenerFecha(minutos)).setValue(
+                                new Ubicacion(latitudNueva, longitudNueva, minutos, 0));
                         latitudVieja = latitudNueva;
                         longitudVieja = longitudNueva;
                         minutos = 0;
-                        segundos = 0;
                     }
                 }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                segundos++;
-                if (segundos == 60) {
-                    minutos++;
-                    segundos = 0;
-                }
+
             }
         }
 

@@ -106,8 +106,10 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         if (!estaEjecutandoseReporteUbicacion()) {
             Intent intent = new Intent(getApplicationContext(), ServicioUbicacion.class);
             intent.setAction(VariablesServicio.ACCION_INICIO);
-            intent.putExtra("intervalo", 5L);
-            intent.putExtra("rangoMaximo", 0.00009);
+            //Cada cuanto tiempo se actualiza en la base de datos
+            intent.putExtra("intervalo", 5);
+            //Metros de distancia de rango maximo para poder insertar
+            intent.putExtra("rangoMaximo", 5);
             intent.putExtra("usuario", getIntent().getStringExtra("USUARIO"));
             startService(intent);
             Toast.makeText(PersonaInicio.this, "Servicio de Analisis de Ubicación Activado", Toast.LENGTH_LONG).show();
