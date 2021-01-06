@@ -2,23 +2,31 @@ package com.example.secoco.entities;
 
 public class Usuario {
 
-    public String N, M, I, C, D, E, X, F;
+    public String N, M, I, C, D, Z, E, X, F;
+
+
+    public Usuario() {
+
+    }
 
     public Usuario(String nombre, String apellido, String correo, String id, String contraseña,
                    String direccion, String tipo_id, String localidad, String estado, String fechaNacimiento) {
-        this.N = nombre+ " "+ apellido;
+        this.N = nombre + " " + apellido;
         this.C = contraseña;
         this.M = correo;
-        this.I = tipo_id + " "+ id;
-        this.D =direccion+ ":" +localidad;
-        this.E = "0000";
-        if(estado.equals("Activo")){
+        this.I = tipo_id + " " + id;
+        this.D = direccion;
+        this.Z = localidad;
+        this.E = "000000";
+        if (estado.equals("Activo")) {
             this.X = "- A";
-        }else{
+        } else {
             this.X = "- I";
         }
-        this.F= fechaNacimiento;
+        this.F = fechaNacimiento;
     }
+
+
 
 }
 

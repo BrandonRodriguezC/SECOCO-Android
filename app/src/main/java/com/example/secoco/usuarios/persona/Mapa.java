@@ -1,5 +1,7 @@
 package com.example.secoco.usuarios.persona;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,7 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.secoco.Ingreso;
 import com.example.secoco.R;
+import com.example.secoco.usuarios.persona.ubicacion.UbicacionUsuario;
+import com.example.secoco.usuarios.persona.ubicacion.VariablesServicio;
 import com.google.android.material.navigation.NavigationView;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
@@ -66,9 +71,9 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
 
         //MENU LATERAL - RECORDAR IMPLEMENTS NavigationView.OnNavigationItemSelectedListener
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView =(NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.bringToFront();
-        if(navigationView!=null){
+        if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
         //navigationView.bringToFront();
@@ -88,7 +93,7 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
         });
     }
 
-    @SuppressWarnings( {"MissingPermission"})
+    @SuppressWarnings({"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
 // Check if permissions are enabled and if not request
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
@@ -183,12 +188,43 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         //Toast.makeText(this, "Sintomas"+getIntent().getStringExtra("USUARIO"), Toast.LENGTH_SHORT).show();
-        if (item.toString().equals("Sintomas")){
-
+        if (item.toString().equals("Sintomas")) {
             Intent sintomas = new Intent(this, Sintomas.class);
             sintomas.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
             startActivity(sintomas);
+        } else if (item.toString().equals("Cerrar sesion")) {
+            finalizarServicio();
+            Intent login = new Intent(Mapa.this, Ingreso.class);
+            startActivity(login);
+            finish();
         }
         return false;
     }
+
+    //Metodos para finalizar el servicio si se encuentra activo
+    private boolean estaEjecutandoseReporteUbicacion() {
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        if (activityManager != null) {
+            for (ActivityManager.RunningServiceInfo servicio :
+                    activityManager.getRunningServices(Integer.MAX_VALUE)) {
+                if (UbicacionUsuario.class.getName().equals(servicio.service.getClassName())) {
+                    if (servicio.foreground) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private void finalizarServicio() {
+        if (estaEjecutandoseReporteUbicacion()) {
+            Intent intent = new Intent(getApplicationContext(), UbicacionUsuario.class);
+            intent.setAction(VariablesServicio.ACCION_FINAL);
+            startService(intent);
+            Toast.makeText(Mapa.this, "Analisis de Ubicación Finalizado", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 }

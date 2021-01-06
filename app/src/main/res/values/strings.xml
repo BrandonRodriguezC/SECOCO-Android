@@ -79,8 +79,30 @@
     </string-array>
     <string name="registro_txt_boton_registrar">Regístrate</string>
 
-    <!-- Etiquetas para usuarios.ERCInicio-->
+    <!-- Etiquetas para usuarios.erc_coivd.ERCInicio-->
     <string name="ercInicio_nombre">ERC-COVID (Entidad que Reporta Contactos Covid)</string>
+    <string name="ercInicio_btn_notificar_cita">Notificar Cita</string>
+
+    <!--Etiquetas para usuarios.erc_covid.ReporteNotificacion-->
+    <string name="reporteNotificacion_txt_titulo">Notificación de Citas</string>
+    <string name="reporteNotificacion_txt_filtro">Seleccione los síntomas para filtrar:</string>
+    <string name="reporteNotificacion_check_dif_respirar">Dificultad para Respirar</string>
+    <string name="reporteNotificacion_check_fatiga">Fatiga</string>
+    <string name="reporteNotificacion_check_fiebre">Fiebre</string>
+    <string name="reporteNotificacion_check_tos">Tos</string>
+    <string name="reporteNotificacion_check_dis_olfato_sabor">Disminución de Olfato y Sabor</string>
+    <string name="reporteNotificacion_check_contacto">Contacto con Sospechoso</string>
+    <string name="reporteNotificacion_btn_buscarUsuarios">Buscar Usuarios</string>
+    <string name="reporteNotificacion_btn_enviar_correo_seleccionados">Enviar Correo Seleccionados</string>
+    <string name="reporteNotificacion_btn_enviar_correo_masivo">Enviar Correo Masivo</string>
+
+    <string name="reporteNotificacion_lbl_nombre"><b>Nombre:</b></string>
+    <string name="reporteNotificacion_lbl_documento"><b>Documento:</b></string>
+    <string name="reporteNotificacion_lbl_correo"><b>Correo:</b></string>
+    <string name="reporteNotificacion_lbl_localidad"><b>Localidad:</b></string>
+
+    <string name="reporteNotificacion_lbl_mensaje_buscar"><b>Tocar para Filtrar y Buscar</b></string>
+    <string name="reporteNotificacion_lbl_mensaje_no_encotrado"><b>Usuarios no Encontrados</b></string>
 
     <!-- Etiquetas para usuarios.EREInicio-->
     <string name="ereInicio_nombre">ERE-COVID (Entidad que Reporta Examenes (Diagnosticos) Covid)</string>
@@ -99,7 +121,7 @@
     <string name="Error_Base_de_Datos">Hubo un error con la base de datos, por favor intenta mas tarde</string>
     <string name="Error_Nombre_de_Usuario">Lo sentimos, ese nombre de usuario ya está en uso</string>
 
-    <!-- Etiquetas para Sintomas -->
+    <!-- Etiquetas para usuario.persona.Sintomas -->
     <string name="sintomas_dificultadR">¿Le ha faltado el aire o ha tenido dificultad para respirar?</string>
     <string name="sintomas_fatiga">¿Se ha sentido últimamente más fatigado de lo usual?</string>
     <string name="sintomas_fiebre">¿Ha tenido fiebre o temperatura mayor a 38*C en los últimos dias?</string>
@@ -110,7 +132,6 @@
     <string-array name="si_no">
         <item>Si</item>
         <item>No</item>
-
     </string-array>
 
 </resources>
