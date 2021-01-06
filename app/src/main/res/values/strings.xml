@@ -110,7 +110,11 @@
     <string-array name="si_no">
         <item>Si</item>
         <item>No</item>
-
     </string-array>
-
+    <!-- Etiquetas para Reporte Resultados -->
+    <string-array name="resultado_examen">
+        <item>Positivo</item>
+        <item>Negativo</item>
+        <item>Pendiente</item>
+    </string-array>
 </resources>

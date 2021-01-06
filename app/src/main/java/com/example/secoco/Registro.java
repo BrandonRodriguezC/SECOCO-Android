@@ -100,7 +100,7 @@ public class Registro extends AppCompatActivity {
         DatabaseReference usuarios = ref;
         if (contraseña.equals(contraseñaV)) {
             Query queryToGetData = ref.child(nombreUsuario);
-
+            //-----------VERIFICAR CEDULA INSCRITA-------------
             queryToGetData.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

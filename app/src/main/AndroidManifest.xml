@@ -5,8 +5,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -15,14 +15,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SeCoCo">
-        <activity android:name=".usuarios.persona.PersonaInicio"></activity>
+        <activity android:name=".usuarios.ere_covid.ReportarResultados"></activity>
+        <activity android:name=".usuarios.persona.PersonaInicio" />
         <activity android:name=".CambioContrasena" />
         <activity android:name=".usuarios.etda_covid.ETDAInicio" />
         <activity android:name=".usuarios.ere_covid.EREInicio" />
         <activity android:name=".usuarios.erc_covid.ERCInicio" />
         <activity android:name=".usuarios.persona.Mapa" />
         <activity android:name=".Registro" />
-        <activity android:name=".usuarios.persona.Sintomas"/>
+        <activity android:name=".usuarios.persona.Sintomas" />
         <activity android:name=".Ingreso">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,9 +32,10 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".usuarios.persona.ServicioUbicacion"
+        <service
+            android:name=".usuarios.persona.ServicioUbicacion"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>
