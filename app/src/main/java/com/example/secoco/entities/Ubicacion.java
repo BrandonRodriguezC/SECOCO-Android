@@ -9,10 +9,9 @@ public class Ubicacion {
     //Zona de la latitud y Longitud
     public int Z;
 
-    public Ubicacion (double latitud, double longitud, int tiempo, int zona){
+    public Ubicacion(double latitud, double longitud, int tiempo, int zona) {
         this.L = latitud + " " + longitud;
         this.T = tiempo;
-        //Pendiente
         this.Z = zona;
     }
 

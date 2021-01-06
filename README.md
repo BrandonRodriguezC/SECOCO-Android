@@ -15,9 +15,24 @@ Se implementó prototipo de la historia de usuario **Reporte Ubicación**, en do
 de Persona Natural (PersonaInicio) automáticamente el aplicativo solicita permisos para acceder a la
 ubicación y cada 5 minutos revisa si su posición sobrepasa el límite establecido de 5 metros tanto para
 la latitud como longitud; de ser así ingresa a la base de datos la fecha (dd-MM-yyyy HH:mm:ss), latitud,
-longitud, zona (código postal de la zona) y tiempo (periodo que transcurrió en el rango establecido).
+longitud, zona (código de la zona) y tiempo (periodo que transcurrió en el rango establecido).
+
+### Notificación de Cita
+Funcionalidad para la búsqueda y solicitud de cita de los pacientes con posible contagio con COVID-19,
+con lo cual dependiendo del filtro realizado por la ERC y la fecha se envía un mensaje personalizado a
+los usuarios naturales del aplicativo y se actualiza el estado *X* dentro de la base de datos. (Falta
+solicitar a la organización las credenciales para enviar el correo en BackGround)
 
 ## Comentarios
+- Reorganización de Estructura de Proyecto, es decir, se generalizaron funciones para evitar repetir el
+código
+- Incorporación de identificación de zona en el **Reporte Ubicación**
+- Implementación de Historia de Usuario **Notificación de Cita**, en donde se tuvo en cuenta el envió
+de correos electrónicos mediante Intent y JavaMailAPI
+- Organización de Preguntas según prioridad
+- Creación de Entity Zona con la cual se traen las localidades de Bogotá y se determina en cual se
+encuentra cada usuario
+- Agregado de función de Cierre de Sesión al menu desplegable encontrado en la Activity Mapa
 - Se creo una nueva Activity (*PersonaInicio*) que permite al usuario (Persona Natural) tener control
 de las funcionalidades a utilizar
 - Se elaboró un nuevo paquete (*entities*) el cual contiene todas las entidades del aplicativo

@@ -86,17 +86,30 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
 
         if (!txt_usuario.equals("") && !txt_contrasena.equals("")) {
 
-            //EVITAR CONSUMO DE RECURSOS
-            /*Intent nuevaActividad = new Intent(Ingreso.this, PersonaInicio.class);
-            nuevaActividad.putExtra("USUARIO", txt_usuario);
-            startActivity(nuevaActividad);
-            guardarCredenciales(txt_usuario, txt_contrasena, txt_tipo_usuario);*/
-            //Para cerrar la activity y que no puedan volver al LOGIN despues de LOGGEARSE
-            //finish();
-
-
-            try {
-                this.baseDatos.child(txt_tipo_usuario).child(txt_usuario).addValueEventListener(new ValueEventListener() {
+            //------------------------------------EVITAR CONSUMO DE RECURSOS -----
+            Intent nuevaActividad = null;
+            if (txt_tipo_usuario.equals(opcionesSpinner[1])) {
+                //Toast.makeText(Ingreso.this, "ERC-COVID", Toast.LENGTH_SHORT).show();
+                nuevaActividad = new Intent(Ingreso.this, ERCInicio.class);
+            } else if (txt_tipo_usuario.equals(opcionesSpinner[3])) {
+                //Toast.makeText(Ingreso.this, "ERE-COVID", Toast.LENGTH_SHORT).show();
+                nuevaActividad = new Intent(Ingreso.this, EREInicio.class);
+            } else if (txt_tipo_usuario.equals(opcionesSpinner[2])) {
+                //Toast.makeText(Ingreso.this, "ETDA-COVID", Toast.LENGTH_SHORT).show();
+                nuevaActividad = new Intent(Ingreso.this, ETDAInicio.class);
+            } else if (txt_tipo_usuario.equals(opcionesSpinner[0])) {
+                //Toast.makeText(Ingreso.this, "Persona", Toast.LENGTH_SHORT).show();
+                nuevaActividad = new Intent(Ingreso.this, PersonaInicio.class);
+            }
+            if (nuevaActividad != null) {
+                nuevaActividad.putExtra("USUARIO", txt_usuario);
+                startActivity(nuevaActividad);
+                guardarCredenciales(txt_usuario, txt_contrasena, txt_tipo_usuario);
+            }
+            //----------------------------------------------------------------------------------------
+            //Login con base de datos
+            /*try {
+                this.baseDatos.child(txt_tipo_usuario).child(txt_usuario).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
@@ -139,7 +152,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
                 });
             } catch (Exception e) {
                 txtUsuario.setError("Caracteres Ingresados Invalidos ('.', '#', '$', '[', o ']')");
-            }
+            }*/
         } else {
             if (txt_usuario.equals(""))
                 txtUsuario.setError("Usuario Requerido");
@@ -174,11 +187,10 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
 
     public void registrar() {
         Toast.makeText(this, "Registrar", Toast.LENGTH_SHORT).show();
-       Intent registro = new Intent(this, Registro.class);
+        Intent registro = new Intent(this, Registro.class);
         startActivity(registro);
         finish();
     }
-
 
     public void cambioContrasena() {
         //Toca Agregarlo

@@ -1,14 +1,10 @@
-package com.example.secoco.usuarios.persona;
+package com.example.secoco.general;
 
 import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,58 +12,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.secoco.R;
+import com.example.secoco.usuarios.persona.PersonaInicio;
 import com.example.secoco.usuarios.persona.ubicacion.UbicacionUsuario;
 import com.example.secoco.usuarios.persona.ubicacion.VariablesServicio;
 
-public class PersonaInicio extends AppCompatActivity implements View.OnClickListener {
+public class ServicioUbicacion {
 
-    private static int CODIGO_REQUEST_EXITOSO = 1;
-    //Atributos
-    private Button btnUbicación;
-    private Button btnMapa;
+    /*Clase para generalizar la ejecución del Servicio de Ubicación
+     * y poder iniciar y finalizarlo mediante la llamada de ServicioUbicacion.iniciarReporteUbicacion */
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_persona_inicio);
-
-        //Inicialización de Atributos
-        this.btnUbicación = (Button) findViewById(R.id.btn_ubicacion);
-        this.btnMapa = (Button) findViewById(R.id.btn_mapa);
-
-        //Inicia a tomar y validar las coordenadas (latitud y longitud)
-        //iniciarReporteUbicacion();
-
-        //Acción de Botones
-        this.btnUbicación.setOnClickListener(this);
-        this.btnMapa.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == this.btnUbicación.getId()) {
-            finalizarServicio();
-        } else if (view.getId() == this.btnMapa.getId()) {
-            Intent nuevaActividad = new Intent(PersonaInicio.this, Mapa.class);
-            nuevaActividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
-            startActivity(nuevaActividad);
-        }
-    }
+    /*private static int CODIGO_REQUEST_EXITOSO = 1;
 
     private void iniciarReporteUbicacion() {
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     CODIGO_REQUEST_EXITOSO);
         } else {
-
-            if (estaActivoGPS(PersonaInicio.this)) {
-                iniciarServicio();
-            }else{
-                //Arreglar para que cuando no este prendido lo solicite
-                Toast.makeText(PersonaInicio.this, "GPS desactivado, favor intentar de nuevo", Toast.LENGTH_SHORT).show();
-            }
+            iniciarServicio();
         }
     }
 
@@ -76,12 +38,7 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == CODIGO_REQUEST_EXITOSO && grantResults.length > 0) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (estaActivoGPS(PersonaInicio.this)) {
-                    iniciarServicio();
-                }else{
-                    //Arreglar para que cuando no este prendido lo solicite
-                    Toast.makeText(PersonaInicio.this, "GPS desactivado, favor intentar de nuevo", Toast.LENGTH_SHORT).show();
-                }
+                iniciarServicio();
             } else {
                 Toast.makeText(PersonaInicio.this, "Permisos Denegados", Toast.LENGTH_SHORT);
             }
@@ -124,11 +81,6 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
             startService(intent);
             Toast.makeText(PersonaInicio.this, "Servicio de Analisis de Ubicación Terminado", Toast.LENGTH_LONG).show();
         }
-    }
-
-    public static boolean estaActivoGPS(Context context) {
-        LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    }
+    }*/
 
 }

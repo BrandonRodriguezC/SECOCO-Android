@@ -1,4 +1,4 @@
-package com.example.secoco.usuarios.persona;
+package com.example.secoco.usuarios.persona.ubicacion;
 
 import android.Manifest;
 import android.app.NotificationChannel;
@@ -13,27 +13,32 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
-import com.example.secoco.entities.Ubicacion;
+import com.example.secoco.entities.Zona;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class ServicioUbicacion extends Service {
+public class UbicacionUsuario extends Service {
 
     private long intervalo;
-    private UbicacionUsuario ubicacionUsuario;
+    private HiloUbicacionUsuario ubicacionUsuario;
     private LocationCallback locationCallback;
 
     @Override
@@ -54,10 +59,10 @@ public class ServicioUbicacion extends Service {
 
     private void inicializarAtributos(Intent intent) {
         this.intervalo = intent.getIntExtra("intervalo", 5) * 60000;
-        double rangoMaximo = intent.getIntExtra("rangoMaximo", 5) *  0.00001  / 1.11;
+        double rangoMaximo = intent.getIntExtra("rangoMaximo", 5) * 0.00001 / 1.11;
 
         String usuario = intent.getStringExtra("usuario");
-        ubicacionUsuario = new UbicacionUsuario(this.intervalo, rangoMaximo, usuario);
+        ubicacionUsuario = new HiloUbicacionUsuario(this.intervalo, rangoMaximo, usuario);
 
         this.locationCallback = new LocationCallback() {
             @Override
@@ -87,8 +92,8 @@ public class ServicioUbicacion extends Service {
         builder.setContentIntent(pendingIntent);
         builder.setPriority(NotificationCompat.PRIORITY_MAX);
 
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.O){
-            if(notificationManager != null && notificationManager.getNotificationChannel(id_canal) == null){
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            if (notificationManager != null && notificationManager.getNotificationChannel(id_canal) == null) {
                 NotificationChannel notificationChannel = new NotificationChannel(id_canal,
                         "Analizando su Ubicación",
                         NotificationManager.IMPORTANCE_HIGH);
@@ -126,21 +131,26 @@ public class ServicioUbicacion extends Service {
         throw new UnsupportedOperationException("Todavia no ha sido implementado");
     }
 
-    class UbicacionUsuario extends Thread {
+    class HiloUbicacionUsuario extends Thread {
 
         private double latitud, longitud;
         private double rangoMaximo;
         private long intervalo;
         private String usuario;
         private boolean estaVivo;
+        private ArrayList<Zona> zonas;
 
-        public UbicacionUsuario(long intervalo, double rangoMaximo, String usuario) {
+        public HiloUbicacionUsuario(long intervalo, double rangoMaximo, String usuario) {
             this.intervalo = intervalo;
             this.rangoMaximo = rangoMaximo;
             this.usuario = usuario;
             this.latitud = 0;
             this.longitud = 0;
             this.estaVivo = true;
+            this.zonas = new ArrayList<Zona>();
+            //Carga en el dispositivo las zonas disponibles para poder identificar
+            //en que zona se encuentra cada usuario
+            cargarZonas();
         }
 
         @Override
@@ -148,6 +158,7 @@ public class ServicioUbicacion extends Service {
             double latitudNueva = 0, latitudVieja = 0, longitudNueva = 0, longitudVieja = 0;
             int minutos = 0;
             DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference("ubicaciones");
+
             while (estaVivo) {
                 try {
                     Thread.sleep(60000);
@@ -159,29 +170,59 @@ public class ServicioUbicacion extends Service {
                 if (minutos % (this.intervalo / 60000) == 0) {
                     latitudNueva = latitud;
                     longitudNueva = longitud;
-                    //Verificar Los minutos (tiempo) que se sube a la base de datos
                     //System.out.println("Dif Lat " + (Math.abs(latitudNueva - latitudVieja)) + " " + (Math.abs(latitudNueva - latitudVieja) > rangoMaximo));
                     //System.out.println("Dif Lon " + (Math.abs(longitudNueva - longitudVieja)) + " " + (Math.abs(longitudNueva - longitudVieja) > rangoMaximo));
                     //System.out.println("Entro " + minutos);
                     if (Math.abs(latitudNueva - latitudVieja) > rangoMaximo || Math.abs(longitudNueva - longitudVieja) > rangoMaximo) {
                         //System.out.println("Tiempo De Resta " + tiempo);
-                        baseDatos.child(usuario).child(obtenerFecha(minutos)).setValue(
-                                new Ubicacion(latitudNueva, longitudNueva, minutos, 0));
+                        int zona = 0, i = 0;
+                        boolean tieneZona = false;
+                        while (i < zonas.size() && !tieneZona) {
+                            Zona z = zonas.get(i);
+                            if (latitudNueva >= z.getLatitudMin() && latitudNueva <= z.getLatitudMax()
+                                    && longitudNueva >= z.getLongitudMin() && longitudNueva <= z.getLongitudMax()) {
+                                zona = i + 1;
+                                tieneZona = true;
+                            }
+                            i++;
+                        }
+                        String fechaHora[] = obtenerFecha(minutos);
+                        baseDatos.child(usuario).child(fechaHora[0]).child(fechaHora[1]).setValue(
+                                new com.example.secoco.entities.Ubicacion(latitudNueva, longitudNueva, minutos, zona));
                         latitudVieja = latitudNueva;
                         longitudVieja = longitudNueva;
                         minutos = 0;
                     }
                 }
-
             }
         }
 
-        private String obtenerFecha(int tiempo) {
+        private String[] obtenerFecha(int tiempo) {
             Calendar calendario = Calendar.getInstance();
             calendario.setTime(new Date());
             calendario.set(Calendar.MINUTE, calendario.get(Calendar.MINUTE) - tiempo);
-            DateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            return formatoFecha.format(calendario.getTime());
+            DateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            return formatoFecha.format(calendario.getTime()).split(" ");
+        }
+
+        private void cargarZonas() {
+            DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference("zonas");
+            baseDatos.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot zona : snapshot.getChildren()) {
+                        Zona z = zona.getValue(Zona.class);
+                        z.generarCoordenadas();
+                        zonas.add(z);
+                    }
+                    Log.i("Cargado de Zonas", "Correcto");
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.i("Cargado de Zonas", "Incorrecto");
+                }
+            });
         }
 
         public void setLatitud(double latitud) {

@@ -1,4 +1,4 @@
-package com.example.secoco.usuarios.persona;
+package com.example.secoco.usuarios.persona.ubicacion;
 
 public class VariablesServicio {
 

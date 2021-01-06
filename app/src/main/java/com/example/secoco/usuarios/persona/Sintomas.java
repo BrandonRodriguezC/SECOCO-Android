@@ -1,5 +1,6 @@
 package com.example.secoco.usuarios.persona;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +16,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Sintomas extends AppCompatActivity implements View.OnClickListener{
+public class Sintomas extends AppCompatActivity implements View.OnClickListener {
     private Button button;
     private Spinner spinner4, spinner5, spinner6, spinner7, spinner8, spinner9;
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private  String resultado;
+    private String resultado;
 
 
     @Override
@@ -42,56 +43,61 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener{
         spinner7 = (Spinner) findViewById(R.id.spinner7);
         spinner8 = (Spinner) findViewById(R.id.spinner8);
         spinner9 = (Spinner) findViewById(R.id.spinner9);
-        resultado="";
+        resultado = "";
         if (view.getId() == this.button.getId()) {
-            //pregunta1
-            if ( spinner4.getSelectedItemPosition()==0 ){
-                resultado+=1;
-            }else {
-                resultado+=0;
+            //Organización de Preguntas de la que más impacto tiene a la que menos impacto
+            //segun https://www.who.int/es/emergencies/diseases/novel-coronavirus-2019/advice-for-public/q-a-coronaviruses
+            //pregunta 6 ¿Ha estado en contacto con alguien diagnosticado o sospechoso de covid-19 en los últimos días?
+            if (spinner9.getSelectedItemPosition() == 0) {
+                resultado += 1;
+            } else {
+                resultado += 0;
             }
-            //pregunta2
-            if ( spinner5.getSelectedItemPosition()==0 ){
-                resultado+=1;
-            }else {
-                resultado+=0;
+            //pregunta 3 ¿Ha tenido fiebre o temperatura mayor a 38*C en los últimos dias?
+            if (spinner6.getSelectedItemPosition() == 0) {
+                resultado += 1;
+            } else {
+                resultado += 0;
             }
-            //pregunta3
-            if ( spinner6.getSelectedItemPosition()==0 ){
-                resultado+=1;
-            }else {
-                resultado+=0;
+            //pregunta 1 ¿Le ha faltado el aire o ha tenido dificultad para respirar?
+            if (spinner4.getSelectedItemPosition() == 0) {
+                resultado += 1;
+            } else {
+                resultado += 0;
             }
-            //pregunta4
-            if ( spinner7.getSelectedItemPosition()==0 ){
-                resultado+=1;
-            }else {
-                resultado+=0;
+            //pregunta 2 ¿Se ha sentido últimamente más fatigado de lo usual?
+            if (spinner5.getSelectedItemPosition() == 0) {
+                resultado += 1;
+            } else {
+                resultado += 0;
             }
-            //pregunta5
-            if ( spinner8.getSelectedItemPosition()==0 ){
-                resultado+=1;
-            }else {
-                resultado+=0;
+            //pregunta 5 ¿Ha notado disminución del olfato o del sabor de los alimentos?
+            if (spinner8.getSelectedItemPosition() == 0) {
+                resultado += 1;
+            } else {
+                resultado += 0;
             }
-            //pregunta6
-            if ( spinner9.getSelectedItemPosition()==0 ){
-                resultado+=1;
-            }else {
-                resultado+=0;
+            //pregunta 4 ¿Ha tenido tos en los últimos dias?
+            if (spinner7.getSelectedItemPosition() == 0) {
+                resultado += 1;
+            } else {
+                resultado += 0;
             }
 
-            Toast.makeText(this,resultado,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, resultado, Toast.LENGTH_SHORT).show();
+
 
             //Envio
-            String usuario= getIntent().getStringExtra("USUARIO");
+            String usuario = getIntent().getStringExtra("USUARIO");
             //Toast.makeText(this, "Sintomas: "+getIntent().getStringExtra("USUARIO"), Toast.LENGTH_SHORT).show();
-            DatabaseReference ref = database.getReference("usuarios/Naturales/"+usuario+"/E");
+            DatabaseReference ref = database.getReference("usuarios/Naturales/" + usuario + "/E");
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ref.setValue(resultado);
+                    Toast.makeText(Sintomas.this, "Sintomás Actualizados", Toast.LENGTH_SHORT).show();
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     Toast.makeText(Sintomas.this, R.string.Error_Base_de_Datos, Toast.LENGTH_SHORT).show();
