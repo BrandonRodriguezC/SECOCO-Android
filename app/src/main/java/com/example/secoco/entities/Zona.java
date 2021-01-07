@@ -3,7 +3,6 @@ package com.example.secoco.entities;
 public class Zona {
 
     public String L, N, C;
-    private double latitudMin, longitudMin, latitudMax, longitudMax;
 
     public Zona() {
 
@@ -13,33 +12,12 @@ public class Zona {
         this.L = coordenadas;
         this.N = nombre;
         this.C = cuarentena;
-        this.latitudMin = 0;
-        this.longitudMin = 0;
-        this.latitudMax = 0;
-        this.longitudMax = 0;
     }
 
-    public void generarCoordenadas() {
+    public double[] generarCoordenadas() {
         String coor[] = this.L.split(" ");
-        this.latitudMin = Double.parseDouble(coor[0]);
-        this.longitudMin = Double.parseDouble(coor[1]);
-        this.latitudMax = Double.parseDouble(coor[2]);
-        this.longitudMax = Double.parseDouble(coor[3]);
+        //Retorna latitudMin = [0], longitudMin = [1], latitudMax = [2] y longitudMax = [3]
+        return new double[]{Double.parseDouble(coor[0]), Double.parseDouble(coor[1]), Double.parseDouble(coor[2]), Double.parseDouble(coor[3])};
     }
 
-    public double getLatitudMin() {
-        return latitudMin;
-    }
-
-    public double getLongitudMin() {
-        return longitudMin;
-    }
-
-    public double getLatitudMax() {
-        return latitudMax;
-    }
-
-    public double getLongitudMax() {
-        return longitudMax;
-    }
 }

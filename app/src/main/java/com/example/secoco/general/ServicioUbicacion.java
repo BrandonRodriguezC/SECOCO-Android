@@ -1,21 +1,5 @@
 package com.example.secoco.general;
 
-import android.Manifest;
-import android.app.ActivityManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import com.example.secoco.usuarios.persona.PersonaInicio;
-import com.example.secoco.usuarios.persona.ubicacion.UbicacionUsuario;
-import com.example.secoco.usuarios.persona.ubicacion.VariablesServicio;
-
 public class ServicioUbicacion {
 
     /*Clase para generalizar la ejecución del Servicio de Ubicación
