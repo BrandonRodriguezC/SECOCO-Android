@@ -48,7 +48,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
         this.lblContrasena = (TextView) findViewById(R.id.lbl_cambioContrasena);
 
         opcionesSpinner = new String[]{"Naturales", "Diagnostico", "Seguimiento", "Distrito"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Ingreso.this, android.R.layout.simple_spinner_dropdown_item, opcionesSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(Ingreso.this, android.R.layout.simple_spinner_dropdown_item, opcionesSpinner);
         this.spTipoUsuario.setAdapter(adapter);
 
         cargarCredenciales();
@@ -169,7 +169,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
         editor.putString("usuario", txt_usuario);
         editor.putString("contraseña", txt_contrasena);
         editor.putString("tipoUsuario", txt_tipo_usuario);
-        editor.commit();
+        editor.apply();
     }
 
     private void cargarCredenciales() {

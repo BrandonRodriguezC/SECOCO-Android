@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.secoco.R;
 import com.example.secoco.entities.Usuario;
 import com.example.secoco.general.Email;
+import com.example.secoco.general.VariablesGenerales;
 import com.example.secoco.usuarios.erc_covid.recyclerView.AdaptadorRecyclerNotificarCita;
 import com.example.secoco.usuarios.erc_covid.recyclerView.Item;
 import com.google.firebase.database.DataSnapshot;
@@ -39,7 +40,7 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
 
     //Atributos
     private DatabaseReference baseDatos;
-    private CheckBox checkBoxs[];
+    private CheckBox [] checkBoxs;
     private Button btnBuscarUsuarios, btnEnviarMasivo, btnFiltro;
     private ArrayList<Item> items;
     private RecyclerView recyclerView;
@@ -126,17 +127,17 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
             }*/
 
             //Falta solicitar las credenciales del correo. Por el momento se envian con:
-            String emailOrigen[] = {"pedroppax@gmail.com", "Pruebasecoco"};
+            String [] emailOrigen = VariablesGenerales.EMAIL_ORIGEN;
             for (int i = 0; i < items.size(); i++) {
                 Usuario usuario = items.get(i).getUsuario();
                 if (usuario != null) {
                     Email.enviarCorreoBackGround(view,
                             emailOrigen,
-                            new String[]{usuario.M, "Citación para Prueba COVID-19",
+                            usuario.M, "Citación para Prueba COVID-19",
                                     Email.mensajePersonalizado(view,
                                             new String[]{usuario.N, usuario.I, txtFechaCita.getText().toString(),
                                                     usuario.E, usuario.D}),
-                                    "Actualizar Examen", "usuarios/Naturales/" + items.get(i).getUsuarioKey() + "/X", "- S"}
+                                    "Actualizar Examen", "usuarios/Naturales/" + items.get(i).getUsuarioKey() + "/X", "- S"
                     );
                 }
             }

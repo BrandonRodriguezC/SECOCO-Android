@@ -15,7 +15,7 @@ public class Zona {
     }
 
     public double[] generarCoordenadas() {
-        String coor[] = this.L.split(" ");
+        String[] coor = this.L.split(" ");
         //Retorna latitudMin = [0], longitudMin = [1], latitudMax = [2] y longitudMax = [3]
         return new double[]{Double.parseDouble(coor[0]), Double.parseDouble(coor[1]), Double.parseDouble(coor[2]), Double.parseDouble(coor[3])};
     }

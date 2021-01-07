@@ -1,7 +1,9 @@
 package com.example.secoco.usuarios.persona;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,9 +25,8 @@ import com.example.secoco.general.VariablesGenerales;
 
 public class PersonaInicio extends AppCompatActivity implements View.OnClickListener {
 
-
     //Atributos
-    private Button btnUbicación;
+    private Button btnUbicacion;
     private Button btnMapa;
 
     @Override
@@ -34,20 +35,20 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_persona_inicio);
 
         //Inicialización de Atributos
-        this.btnUbicación = (Button) findViewById(R.id.btn_ubicacion);
+        this.btnUbicacion = (Button) findViewById(R.id.btn_ubicacion);
         this.btnMapa = (Button) findViewById(R.id.btn_mapa);
 
         //Inicia a tomar y validar las coordenadas (latitud y longitud)
         iniciarReporteUbicacion();
 
         //Acción de Botones
-        this.btnUbicación.setOnClickListener(this);
+        this.btnUbicacion.setOnClickListener(this);
         this.btnMapa.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == this.btnUbicación.getId()) {
+        if (view.getId() == this.btnUbicacion.getId()) {
             finalizarServicio();
         } else if (view.getId() == this.btnMapa.getId()) {
             Intent nuevaActividad = new Intent(PersonaInicio.this, Mapa.class);
@@ -66,6 +67,7 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    @SuppressLint("ShowToast")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -83,10 +85,15 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             iniciarServicio();
         } else {
-            //Arreglar para que cuando no este prendido lo solicite
-            Toast.makeText(PersonaInicio.this, "GPS desactivado, favor activarlo he intentar de nuevo", Toast.LENGTH_LONG).show();
-            Intent ingreso = new Intent(PersonaInicio.this, Ingreso.class);
-            startActivity(ingreso);
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Error de GPS")
+                    .setMessage("El GPS no se encuentra Activo, favor activarlo y volver a ingresar")
+                    .setPositiveButton("Aceptar", (dialog, which) -> {
+                        Intent ingreso = new Intent(PersonaInicio.this, Ingreso.class);
+                        startActivity(ingreso);
+                        finish();
+                    });
+            builder.show();
         }
     }
 

@@ -1,6 +1,5 @@
 package com.example.secoco.usuarios.persona;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +14,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 public class Sintomas extends AppCompatActivity implements View.OnClickListener {
     private Button button;
@@ -93,13 +94,13 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener 
             DatabaseReference ref = database.getReference("usuarios/Naturales/" + usuario + "/E");
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                     ref.setValue(resultado);
                     Toast.makeText(Sintomas.this, "Sintomás Actualizados", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onCancelled(@NotNull DatabaseError databaseError) {
                     Toast.makeText(Sintomas.this, R.string.Error_Base_de_Datos, Toast.LENGTH_SHORT).show();
                 }
             });

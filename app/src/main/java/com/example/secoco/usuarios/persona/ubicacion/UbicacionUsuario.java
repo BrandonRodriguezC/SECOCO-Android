@@ -133,14 +133,14 @@ public class UbicacionUsuario extends Service {
         throw new UnsupportedOperationException("Todavia no ha sido implementado");
     }
 
-    class HiloUbicacionUsuario extends Thread {
+    static class HiloUbicacionUsuario extends Thread {
 
         private double latitud, longitud;
-        private double rangoMaximo;
-        private long intervalo;
-        private String usuario;
+        private final double  rangoMaximo;
+        private final long intervalo;
+        private final String usuario;
         private boolean estaVivo;
-        private ArrayList<Zona> zonas;
+        private final ArrayList<Zona> zonas;
 
         public HiloUbicacionUsuario(long intervalo, double rangoMaximo, String usuario) {
             this.intervalo = intervalo;
@@ -149,7 +149,7 @@ public class UbicacionUsuario extends Service {
             this.latitud = 0;
             this.longitud = 0;
             this.estaVivo = true;
-            this.zonas = new ArrayList<Zona>();
+            this.zonas = new ArrayList<>();
             //Carga en el dispositivo las zonas disponibles para poder identificar
             //en que zona se encuentra cada usuario
             cargarZonas();
@@ -157,7 +157,7 @@ public class UbicacionUsuario extends Service {
 
         @Override
         public void run() {
-            double latitudNueva = 0, latitudVieja = 0, longitudNueva = 0, longitudVieja = 0;
+            double latitudNueva, latitudVieja = 0, longitudNueva, longitudVieja = 0;
             int minutos = 0;
             DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference("ubicaciones");
 
@@ -180,7 +180,7 @@ public class UbicacionUsuario extends Service {
                         int zona = 0, i = 0;
                         boolean tieneZona = false;
                         while (i < zonas.size() && !tieneZona) {
-                            double coordenadasZona[] = zonas.get(i).generarCoordenadas();
+                            double[] coordenadasZona = zonas.get(i).generarCoordenadas();
                             if (latitudNueva >= coordenadasZona[0] && latitudNueva <= coordenadasZona[2]
                                     && longitudNueva >= coordenadasZona[1] && longitudNueva <= coordenadasZona[3]) {
                                 zona = i + 1;
@@ -188,7 +188,7 @@ public class UbicacionUsuario extends Service {
                             }
                             i++;
                         }
-                        String fechaHora[] = obtenerFecha(minutos);
+                        String [] fechaHora = obtenerFecha(minutos);
                         baseDatos.child(usuario).child(fechaHora[0]).child(fechaHora[1] + " " + fechaHora[2]).setValue(
                                 new Ubicacion(latitudNueva, longitudNueva, usuario, zona));
                         latitudVieja = latitudNueva;
@@ -200,7 +200,7 @@ public class UbicacionUsuario extends Service {
         }
 
         private String[] obtenerFecha(int tiempo) {
-            String fecha = "";
+            String fecha;
             Calendar fechaInicio = Calendar.getInstance();
             fechaInicio.setTime(new Date());
             DateFormat formatoFecha = new SimpleDateFormat("HHmm");

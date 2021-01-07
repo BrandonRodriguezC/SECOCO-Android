@@ -9,10 +9,10 @@ public class Usuario {
 
     }
 
-    public Usuario(String nombre, String apellido, String correo, String id, String contraseña,
+    public Usuario(String nombre, String apellido, String correo, String id, String contrasena,
                    String direccion, String tipo_id, String localidad, String estado, String fechaNacimiento) {
         this.N = nombre + " " + apellido;
-        this.C = contraseña;
+        this.C = contrasena;
         this.M = correo;
         this.I = tipo_id + " " + id;
         this.D = direccion;

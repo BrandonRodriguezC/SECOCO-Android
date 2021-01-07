@@ -2,7 +2,6 @@ package com.example.secoco.general;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import java.util.Properties;
 
@@ -16,10 +15,10 @@ import javax.mail.internet.MimeMessage;
 
 public class JavaMail extends AsyncTask<String, Void, Void> {
 
-    private Activity activity;
+    private final Activity activity;
 
     private Session sesion;
-    private String emailOrigen, constrasenaOrigen;
+    private final String emailOrigen, constrasenaOrigen;
 
 
     public JavaMail(Activity activity, String origen[]) {
@@ -72,7 +71,7 @@ public class JavaMail extends AsyncTask<String, Void, Void> {
                 }
             });*/
             if (strings.length > 3) {
-                actualizarInformación(strings[3], strings[4], strings[5]);
+                actualizarInformacion(strings[3], strings[4], strings[5]);
             }
         } catch (MessagingException e) {
             e.getMessage();
@@ -84,7 +83,7 @@ public class JavaMail extends AsyncTask<String, Void, Void> {
     /*Metodo encargado de hacer operaciones extra despues de enviar el correo electronico
     * Actualizar Examen -> Se encarga de actualizar el examen del paciente segun los diferentes estados
     * (- A "Activo", - S "Solicitado" y - I "Inactivo") */
-    private void actualizarInformación(String accion, String ruta, String valor) {
+    private void actualizarInformacion(String accion, String ruta, String valor) {
         if (accion.equals("Actualizar Examen")) {
             Query.actualizarDatoUsuario(activity, ruta,
                     valor, new String[]{"Actualización Completada a: "+ ruta.split("/")[2], "Error al intentar Actualizar"});

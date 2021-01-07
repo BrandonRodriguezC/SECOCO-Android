@@ -14,7 +14,7 @@ public class Ubicacion {
     }
 
     public double[] generarCoordenadas() {
-        String coor[] = this.L.split(" ");
+        String[] coor = this.L.split(" ");
         // latitud = [0] y longitud = [1]
         return new double[]{Double.parseDouble(coor[0]), Double.parseDouble(coor[1])};
     }

@@ -20,7 +20,7 @@ public class Email {
      * String origen [] = {EmailOrigen, ConstraseñaOrigen}
      * String mensaje [] = {EmailDestino, Asunto, Mensaje, accion (Opcional),
      *                     rutaBaseDeDatos (Opcional), valor (Opcional)} */
-    public static void enviarCorreoBackGround(View view, String origen[], String... mensaje) {
+    public static void enviarCorreoBackGround(View view, String [] origen, String... mensaje) {
         JavaMail javaMailAPI = new JavaMail(((Activity) view.getContext()), origen);
         javaMailAPI.execute(mensaje);
     }
@@ -41,7 +41,7 @@ public class Email {
     public static String leerMensaje(InputStream archivo) {
         try {
             BufferedReader a = new BufferedReader(new InputStreamReader(archivo));
-            String linea = "", mensaje = "";
+            String linea, mensaje = "";
             while ((linea = a.readLine()) != null) {
                 mensaje += linea + "\n";
             }

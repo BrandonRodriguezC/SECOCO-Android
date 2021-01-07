@@ -21,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Registro extends AppCompatActivity {
 
     //atributos
@@ -87,8 +89,8 @@ public class Registro extends AppCompatActivity {
         String apellido = txt_apellido.getText().toString();
         String correo = txt_correo.getText().toString();
         String id = txt_id.getText().toString();
-        String contraseña = txt_contrasena_r.getText().toString();
-        String contraseñaV = txt_contrasena_rv.getText().toString();
+        String contrasena = txt_contrasena_r.getText().toString();
+        String contrasenaV = txt_contrasena_rv.getText().toString();
         String fechaNacimiento = txt_fecha_nacimiento.getText().toString();
         String direccion = txt_direccion.getText().toString();
         String nombreUsuario = txt_nombre_usuario.getText().toString();
@@ -98,14 +100,14 @@ public class Registro extends AppCompatActivity {
         String estado = spinner3.getSelectedItem().toString();
 
         DatabaseReference usuarios = ref;
-        if (contraseña.equals(contraseñaV)) {
+        if (contrasena.equals(contrasenaV)) {
             Query queryToGetData = ref.child(nombreUsuario);
 
             queryToGetData.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                     if (!dataSnapshot.exists()) {
-                        usuarios.child(nombreUsuario).setValue(new Usuario(nombre, apellido, correo, id, contraseña, direccion, tipo_id, localidad, estado, fechaNacimiento));
+                        usuarios.child(nombreUsuario).setValue(new Usuario(nombre, apellido, correo, id, contrasena, direccion, tipo_id, localidad, estado, fechaNacimiento));
                         Intent inicio = new Intent(Registro.this, PersonaInicio.class);
                         startActivity(inicio);
                         finish();
@@ -115,7 +117,7 @@ public class Registro extends AppCompatActivity {
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onCancelled(@NotNull DatabaseError databaseError) {
                     Toast.makeText(Registro.this, R.string.Error_Base_de_Datos, Toast.LENGTH_SHORT).show();
                 }
             });
