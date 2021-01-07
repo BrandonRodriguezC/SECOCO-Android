@@ -2,17 +2,21 @@ package com.example.secoco.entities;
 
 public class Ubicacion {
 
-    //Latitud y Longitud (Separada por Espacio)
-    public String L;
-    //Tiempo en el que duro en latitudes y longitudes similares
-    public int T;
+    //Latitud y Longitud (Separada por Espacio) | Usuario (U)
+    public String L, U;
     //Zona de la latitud y Longitud
     public int Z;
 
-    public Ubicacion(double latitud, double longitud, int tiempo, int zona) {
+    public Ubicacion(double latitud, double longitud, String usuario, int zona) {
         this.L = latitud + " " + longitud;
-        this.T = tiempo;
+        this.U = usuario;
         this.Z = zona;
+    }
+
+    public double[] generarCoordenadas() {
+        String[] coor = this.L.split(" ");
+        // latitud = [0] y longitud = [1]
+        return new double[]{Double.parseDouble(coor[0]), Double.parseDouble(coor[1])};
     }
 
 }

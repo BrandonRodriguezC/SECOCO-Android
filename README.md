@@ -12,10 +12,12 @@ que el usuario pueda registrarse y cambiar su contraseña.
 
 ### Reporte Ubicación
 Se implementó prototipo de la historia de usuario **Reporte Ubicación**, en donde al entrar al Activity
-de Persona Natural (PersonaInicio) automáticamente el aplicativo solicita permisos para acceder a la
-ubicación y cada 5 minutos revisa si su posición sobrepasa el límite establecido de 5 metros tanto para
-la latitud como longitud; de ser así ingresa a la base de datos la fecha (dd-MM-yyyy HH:mm:ss), latitud,
-longitud, zona (código de la zona) y tiempo (periodo que transcurrió en el rango establecido).
+de Persona Natural (PersonaInicio) automáticamente el aplicativo verifica si el GPS se encuentra activo,
+de no estarlo muestra un AlertDialog y lo redirige nuevamente al **Ingreso**; De estar disponible solicita
+permisos para acceder a la ubicación y cada 5 minutos revisa si su posición sobrepasa el límite establecido
+de 5 metros tanto para la latitud como longitud; de ser así ingresa a la base de datos la fecha
+(dd-MM-yyyy HH:mm:ss), latitud, longitud, zona (código de la zona) y tiempo (periodo que transcurrió
+en el rango establecido).
 
 ### Notificación de Cita
 Funcionalidad para la búsqueda y solicitud de cita de los pacientes con posible contagio con COVID-19,

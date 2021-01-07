@@ -18,7 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
+import com.example.secoco.entities.Ubicacion;
 import com.example.secoco.entities.Zona;
+import com.example.secoco.general.VariablesGenerales;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -46,10 +48,10 @@ public class UbicacionUsuario extends Service {
         if (intent != null) {
             String accion = intent.getAction();
             if (accion != null) {
-                if (accion.equals(VariablesServicio.ACCION_INICIO)) {
+                if (accion.equals(VariablesGenerales.ACCION_INICIO)) {
                     inicializarAtributos(intent);
                     inicioServicio();
-                } else if (accion.equals(VariablesServicio.ACCION_FINAL)) {
+                } else if (accion.equals(VariablesGenerales.ACCION_FINAL)) {
                     finalizarServicio();
                 }
             }
@@ -58,8 +60,8 @@ public class UbicacionUsuario extends Service {
     }
 
     private void inicializarAtributos(Intent intent) {
-        this.intervalo = intent.getIntExtra("intervalo", 5) * 60000;
-        double rangoMaximo = intent.getIntExtra("rangoMaximo", 5) * 0.00001 / 1.11;
+        this.intervalo = VariablesGenerales.INTERVALO_ENVIO_GPS;
+        double rangoMaximo = VariablesGenerales.RANGO_MAXIMO_GPS;
 
         String usuario = intent.getStringExtra("usuario");
         ubicacionUsuario = new HiloUbicacionUsuario(this.intervalo, rangoMaximo, usuario);
@@ -114,7 +116,7 @@ public class UbicacionUsuario extends Service {
             LocationServices.getFusedLocationProviderClient(this).
                     requestLocationUpdates(ubicacion, locationCallback, Looper.getMainLooper());
             ubicacionUsuario.start();
-            startForeground(VariablesServicio.ID_SERVICIO, builder.build());
+            startForeground(VariablesGenerales.ID_SERVICIO, builder.build());
         }
     }
 
@@ -131,14 +133,14 @@ public class UbicacionUsuario extends Service {
         throw new UnsupportedOperationException("Todavia no ha sido implementado");
     }
 
-    class HiloUbicacionUsuario extends Thread {
+    static class HiloUbicacionUsuario extends Thread {
 
         private double latitud, longitud;
-        private double rangoMaximo;
-        private long intervalo;
-        private String usuario;
+        private final double  rangoMaximo;
+        private final long intervalo;
+        private final String usuario;
         private boolean estaVivo;
-        private ArrayList<Zona> zonas;
+        private final ArrayList<Zona> zonas;
 
         public HiloUbicacionUsuario(long intervalo, double rangoMaximo, String usuario) {
             this.intervalo = intervalo;
@@ -147,7 +149,7 @@ public class UbicacionUsuario extends Service {
             this.latitud = 0;
             this.longitud = 0;
             this.estaVivo = true;
-            this.zonas = new ArrayList<Zona>();
+            this.zonas = new ArrayList<>();
             //Carga en el dispositivo las zonas disponibles para poder identificar
             //en que zona se encuentra cada usuario
             cargarZonas();
@@ -155,7 +157,7 @@ public class UbicacionUsuario extends Service {
 
         @Override
         public void run() {
-            double latitudNueva = 0, latitudVieja = 0, longitudNueva = 0, longitudVieja = 0;
+            double latitudNueva, latitudVieja = 0, longitudNueva, longitudVieja = 0;
             int minutos = 0;
             DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference("ubicaciones");
 
@@ -178,17 +180,17 @@ public class UbicacionUsuario extends Service {
                         int zona = 0, i = 0;
                         boolean tieneZona = false;
                         while (i < zonas.size() && !tieneZona) {
-                            Zona z = zonas.get(i);
-                            if (latitudNueva >= z.getLatitudMin() && latitudNueva <= z.getLatitudMax()
-                                    && longitudNueva >= z.getLongitudMin() && longitudNueva <= z.getLongitudMax()) {
+                            double[] coordenadasZona = zonas.get(i).generarCoordenadas();
+                            if (latitudNueva >= coordenadasZona[0] && latitudNueva <= coordenadasZona[2]
+                                    && longitudNueva >= coordenadasZona[1] && longitudNueva <= coordenadasZona[3]) {
                                 zona = i + 1;
                                 tieneZona = true;
                             }
                             i++;
                         }
-                        String fechaHora[] = obtenerFecha(minutos);
-                        baseDatos.child(usuario).child(fechaHora[0]).child(fechaHora[1]).setValue(
-                                new com.example.secoco.entities.Ubicacion(latitudNueva, longitudNueva, minutos, zona));
+                        String [] fechaHora = obtenerFecha(minutos);
+                        baseDatos.child(usuario).child(fechaHora[0]).child(fechaHora[1] + " " + fechaHora[2]).setValue(
+                                new Ubicacion(latitudNueva, longitudNueva, usuario, zona));
                         latitudVieja = latitudNueva;
                         longitudVieja = longitudNueva;
                         minutos = 0;
@@ -198,11 +200,15 @@ public class UbicacionUsuario extends Service {
         }
 
         private String[] obtenerFecha(int tiempo) {
-            Calendar calendario = Calendar.getInstance();
-            calendario.setTime(new Date());
-            calendario.set(Calendar.MINUTE, calendario.get(Calendar.MINUTE) - tiempo);
-            DateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-            return formatoFecha.format(calendario.getTime()).split(" ");
+            String fecha;
+            Calendar fechaInicio = Calendar.getInstance();
+            fechaInicio.setTime(new Date());
+            DateFormat formatoFecha = new SimpleDateFormat("HHmm");
+            fecha = formatoFecha.format(fechaInicio.getTime());
+            fechaInicio.set(Calendar.MINUTE, fechaInicio.get(Calendar.MINUTE) - tiempo);
+            formatoFecha = new SimpleDateFormat("dd-MM-yyyy HHmm");
+            fecha = formatoFecha.format(fechaInicio.getTime()) + " " + fecha;
+            return fecha.split(" ");
         }
 
         private void cargarZonas() {
@@ -212,7 +218,6 @@ public class UbicacionUsuario extends Service {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot zona : snapshot.getChildren()) {
                         Zona z = zona.getValue(Zona.class);
-                        z.generarCoordenadas();
                         zonas.add(z);
                     }
                     Log.i("Cargado de Zonas", "Correcto");

@@ -16,7 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.secoco.Ingreso;
 import com.example.secoco.R;
 import com.example.secoco.usuarios.persona.ubicacion.UbicacionUsuario;
-import com.example.secoco.usuarios.persona.ubicacion.VariablesServicio;
+import com.example.secoco.general.VariablesGenerales;
 import com.google.android.material.navigation.NavigationView;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
@@ -220,7 +220,7 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
     private void finalizarServicio() {
         if (estaEjecutandoseReporteUbicacion()) {
             Intent intent = new Intent(getApplicationContext(), UbicacionUsuario.class);
-            intent.setAction(VariablesServicio.ACCION_FINAL);
+            intent.setAction(VariablesGenerales.ACCION_FINAL);
             startService(intent);
             Toast.makeText(Mapa.this, "Analisis de Ubicación Finalizado", Toast.LENGTH_LONG).show();
         }
