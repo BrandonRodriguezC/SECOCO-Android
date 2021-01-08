@@ -1,7 +1,5 @@
 package com.example.secoco.usuarios.persona;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,8 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.secoco.Ingreso;
 import com.example.secoco.R;
-import com.example.secoco.usuarios.persona.ubicacion.UbicacionUsuario;
-import com.example.secoco.general.VariablesGenerales;
+import com.example.secoco.general.ServicioUbicacion;
 import com.google.android.material.navigation.NavigationView;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
@@ -95,16 +92,9 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
 
     @SuppressWarnings({"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
-// Check if permissions are enabled and if not request
+        // Check if permissions are enabled and if not request
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
-// Activate the MapboxMap LocationComponent to show user location
-
-            //DIEGO -
-            // Toca que revise como tomar la ubicacion ya propia del gps porque lo que hace este metodo es
-            // que la toma de manera implicita (segun entiendo) y le aplica estilo en el mapa, logicamente
-            // no se está agregando una latitud o longitud exacta, literalmente despues de aprobar el
-            // permiso solo se ejecutan estas 4 lineas. xd
-
+            // Activate the MapboxMap LocationComponent to show user location
             locationComponent = mapboxMap.getLocationComponent();
             locationComponent.activateLocationComponent(LocationComponentActivationOptions.builder(this, mapboxMap.getStyle()).build());
             locationComponent.setLocationComponentEnabled(true);
@@ -183,7 +173,6 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
         return false;
     }
 
-
     //LISTENER MENU LATERAL
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -193,37 +182,12 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
             sintomas.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
             startActivity(sintomas);
         } else if (item.toString().equals("Cerrar sesion")) {
-            finalizarServicio();
+            ServicioUbicacion.finalizarServicio(this);
             Intent login = new Intent(Mapa.this, Ingreso.class);
             startActivity(login);
             finish();
         }
         return false;
-    }
-
-    //Metodos para finalizar el servicio si se encuentra activo
-    private boolean estaEjecutandoseReporteUbicacion() {
-        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        if (activityManager != null) {
-            for (ActivityManager.RunningServiceInfo servicio :
-                    activityManager.getRunningServices(Integer.MAX_VALUE)) {
-                if (UbicacionUsuario.class.getName().equals(servicio.service.getClassName())) {
-                    if (servicio.foreground) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    private void finalizarServicio() {
-        if (estaEjecutandoseReporteUbicacion()) {
-            Intent intent = new Intent(getApplicationContext(), UbicacionUsuario.class);
-            intent.setAction(VariablesGenerales.ACCION_FINAL);
-            startService(intent);
-            Toast.makeText(Mapa.this, "Analisis de Ubicación Finalizado", Toast.LENGTH_LONG).show();
-        }
     }
 
 

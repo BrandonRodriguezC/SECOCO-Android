@@ -19,7 +19,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import com.example.secoco.entities.Ubicacion;
-import com.example.secoco.entities.Zona;
 import com.example.secoco.general.VariablesGenerales;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -33,7 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -136,11 +134,11 @@ public class UbicacionUsuario extends Service {
     static class HiloUbicacionUsuario extends Thread {
 
         private double latitud, longitud;
-        private final double  rangoMaximo;
+        private final double rangoMaximo;
         private final long intervalo;
         private final String usuario;
         private boolean estaVivo;
-        private final ArrayList<Zona> zonas;
+        private int ultimoIndiceUbicacion;
 
         public HiloUbicacionUsuario(long intervalo, double rangoMaximo, String usuario) {
             this.intervalo = intervalo;
@@ -149,17 +147,12 @@ public class UbicacionUsuario extends Service {
             this.latitud = 0;
             this.longitud = 0;
             this.estaVivo = true;
-            this.zonas = new ArrayList<>();
-            //Carga en el dispositivo las zonas disponibles para poder identificar
-            //en que zona se encuentra cada usuario
-            cargarZonas();
         }
 
         @Override
         public void run() {
             double latitudNueva, latitudVieja = 0, longitudNueva, longitudVieja = 0;
             int minutos = 0;
-            DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference("ubicaciones");
 
             while (estaVivo) {
                 try {
@@ -177,20 +170,7 @@ public class UbicacionUsuario extends Service {
                     //System.out.println("Entro " + minutos);
                     if (Math.abs(latitudNueva - latitudVieja) > rangoMaximo || Math.abs(longitudNueva - longitudVieja) > rangoMaximo) {
                         //System.out.println("Tiempo De Resta " + tiempo);
-                        int zona = 0, i = 0;
-                        boolean tieneZona = false;
-                        while (i < zonas.size() && !tieneZona) {
-                            double[] coordenadasZona = zonas.get(i).generarCoordenadas();
-                            if (latitudNueva >= coordenadasZona[0] && latitudNueva <= coordenadasZona[2]
-                                    && longitudNueva >= coordenadasZona[1] && longitudNueva <= coordenadasZona[3]) {
-                                zona = i + 1;
-                                tieneZona = true;
-                            }
-                            i++;
-                        }
-                        String [] fechaHora = obtenerFecha(minutos);
-                        baseDatos.child(usuario).child(fechaHora[0]).child(fechaHora[1] + " " + fechaHora[2]).setValue(
-                                new Ubicacion(latitudNueva, longitudNueva, usuario, zona));
+                        ingresarUbicacion(latitudNueva, longitudNueva, minutos);
                         latitudVieja = latitudNueva;
                         longitudVieja = longitudNueva;
                         minutos = 0;
@@ -211,25 +191,6 @@ public class UbicacionUsuario extends Service {
             return fecha.split(" ");
         }
 
-        private void cargarZonas() {
-            DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference("zonas");
-            baseDatos.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot zona : snapshot.getChildren()) {
-                        Zona z = zona.getValue(Zona.class);
-                        zonas.add(z);
-                    }
-                    Log.i("Cargado de Zonas", "Correcto");
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.i("Cargado de Zonas", "Incorrecto");
-                }
-            });
-        }
-
         public void setLatitud(double latitud) {
             this.latitud = latitud;
         }
@@ -242,6 +203,58 @@ public class UbicacionUsuario extends Service {
             this.estaVivo = estaVivo;
         }
 
+        private void ingresarUbicacion(double latitudNueva, double longitudNueva, int minutos) {
+            //DatabaseReference query se encarga de traer el ultimo elemento de la ubicación y poder
+            //saber cual fue la ultima llave
+            DatabaseReference query = FirebaseDatabase.getInstance().getReference("ubicaciones");
+            query.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ultimoIndiceUbicacion = -10;
+                    for (DataSnapshot indiceUbicacion : snapshot.getChildren()) {
+                        ultimoIndiceUbicacion = Integer.parseInt(indiceUbicacion.getKey());
+                    }
+                    ultimoIndiceUbicacion = ultimoIndiceUbicacion != -10 ? ultimoIndiceUbicacion + 1 : 0;
+
+                    String[] fechaHora = obtenerFecha(minutos);
+                    // DatabaseReference agregaUbicacion se encarga de subir la ubicación a la base de datos
+                    DatabaseReference agregarUbicacion = FirebaseDatabase.getInstance().getReference("ubicaciones");
+                    agregarUbicacion.child(ultimoIndiceUbicacion + "").setValue(
+                            new Ubicacion(latitudNueva, longitudNueva, fechaHora[0], fechaHora[1], fechaHora[2]));
+                    //DatabaseReference actualizarUsuario se encarga de traer el ultimo elemento del usuario en
+                    //relaciones y saber su indice
+                    DatabaseReference indiceRelaciones = FirebaseDatabase.getInstance().getReference("relaciones/" + usuario);
+                    indiceRelaciones.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int ultimoIndiceRelaciones = -10;
+                            for (DataSnapshot ubicacion : snapshot.getChildren()) {
+                                ultimoIndiceRelaciones = Integer.parseInt(ubicacion.getKey());
+                            }
+                            ultimoIndiceRelaciones = ultimoIndiceRelaciones != -10 ? ultimoIndiceRelaciones + 1 : 0;
+                            //DatabaseReference agregarRelacion se encarga de enviar a relaciones el indice
+                            //asociado del usuario a ubicaciones
+                            DatabaseReference agregarRelacion = FirebaseDatabase.getInstance().getReference("relaciones/" + usuario);
+                            agregarRelacion.child(ultimoIndiceRelaciones + "").setValue(ultimoIndiceUbicacion);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            System.out.println("Error al tomar el ultimo indice de relaciones y agregarlo");
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    System.out.println("Error al tomar el ultimo indice de ubicaciones y agregarla");
+                }
+            });
+        }
+
     }
+
 
 }

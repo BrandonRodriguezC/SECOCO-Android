@@ -26,6 +26,9 @@ los usuarios naturales del aplicativo y se actualiza el estado *X* dentro de la 
 solicitar a la organización las credenciales para enviar el correo en BackGround)
 
 ## Comentarios
+- Descentralización del Servicio que reporta la ubicación de usuario, con lo cual puede ser iniciado
+y finalizado desde cualquier activity del aplicativo SeCoCo
+- Actualización de Reporte Ubicación respecto a los nuevos parámetros de la base de datos
 - Reorganización de Estructura de Proyecto, es decir, se generalizaron funciones para evitar repetir el
 código
 - Incorporación de identificación de zona en el **Reporte Ubicación**

@@ -1,36 +1,39 @@
 package com.example.secoco.general;
 
+import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.secoco.Ingreso;
+import com.example.secoco.usuarios.persona.ubicacion.UbicacionUsuario;
+
 public class ServicioUbicacion {
 
-    /*Clase para generalizar la ejecución del Servicio de Ubicación
-     * y poder iniciar y finalizarlo mediante la llamada de ServicioUbicacion.iniciarReporteUbicacion */
-
-    /*private static int CODIGO_REQUEST_EXITOSO = 1;
-
-    private void iniciarReporteUbicacion() {
-        if (ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    CODIGO_REQUEST_EXITOSO);
-        } else {
-            iniciarServicio();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == CODIGO_REQUEST_EXITOSO && grantResults.length > 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                iniciarServicio();
+    public static void verificarGPS(AppCompatActivity activity) {
+        PackageManager packageManager = activity.getPackageManager();
+        if(packageManager.hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
+            LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+            if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                iniciarServicio(activity);
             } else {
-                Toast.makeText(PersonaInicio.this, "Permisos Denegados", Toast.LENGTH_SHORT);
+                mensajeGPS(activity, "Error de GPS",
+                        "El GPS no se encuentra Activo, favor activarlo y volver a ingresar" ).show();
             }
+        }else{
+            mensajeGPS(activity, "GPS no Encontrado",
+                    "Lamentablemente el dispositivo no cuenta con GPS, por lo cual se pierde la " +
+                    "funcionalidad del aplicativo").show();
         }
     }
 
-    private boolean estaEjecutandoseReporteUbicacion() {
-        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+    private static boolean estaEjecutandoseReporteUbicacion(AppCompatActivity activity) {
+        ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
         if (activityManager != null) {
             for (ActivityManager.RunningServiceInfo servicio :
                     activityManager.getRunningServices(Integer.MAX_VALUE)) {
@@ -44,27 +47,35 @@ public class ServicioUbicacion {
         return false;
     }
 
-    private void iniciarServicio() {
-        if (!estaEjecutandoseReporteUbicacion()) {
-            Intent intent = new Intent(getApplicationContext(), UbicacionUsuario.class);
-            intent.setAction(VariablesServicio.ACCION_INICIO);
-            //Cada cuanto tiempo se actualiza en la base de datos
-            intent.putExtra("intervalo", 5);
-            //Metros de distancia de rango maximo para poder insertar
-            intent.putExtra("rangoMaximo", 5);
-            intent.putExtra("usuario", getIntent().getStringExtra("USUARIO"));
-            startService(intent);
-            Toast.makeText(PersonaInicio.this, "Servicio de Analisis de Ubicación Activado", Toast.LENGTH_LONG).show();
+    private static void iniciarServicio(AppCompatActivity activity) {
+        if (!estaEjecutandoseReporteUbicacion(activity)) {
+            Intent intent = new Intent(activity, UbicacionUsuario.class);
+            intent.setAction(VariablesGenerales.ACCION_INICIO);
+            intent.putExtra("usuario", activity.getIntent().getStringExtra("USUARIO"));
+            activity.startService(intent);
+            Toast.makeText(activity, "Servicio de Analisis de Ubicación Activado", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void finalizarServicio() {
-        if (estaEjecutandoseReporteUbicacion()) {
-            Intent intent = new Intent(getApplicationContext(), UbicacionUsuario.class);
-            intent.setAction(VariablesServicio.ACCION_FINAL);
-            startService(intent);
-            Toast.makeText(PersonaInicio.this, "Servicio de Analisis de Ubicación Terminado", Toast.LENGTH_LONG).show();
+    public static void finalizarServicio(AppCompatActivity activity) {
+        if (estaEjecutandoseReporteUbicacion(activity)) {
+            Intent intent = new Intent(activity, UbicacionUsuario.class);
+            intent.setAction(VariablesGenerales.ACCION_FINAL);
+            activity.startService(intent);
+            Toast.makeText(activity, "Servicio de Analisis de Ubicación Terminado", Toast.LENGTH_LONG).show();
         }
-    }*/
+    }
+
+    private static AlertDialog.Builder mensajeGPS(AppCompatActivity activity, String titulo, String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(titulo)
+                .setMessage(mensaje)
+                .setPositiveButton("Aceptar", (dialog, which) -> {
+                    Intent ingreso = new Intent(activity, Ingreso.class);
+                    activity.startActivity(ingreso);
+                    activity.finish();
+                });
+        return builder;
+    }
 
 }
