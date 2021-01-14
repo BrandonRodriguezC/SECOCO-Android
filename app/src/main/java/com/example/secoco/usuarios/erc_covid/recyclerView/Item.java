@@ -1,19 +1,18 @@
 package com.example.secoco.usuarios.erc_covid.recyclerView;
 
-import com.example.secoco.entities.Usuario;
+import com.example.secoco.entities.UsuarioAPI;
 import com.example.secoco.usuarios.erc_covid.ReporteNotificarCita;
 
 public class Item {
 
     private int tipo, tipoMensaje;
-    private Usuario usuario;
+    private UsuarioAPI usuario;
     private ReporteNotificarCita reporteNotificarCita;
-    private String usuarioKey, fecha;
+    private String fecha;
 
-    public Item(int tipo, Usuario usuario, String usuarioKey, String fecha) {
+    public Item(int tipo, UsuarioAPI usuario, String fecha) {
         this.tipo = tipo;
         this.usuario = usuario;
-        this.usuarioKey = usuarioKey;
         this.fecha = fecha;
     }
 
@@ -27,16 +26,12 @@ public class Item {
         return tipo;
     }
 
-    public Usuario getUsuario() {
+    public UsuarioAPI getUsuario() {
         return usuario;
     }
 
     public int getTipoMensaje() {
         return tipoMensaje;
-    }
-
-    public String getUsuarioKey() {
-        return usuarioKey;
     }
 
     public String getFecha() {

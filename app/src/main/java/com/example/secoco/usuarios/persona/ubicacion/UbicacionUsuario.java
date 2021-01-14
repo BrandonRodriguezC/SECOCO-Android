@@ -13,27 +13,26 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
-import com.example.secoco.entities.Ubicacion;
-import com.example.secoco.entities.Zona;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.secoco.general.RequestAPI;
 import com.example.secoco.general.VariablesGenerales;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -64,7 +63,7 @@ public class UbicacionUsuario extends Service {
         double rangoMaximo = VariablesGenerales.RANGO_MAXIMO_GPS;
 
         String usuario = intent.getStringExtra("usuario");
-        ubicacionUsuario = new HiloUbicacionUsuario(this.intervalo, rangoMaximo, usuario);
+        ubicacionUsuario = new HiloUbicacionUsuario(this.intervalo, rangoMaximo, usuario, this);
 
         this.locationCallback = new LocationCallback() {
             @Override
@@ -136,30 +135,27 @@ public class UbicacionUsuario extends Service {
     static class HiloUbicacionUsuario extends Thread {
 
         private double latitud, longitud;
-        private final double  rangoMaximo;
+        private final double rangoMaximo;
         private final long intervalo;
         private final String usuario;
         private boolean estaVivo;
-        private final ArrayList<Zona> zonas;
+        private int ultimoIndiceUbicacion;
+        private Context context;
 
-        public HiloUbicacionUsuario(long intervalo, double rangoMaximo, String usuario) {
+        public HiloUbicacionUsuario(long intervalo, double rangoMaximo, String usuario, Context context) {
             this.intervalo = intervalo;
             this.rangoMaximo = rangoMaximo;
             this.usuario = usuario;
             this.latitud = 0;
             this.longitud = 0;
             this.estaVivo = true;
-            this.zonas = new ArrayList<>();
-            //Carga en el dispositivo las zonas disponibles para poder identificar
-            //en que zona se encuentra cada usuario
-            cargarZonas();
+            this.context = context;
         }
 
         @Override
         public void run() {
             double latitudNueva, latitudVieja = 0, longitudNueva, longitudVieja = 0;
             int minutos = 0;
-            DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference("ubicaciones");
 
             while (estaVivo) {
                 try {
@@ -177,20 +173,7 @@ public class UbicacionUsuario extends Service {
                     //System.out.println("Entro " + minutos);
                     if (Math.abs(latitudNueva - latitudVieja) > rangoMaximo || Math.abs(longitudNueva - longitudVieja) > rangoMaximo) {
                         //System.out.println("Tiempo De Resta " + tiempo);
-                        int zona = 0, i = 0;
-                        boolean tieneZona = false;
-                        while (i < zonas.size() && !tieneZona) {
-                            double[] coordenadasZona = zonas.get(i).generarCoordenadas();
-                            if (latitudNueva >= coordenadasZona[0] && latitudNueva <= coordenadasZona[2]
-                                    && longitudNueva >= coordenadasZona[1] && longitudNueva <= coordenadasZona[3]) {
-                                zona = i + 1;
-                                tieneZona = true;
-                            }
-                            i++;
-                        }
-                        String [] fechaHora = obtenerFecha(minutos);
-                        baseDatos.child(usuario).child(fechaHora[0]).child(fechaHora[1] + " " + fechaHora[2]).setValue(
-                                new Ubicacion(latitudNueva, longitudNueva, usuario, zona));
+                        ingresarUbicacion(latitudNueva, longitudNueva, minutos);
                         latitudVieja = latitudNueva;
                         longitudVieja = longitudNueva;
                         minutos = 0;
@@ -211,25 +194,6 @@ public class UbicacionUsuario extends Service {
             return fecha.split(" ");
         }
 
-        private void cargarZonas() {
-            DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference("zonas");
-            baseDatos.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot zona : snapshot.getChildren()) {
-                        Zona z = zona.getValue(Zona.class);
-                        zonas.add(z);
-                    }
-                    Log.i("Cargado de Zonas", "Correcto");
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.i("Cargado de Zonas", "Incorrecto");
-                }
-            });
-        }
-
         public void setLatitud(double latitud) {
             this.latitud = latitud;
         }
@@ -242,6 +206,39 @@ public class UbicacionUsuario extends Service {
             this.estaVivo = estaVivo;
         }
 
+        private void ingresarUbicacion(double latitudNueva, double longitudNueva, int minutos) {
+            String[] fechaHora = obtenerFecha(minutos);
+            JSONObject request = new JSONObject();
+            try {
+                request.put("U", this.usuario);
+                request.put("F", fechaHora[0]);
+                request.put("HI", Integer.parseInt(fechaHora[1]));
+                request.put("HF", Integer.parseInt(fechaHora[2]));
+                request.put("Lat", latitudNueva);
+                request.put("Lon", longitudNueva);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                    "https://secocobackend.glitch.me/REPORTE-UBICACION",
+                    request,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            System.out.println(response.toString());
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("Error");
+                        }
+                    });
+            jsonObjectRequest.setShouldCache(false);
+            RequestAPI.getInstance(context).add(jsonObjectRequest);
+        }
+
     }
+
 
 }
