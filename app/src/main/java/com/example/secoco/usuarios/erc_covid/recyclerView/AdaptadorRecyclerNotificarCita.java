@@ -6,14 +6,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.secoco.R;
 import com.example.secoco.entities.Usuario;
+import com.example.secoco.entities.UsuarioAPI;
 import com.example.secoco.general.Email;
+import com.example.secoco.general.RequestAPI;
 import com.example.secoco.usuarios.erc_covid.ReporteNotificarCita;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -48,8 +58,7 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
             holderNoEncotrado.setMensaje(items.get(position).getTipoMensaje(), items.get(position).getReporteNotificarCita());
         } else {
             ViewHolderCita holderUsuario = (ViewHolderCita) holder;
-            holderUsuario.setUsuario(items.get(position).getUsuario(), items.get(position).getFecha(),
-                    items.get(position).getUsuarioKey());
+            holderUsuario.setUsuario(items.get(position).getUsuario(), items.get(position).getFecha());
         }
     }
 
@@ -67,8 +76,8 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
 
         private TextView lblNombre, lblCorreo, lblDocumento, lblLocalidad;
         private Button btnEnviarCorreo;
-        private Usuario usuario;
-        private String fecha, usuarioKey;
+        private UsuarioAPI usuario;
+        private String fecha;
 
         public ViewHolderCita(@NonNull View itemView) {
             super(itemView);
@@ -83,25 +92,62 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
             btnEnviarCorreo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    /*
                     Email.enviarCorreoForeGround(view, new String[]{usuario.M}, "Citación para Prueba COVID-19",
                             Email.mensajePersonalizado(view,
-                                    new String[]{usuario.N, usuario.I, fecha, usuario.E, usuario.D}));
+                                    new String[]{usuario.N, usuario.I, fecha, usuario.E, usuario.D}));*/
                     /*Email.enviarCorreoBackGround(view,
                             new String[]{"pedroppax@gmail.com", "Pruebasecoco"},
                             new String[] {usuario.M, "Citación para Prueba COVID-19", mensajePersonalizado(fecha),
                                     "Actualizar Examen", "usuarios/Naturales/" + usuarioKey + "/X", "- S"});*/
+                    JSONObject request = new JSONObject();
+                    try {
+                        request.put("U", usuario.getU());
+                        request.put("F", fecha);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                            "https://secocobackend.glitch.me/ENVIAR-CORREO-USUARIO",
+                            request,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        boolean puedoEnviar = response.getInt("E") == 1;
+                                        if (puedoEnviar) {
+                                            Toast.makeText(view.getContext(), "El correo han sido enviado"
+                                                    , Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(view.getContext(), "Error al enviar el correo"
+                                                    , Toast.LENGTH_SHORT).show();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(view.getContext(), "Error de Conexión"
+                                            , Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    jsonObjectRequest.setShouldCache(false);
+                    RequestAPI.getInstance(view.getContext()).add(jsonObjectRequest);
+
                 }
             });
         }
 
-        public void setUsuario(Usuario usuario, String fecha, String usuarioKey) {
+        public void setUsuario(UsuarioAPI usuario, String fecha) {
             this.usuario = usuario;
-            this.lblNombre.setText(usuario.N);
-            this.lblCorreo.setText(usuario.M);
-            this.lblDocumento.setText(usuario.I);
-            this.lblLocalidad.setText(usuario.Z);
+            this.lblNombre.setText(usuario.getN());
+            this.lblCorreo.setText(usuario.getM());
+            this.lblDocumento.setText(usuario.getI());
+            this.lblLocalidad.setText(usuario.getZ());
             this.fecha = fecha;
-            this.usuarioKey = usuarioKey;
         }
 
     }

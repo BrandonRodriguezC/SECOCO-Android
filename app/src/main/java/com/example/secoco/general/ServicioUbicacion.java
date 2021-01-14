@@ -23,12 +23,12 @@ public class ServicioUbicacion {
                 iniciarServicio(activity);
             } else {
                 mensajeGPS(activity, "Error de GPS",
-                        "El GPS no se encuentra Activo, favor activarlo y volver a ingresar" ).show();
+                        "El GPS no se encuentra Activo, favor activarlo e Intentar de Nuevo", "Intentar de Nuevo", true ).show();
             }
         }else{
             mensajeGPS(activity, "GPS no Encontrado",
                     "Lamentablemente el dispositivo no cuenta con GPS, por lo cual se pierde la " +
-                    "funcionalidad del aplicativo").show();
+                    "funcionalidad del aplicativo", "Salir", false).show();
         }
     }
 
@@ -66,15 +66,20 @@ public class ServicioUbicacion {
         }
     }
 
-    private static AlertDialog.Builder mensajeGPS(AppCompatActivity activity, String titulo, String mensaje){
+    public static AlertDialog.Builder mensajeGPS(AppCompatActivity activity, String titulo, String mensaje, String boton, boolean intentarDeNuevo){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(titulo)
                 .setMessage(mensaje)
-                .setPositiveButton("Aceptar", (dialog, which) -> {
-                    Intent ingreso = new Intent(activity, Ingreso.class);
-                    activity.startActivity(ingreso);
-                    activity.finish();
+                .setPositiveButton(boton, (dialog, which) -> {
+                    if (intentarDeNuevo) {
+                        verificarGPS(activity);
+                    } else {
+                        Intent ingreso = new Intent(activity, Ingreso.class);
+                        activity.startActivity(ingreso);
+                        activity.finish();
+                    }
                 });
+        builder.setCancelable(false);
         return builder;
     }
 

@@ -13,22 +13,23 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
-import com.example.secoco.entities.Ubicacion;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.secoco.general.RequestAPI;
 import com.example.secoco.general.VariablesGenerales;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -62,7 +63,7 @@ public class UbicacionUsuario extends Service {
         double rangoMaximo = VariablesGenerales.RANGO_MAXIMO_GPS;
 
         String usuario = intent.getStringExtra("usuario");
-        ubicacionUsuario = new HiloUbicacionUsuario(this.intervalo, rangoMaximo, usuario);
+        ubicacionUsuario = new HiloUbicacionUsuario(this.intervalo, rangoMaximo, usuario, this);
 
         this.locationCallback = new LocationCallback() {
             @Override
@@ -139,14 +140,16 @@ public class UbicacionUsuario extends Service {
         private final String usuario;
         private boolean estaVivo;
         private int ultimoIndiceUbicacion;
+        private Context context;
 
-        public HiloUbicacionUsuario(long intervalo, double rangoMaximo, String usuario) {
+        public HiloUbicacionUsuario(long intervalo, double rangoMaximo, String usuario, Context context) {
             this.intervalo = intervalo;
             this.rangoMaximo = rangoMaximo;
             this.usuario = usuario;
             this.latitud = 0;
             this.longitud = 0;
             this.estaVivo = true;
+            this.context = context;
         }
 
         @Override
@@ -204,54 +207,35 @@ public class UbicacionUsuario extends Service {
         }
 
         private void ingresarUbicacion(double latitudNueva, double longitudNueva, int minutos) {
-            //DatabaseReference query se encarga de traer el ultimo elemento de la ubicación y poder
-            //saber cual fue la ultima llave
-            DatabaseReference query = FirebaseDatabase.getInstance().getReference("ubicaciones");
-            query.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    ultimoIndiceUbicacion = -10;
-                    for (DataSnapshot indiceUbicacion : snapshot.getChildren()) {
-                        ultimoIndiceUbicacion = Integer.parseInt(indiceUbicacion.getKey());
-                    }
-                    ultimoIndiceUbicacion = ultimoIndiceUbicacion != -10 ? ultimoIndiceUbicacion + 1 : 0;
-
-                    String[] fechaHora = obtenerFecha(minutos);
-                    // DatabaseReference agregaUbicacion se encarga de subir la ubicación a la base de datos
-                    DatabaseReference agregarUbicacion = FirebaseDatabase.getInstance().getReference("ubicaciones");
-                    agregarUbicacion.child(ultimoIndiceUbicacion + "").setValue(
-                            new Ubicacion(latitudNueva, longitudNueva, fechaHora[0], fechaHora[1], fechaHora[2]));
-                    //DatabaseReference actualizarUsuario se encarga de traer el ultimo elemento del usuario en
-                    //relaciones y saber su indice
-                    DatabaseReference indiceRelaciones = FirebaseDatabase.getInstance().getReference("relaciones/" + usuario);
-                    indiceRelaciones.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            String[] fechaHora = obtenerFecha(minutos);
+            JSONObject request = new JSONObject();
+            try {
+                request.put("U", this.usuario);
+                request.put("F", fechaHora[0]);
+                request.put("HI", Integer.parseInt(fechaHora[1]));
+                request.put("HF", Integer.parseInt(fechaHora[2]));
+                request.put("Lat", latitudNueva);
+                request.put("Lon", longitudNueva);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                    "https://secocobackend.glitch.me/REPORTE-UBICACION",
+                    request,
+                    new Response.Listener<JSONObject>() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            int ultimoIndiceRelaciones = -10;
-                            for (DataSnapshot ubicacion : snapshot.getChildren()) {
-                                ultimoIndiceRelaciones = Integer.parseInt(ubicacion.getKey());
-                            }
-                            ultimoIndiceRelaciones = ultimoIndiceRelaciones != -10 ? ultimoIndiceRelaciones + 1 : 0;
-                            //DatabaseReference agregarRelacion se encarga de enviar a relaciones el indice
-                            //asociado del usuario a ubicaciones
-                            DatabaseReference agregarRelacion = FirebaseDatabase.getInstance().getReference("relaciones/" + usuario);
-                            agregarRelacion.child(ultimoIndiceRelaciones + "").setValue(ultimoIndiceUbicacion);
-
+                        public void onResponse(JSONObject response) {
+                            System.out.println(response.toString());
                         }
-
+                    },
+                    new Response.ErrorListener() {
                         @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            System.out.println("Error al tomar el ultimo indice de relaciones y agregarlo");
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("Error");
                         }
                     });
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    System.out.println("Error al tomar el ultimo indice de ubicaciones y agregarla");
-                }
-            });
+            jsonObjectRequest.setShouldCache(false);
+            RequestAPI.getInstance(context).add(jsonObjectRequest);
         }
 
     }

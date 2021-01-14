@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,9 +22,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.secoco.R;
 import com.example.secoco.entities.Usuario;
+import com.example.secoco.entities.UsuarioAPI;
 import com.example.secoco.general.Email;
+import com.example.secoco.general.RequestAPI;
 import com.example.secoco.general.VariablesGenerales;
 import com.example.secoco.usuarios.erc_covid.recyclerView.AdaptadorRecyclerNotificarCita;
 import com.example.secoco.usuarios.erc_covid.recyclerView.Item;
@@ -30,6 +40,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -40,14 +55,13 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
 
     //Atributos
     private DatabaseReference baseDatos;
-    private CheckBox [] checkBoxs;
+    private CheckBox[] checkBoxs;
     private Button btnBuscarUsuarios, btnEnviarMasivo, btnFiltro;
     private ArrayList<Item> items;
     private RecyclerView recyclerView;
     private AdaptadorRecyclerNotificarCita adaptador;
     private CardView cardViewFiltro;
     private ConstraintLayout cnsActivity;
-    private String busqueda;
     private EditText txtFechaCita;
 
     @Override
@@ -57,7 +71,6 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
         getSupportActionBar().setTitle(R.string.reporteNotificacion_txt_titulo);
 
         //Inicialización de Atributos
-        this.busqueda = "";
         this.cnsActivity = (ConstraintLayout) findViewById(R.id.cns_a);
         this.btnFiltro = (Button) findViewById(R.id.btn_filtro);
 
@@ -95,52 +108,54 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         if (view.getId() == btnBuscarUsuarios.getId()) {
             if (!txtFechaCita.getText().toString().equals("")) {
-                //La busqueda sigue la prioridad de preguntas
-                busqueda = "";
-                busqueda = checkBoxs[0].isChecked() ? busqueda + "1" : busqueda + "0";
-                busqueda = checkBoxs[1].isChecked() ? busqueda + "1" : busqueda + "0";
-                busqueda = checkBoxs[2].isChecked() ? busqueda + "1" : busqueda + "0";
-                busqueda = checkBoxs[3].isChecked() ? busqueda + "1" : busqueda + "0";
-                busqueda = checkBoxs[4].isChecked() ? busqueda + "1" : busqueda + "0";
-                busqueda = checkBoxs[5].isChecked() ? busqueda + "1" : busqueda + "0";
-                obtenerPersonasconSintomas(busqueda, 100);
+                obtenerPersonasconSintomas(tomarSintomas(), 100);
 
                 visibilidadTarjetaFiltro(false);
             } else {
                 Toast.makeText(ReporteNotificarCita.this,
                         "La Fecha no fue seleccionada ", Toast.LENGTH_SHORT).show();
             }
-        } else if (view.getId() == btnEnviarMasivo.getId()){
-            /* Prototipo de Correo Masivo
-            ArrayList<String> correos = new ArrayList<String>();
-            for (int i = 0; i < items.size(); i++) {
-                if (items.get(i).getUsuario() != null) {
-                    correos.add(items.get(i).getUsuario().M);
+        } else if (view.getId() == btnEnviarMasivo.getId()) {
+            String busqueda = tomarSintomas();
+            if(!busqueda.equals("000000")) {
+                JSONObject request = new JSONObject();
+                try {
+                    request.put("E", busqueda);
+                    request.put("F", txtFechaCita.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                        "https://secocobackend.glitch.me/ENVIAR-CORREO-USUARIOS-NOTIFICAR-CITA",
+                        request,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    boolean puedoEnviar = response.getInt("E") == 1;
+                                    if (puedoEnviar) {
+                                        Toast.makeText(ReporteNotificarCita.this, "Los correos han sido enviados"
+                                                , Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(ReporteNotificarCita.this, "Error al enviar los correos"
+                                                , Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(ReporteNotificarCita.this, "Error de Conexión"
+                                        , Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                jsonObjectRequest.setShouldCache(false);
+                RequestAPI.getInstance(this).add(jsonObjectRequest);
             }
-            String email[] = new String[correos.size()];
-            email = correos.toArray(email);
-            if (email.length > 0) {
-                Email.enviarCorreoForeGround(view, email, "Citación para Prueba COVID-19", mensajeMasivo(view, txtFechaCita.getText().toString()));
-            } else {
-                Toast.makeText(ReporteNotificarCita.this, "Usuarios no disponibles", Toast.LENGTH_SHORT).show();
-            }*/
 
-            //Falta solicitar las credenciales del correo. Por el momento se envian con:
-            String [] emailOrigen = VariablesGenerales.EMAIL_ORIGEN;
-            for (int i = 0; i < items.size(); i++) {
-                Usuario usuario = items.get(i).getUsuario();
-                if (usuario != null) {
-                    Email.enviarCorreoBackGround(view,
-                            emailOrigen,
-                            usuario.M, "Citación para Prueba COVID-19",
-                                    Email.mensajePersonalizado(view,
-                                            new String[]{usuario.N, usuario.I, txtFechaCita.getText().toString(),
-                                                    usuario.E, usuario.D}),
-                                    "Actualizar Examen", "usuarios/Naturales/" + items.get(i).getUsuarioKey() + "/X", "- S"
-                    );
-                }
-            }
         } else if (view.getId() == btnFiltro.getId()) {
             visibilidadTarjetaFiltro(true);
         } else if (view.getId() == txtFechaCita.getId()) {
@@ -189,25 +204,53 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
     }
 
     private void obtenerPersonasconSintomas(String sintomas, int limite) {
-        this.baseDatos = FirebaseDatabase.getInstance().getReference("usuarios/Naturales");
-        this.baseDatos.orderByChild("E").equalTo(sintomas).limitToFirst(limite).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                items.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Usuario usuario = dataSnapshot.getValue(Usuario.class);
-                    //No se tiene en cuenta a los usuarios a los cuales ya se les solicito el examen
-                    if (!usuario.X.equals("- S"))
-                        items.add(new Item(1, usuario, dataSnapshot.getKey(), txtFechaCita.getText().toString()));
+        ProgressDialog progressDialog = new ProgressDialog(ReporteNotificarCita.this);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        JSONObject request = new JSONObject();
+        try {
+            request.put("E", sintomas);
+            request.put("L", limite);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                "https://secocobackend.glitch.me/SOLICITAR-USUARIOS-NOTIFICAR-CITA",
+                request,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            items.clear();
+                            JSONArray a = response.getJSONArray("listaUsuarios");
+                            Gson gson = new Gson();
+                            for (int i = 0; i < a.length(); i++) {
+                                String res = a.getJSONObject(i).toString();
+                                UsuarioAPI obj = gson.fromJson(res, UsuarioAPI.class);
+                                items.add(new Item(1, obj, txtFechaCita.getText().toString()));
+                            }
+                            actualizarItems();
+                            progressDialog.dismiss();
+                        } catch (JSONException e) {
+                            Log.e("Error Cargar", "Problemas para transformar los datos");
+                            progressDialog.dismiss();
+                            Toast.makeText(ReporteNotificarCita.this, "Problemas para transformar los datos",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Error de Conexión", "Problemas durante la petición");
+                        progressDialog.dismiss();
+                        Toast.makeText(ReporteNotificarCita.this, "Problemas durante la petición",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
-                actualizarItems();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("ERROR");
-            }
-        });
+        );
+        jsonObjectRequest.setShouldCache(true);
+        RequestAPI.getInstance(ReporteNotificarCita.this).add(jsonObjectRequest);
     }
 
     private void actualizarItems() {
@@ -217,5 +260,18 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
         }
         adaptador.notifyDataSetChanged();
     }
+
+    private String tomarSintomas() {
+        String busqueda = "";
+        busqueda = checkBoxs[0].isChecked() ? busqueda + "1" : busqueda + "0";
+        busqueda = checkBoxs[1].isChecked() ? busqueda + "1" : busqueda + "0";
+        busqueda = checkBoxs[2].isChecked() ? busqueda + "1" : busqueda + "0";
+        busqueda = checkBoxs[3].isChecked() ? busqueda + "1" : busqueda + "0";
+        busqueda = checkBoxs[4].isChecked() ? busqueda + "1" : busqueda + "0";
+        busqueda = checkBoxs[5].isChecked() ? busqueda + "1" : busqueda + "0";
+        return busqueda;
+    }
+
+
 
 }

@@ -5,25 +5,25 @@ Bienvenidos perros :D
 ## Información General
 
 ### Ingreso
-Funcionalidad completa para el ingreso de los diferentes usuarios del aplicativo, con lo cual según
-sus permisos acceden a sus respectivas Activities. Por otro lado, esta funciona como intermediario para
-que el usuario pueda registrarse y cambiar su contraseña.
+Funcionalidad completa para el ingreso de los diferentes usuarios del aplicativo mediante conexion
+con el servidor Node.js, con lo cual según sus permisos acceden a sus respectivas Activities. Por otro
+lado, esta funciona como intermediario para que el usuario pueda registrarse y cambiar su contraseña.
 
 
 ### Reporte Ubicación
-Se implementó prototipo de la historia de usuario **Reporte Ubicación**, en donde al entrar al Activity
-de Persona Natural (PersonaInicio) automáticamente el aplicativo verifica si el GPS se encuentra activo,
-de no estarlo muestra un AlertDialog y lo redirige nuevamente al **Ingreso**; De estar disponible solicita
-permisos para acceder a la ubicación y cada 5 minutos revisa si su posición sobrepasa el límite establecido
-de 5 metros tanto para la latitud como longitud; de ser así ingresa a la base de datos la fecha
-(dd-MM-yyyy HH:mm:ss), latitud, longitud, zona (código de la zona) y tiempo (periodo que transcurrió
-en el rango establecido).
+Se implementó la historia de usuario **Reporte Ubicación**, en donde al entrar al Activity
+de Persona Natural (PersonaInicio) automáticamente el aplicativo solicita y verifica
+permisos para acceder a la ubicación; De igual forma, se comprueba si el GPS se encuentra activo,
+de no estarlo muestra un AlertDialog para intentar de nuevo. Finalmente al tener todos los permisos
+necesarios, el aplicativo revisa cada 15 minutos si la posición del usuario sobrepasa el límite establecido
+de 5 metros tanto para la latitud como longitud; de ser así agrega a la base de datos la fecha
+(dd-MM-yyyy), latitud, longitud, zona (código de la zona) y la hora inicial y final, es decir, el periodo
+transcurrido en el rango establecido), además de relacionar dicha ubicación con el usuario.
 
 ### Notificación de Cita
 Funcionalidad para la búsqueda y solicitud de cita de los pacientes con posible contagio con COVID-19,
 con lo cual dependiendo del filtro realizado por la ERC y la fecha se envía un mensaje personalizado a
-los usuarios naturales del aplicativo y se actualiza el estado *X* dentro de la base de datos. (Falta
-solicitar a la organización las credenciales para enviar el correo en BackGround)
+los usuarios naturales del aplicativo y se actualiza el estado *X* dentro de la base de datos.
 
 ## Comentarios
 - Descentralización del Servicio que reporta la ubicación de usuario, con lo cual puede ser iniciado
@@ -47,11 +47,6 @@ pretende ingresar al aplicativo sin necesidad de volver a realizar el loggeo
 
 ## Android SDK
 Version 29
-## Base de Datos
-(Temp) Firebase - secocoda@gmail.com 
-  - Dependencias y JSON adjuntas al proyecto
-### Estructura y diccionario de Firebase
-![alt text](https://64.media.tumblr.com/f828051dfa9d8a174ab564f8247c2619/297b8bdb6480845f-42/s1280x1920/d3a2d57f1a7c1906820cf0281ac57344cfa11b98.jpg )
 
 ### Tipo de Usuarios
 Los tipos de usuario disponibles en el aplicativo son:

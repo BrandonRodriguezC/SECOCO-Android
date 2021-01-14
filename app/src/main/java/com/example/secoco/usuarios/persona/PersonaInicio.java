@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.secoco.Ingreso;
 import com.example.secoco.R;
 import com.example.secoco.general.ServicioUbicacion;
 import com.example.secoco.general.VariablesGenerales;
@@ -33,7 +34,7 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         this.btnMapa = (Button) findViewById(R.id.btn_mapa);
 
         //Inicia a tomar y validar las coordenadas (latitud y longitud)
-        //iniciarReporteUbicacion();
+        iniciarReporteUbicacion();
 
         //Acción de Botones
         this.btnUbicacion.setOnClickListener(this);
@@ -70,10 +71,20 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 ServicioUbicacion.verificarGPS(this);
             } else {
-                Toast.makeText(PersonaInicio.this, "Permisos Denegados", Toast.LENGTH_SHORT).show();
+                if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            VariablesGenerales.CODIGO_REQUEST_EXITOSO);
+                }else{
+                    Toast.makeText(PersonaInicio.this, "Permisos de Acceso a la Ubicación Denegados",
+                            Toast.LENGTH_SHORT).show();
+                    Intent ingreso = new Intent(PersonaInicio.this, Ingreso.class);
+                    startActivity(ingreso);
+                    finish();
+                }
             }
         }
     }
+    /*--------------------------------------------------------------------------------------------*/
 
 
 }
