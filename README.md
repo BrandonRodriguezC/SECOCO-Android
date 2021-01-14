@@ -47,11 +47,6 @@ pretende ingresar al aplicativo sin necesidad de volver a realizar el loggeo
 
 ## Android SDK
 Version 29
-## Base de Datos
-(Temp) Firebase - secocoda@gmail.com 
-  - Dependencias y JSON adjuntas al proyecto
-### Estructura y diccionario de Firebase
-![alt text](https://64.media.tumblr.com/f828051dfa9d8a174ab564f8247c2619/297b8bdb6480845f-42/s1280x1920/d3a2d57f1a7c1906820cf0281ac57344cfa11b98.jpg )
 
 ### Tipo de Usuarios
 Los tipos de usuario disponibles en el aplicativo son:
