@@ -31,47 +31,50 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
             <TextView
-                android:id="@+id/txt_titulo"
+                android:id="@+id/reporte_zona_txt_titulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 mapbox:layout_constraintBottom_toBottomOf="parent"
                 mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.384"
+                mapbox:layout_constraintHorizontal_bias="0.498"
                 mapbox:layout_constraintStart_toStartOf="parent"
                 mapbox:layout_constraintTop_toTopOf="parent"
-                mapbox:layout_constraintVertical_bias="0.053" />
+                mapbox:layout_constraintVertical_bias="0.091" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Casos Activos"
+                android:text="Activos"
                 mapbox:layout_constraintBottom_toBottomOf="parent"
                 mapbox:layout_constraintEnd_toEndOf="parent"
                 mapbox:layout_constraintHorizontal_bias="0.049"
                 mapbox:layout_constraintStart_toStartOf="parent"
-                mapbox:layout_constraintTop_toBottomOf="@+id/txt_titulo"
+                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_titulo"
                 mapbox:layout_constraintVertical_bias="0.058" />
 
             <TextView
-                android:id="@+id/txt_activos"
+                android:id="@+id/reporte_zona_txt_activos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 mapbox:layout_constraintBottom_toBottomOf="parent"
                 mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.505"
+                mapbox:layout_constraintHorizontal_bias="0.509"
                 mapbox:layout_constraintStart_toEndOf="@+id/textView4"
-                mapbox:layout_constraintTop_toBottomOf="@+id/txt_titulo"
-                mapbox:layout_constraintVertical_bias="0.085" />
+                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_titulo"
+                mapbox:layout_constraintVertical_bias="0.08" />
 
             <TextView
-                android:id="@+id/txt_inactivos"
+                android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -84,11 +87,24 @@
                 mapbox:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/reporte_zona_txt_inactivos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="TextView"
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintEnd_toEndOf="parent"
+                mapbox:layout_constraintHorizontal_bias="0.49"
+                mapbox:layout_constraintStart_toEndOf="@+id/textView6"
+                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_activos"
+                mapbox:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Solicitados"
                 mapbox:layout_constraintBottom_toBottomOf="parent"
                 mapbox:layout_constraintEnd_toEndOf="parent"
                 mapbox:layout_constraintHorizontal_bias="0.049"
@@ -101,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="TextView"
+                android:text="Pendientes"
                 mapbox:layout_constraintBottom_toBottomOf="parent"
                 mapbox:layout_constraintEnd_toEndOf="parent"
                 mapbox:layout_constraintHorizontal_bias="0.049"
@@ -114,15 +130,52 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="TextView"
-
+                android:text="Examen no Tomado"
                 mapbox:layout_constraintBottom_toBottomOf="parent"
                 mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.049"
+                mapbox:layout_constraintHorizontal_bias="0.057"
                 mapbox:layout_constraintStart_toStartOf="parent"
                 mapbox:layout_constraintTop_toBottomOf="@+id/textView8"
                 mapbox:layout_constraintVertical_bias="0.0" />
 
+            <TextView
+                android:id="@+id/reporte_zona_txt_solicitados"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:layout_marginTop="2dp"
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintEnd_toEndOf="parent"
+                mapbox:layout_constraintHorizontal_bias="0.468"
+                mapbox:layout_constraintStart_toEndOf="@+id/textView7"
+                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_inactivos"
+                mapbox:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/reporte_zona_txt_pendientes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="TextView"
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintEnd_toEndOf="parent"
+                mapbox:layout_constraintHorizontal_bias="0.466"
+                mapbox:layout_constraintStart_toEndOf="@+id/textView8"
+                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_solicitados"
+                mapbox:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/reporte_zona_txt_examenNoTomado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="TextView"
+                mapbox:layout_constraintBottom_toBottomOf="parent"
+                mapbox:layout_constraintEnd_toEndOf="parent"
+                mapbox:layout_constraintHorizontal_bias="0.311"
+                mapbox:layout_constraintStart_toEndOf="@+id/textView9"
+                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_pendientes"
+                mapbox:layout_constraintVertical_bias="0.0" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

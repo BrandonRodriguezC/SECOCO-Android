@@ -10,7 +10,7 @@ public class VariablesGenerales {
 
     /*------------------------Variables generales de agregado de Ubicación------------------------*/
     //Cada cuanto tiempo se agrega ubicaciones en la base de datos **Su estructura es 1 * 60000 (1 minuto)**
-    public static final int INTERVALO_ENVIO_GPS = 15 * 60000;
+    public static final int INTERVALO_ENVIO_GPS = 1 * 60000;
     //Metros de distancia de rango maximo para poder insertar
     //Su estructura esta dada por una regla de 3 en donde 0.00001 en latitud o longitud equivale a 1.11 metros
     public static final double RANGO_MAXIMO_GPS = 5 * 0.00001 / 1.11;
