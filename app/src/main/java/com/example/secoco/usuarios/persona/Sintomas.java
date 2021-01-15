@@ -9,13 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.secoco.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.jetbrains.annotations.NotNull;
 
 public class Sintomas extends AppCompatActivity implements View.OnClickListener {
     private Button button;
@@ -88,7 +82,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener 
             Toast.makeText(this, resultado, Toast.LENGTH_SHORT).show();
 
 
-            //Envio
+           /* //Envio
             String usuario = getIntent().getStringExtra("USUARIO");
             //Toast.makeText(this, "Sintomas: "+getIntent().getStringExtra("USUARIO"), Toast.LENGTH_SHORT).show();
             DatabaseReference ref = database.getReference("usuarios/Naturales/" + usuario + "/E");
@@ -103,7 +97,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener 
                 public void onCancelled(@NotNull DatabaseError databaseError) {
                     Toast.makeText(Sintomas.this, R.string.Error_Base_de_Datos, Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         }
     }
 }

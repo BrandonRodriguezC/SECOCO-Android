@@ -1,27 +1,21 @@
 package com.example.secoco;
 
-import android.content.Intent;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.secoco.entities.Usuario;
-import com.example.secoco.usuarios.persona.PersonaInicio;
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import org.jetbrains.annotations.NotNull;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Registro extends AppCompatActivity {
 
@@ -41,25 +35,29 @@ public class Registro extends AppCompatActivity {
         setContentView(R.layout.activity_registro);
         getSupportActionBar().setTitle("Registro");
 
-
         //fecha nacimiento
-        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
-        builder.setTitleText("Seleccione su fecha de nacimiento");
-        final MaterialDatePicker materialDatePicker = builder.build();
         this.txt_fecha_nacimiento = (EditText) findViewById(R.id.txt_fecha_nacimiento);
         this.txt_fecha_nacimiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                materialDatePicker.show(getSupportFragmentManager(), "Date_Picker ");
+                Calendar fechaActual = Calendar.getInstance();
+                int dia = fechaActual.get(Calendar.DAY_OF_MONTH), mes = fechaActual.get(Calendar.MONTH), anio = fechaActual.get(Calendar.YEAR);
 
+                DatePickerDialog fecha = new DatePickerDialog(Registro.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        fechaActual.set(Calendar.YEAR, year);
+                        fechaActual.set(Calendar.MINUTE, month);
+                        fechaActual.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                            DateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+                            txt_fecha_nacimiento.setText(formatoFecha.format(fechaActual.getTime()));
+
+                    }
+                }, anio, mes, dia);
+                fecha.show();
             }
         });
-        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
-            @Override
-            public void onPositiveButtonClick(Object selection) {
-                txt_fecha_nacimiento.setText(materialDatePicker.getHeaderText());
-            }
-        });
+
         boton_registro = (Button) findViewById(R.id.boton_registro);
         this.boton_registro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +66,8 @@ public class Registro extends AppCompatActivity {
             }
         });
     }
+
+
 
     public void boton_registro() {
         txt_nombre = (EditText) findViewById(R.id.txt_nombre);
@@ -89,8 +89,8 @@ public class Registro extends AppCompatActivity {
         String apellido = txt_apellido.getText().toString();
         String correo = txt_correo.getText().toString();
         String id = txt_id.getText().toString();
-        String contrasena = txt_contrasena_r.getText().toString();
-        String contrasenaV = txt_contrasena_rv.getText().toString();
+        String contraseña = txt_contrasena_r.getText().toString();
+        String contraseñaV = txt_contrasena_rv.getText().toString();
         String fechaNacimiento = txt_fecha_nacimiento.getText().toString();
         String direccion = txt_direccion.getText().toString();
         String nombreUsuario = txt_nombre_usuario.getText().toString();
@@ -99,15 +99,15 @@ public class Registro extends AppCompatActivity {
         String localidad = getResources().getStringArray(R.array.LocalidadesIdentificador)[spinner2.getSelectedItemPosition()];
         String estado = spinner3.getSelectedItem().toString();
 
-        DatabaseReference usuarios = ref;
-        if (contrasena.equals(contrasenaV)) {
+       /* DatabaseReference usuarios = ref;
+        if (contraseña.equals(contraseñaV)) {
             Query queryToGetData = ref.child(nombreUsuario);
-
+            //-----------VERIFICAR CEDULA INSCRITA-------------
             queryToGetData.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+                public void onDataChange(DataSnapshot dataSnapshot) {
                     if (!dataSnapshot.exists()) {
-                        usuarios.child(nombreUsuario).setValue(new Usuario(nombre, apellido, correo, id, contrasena, direccion, tipo_id, localidad, estado, fechaNacimiento));
+                        usuarios.child(nombreUsuario).setValue(new Usuario(nombre, apellido, correo, id, contraseña, direccion, tipo_id, localidad, estado, fechaNacimiento));
                         Intent inicio = new Intent(Registro.this, PersonaInicio.class);
                         startActivity(inicio);
                         finish();
@@ -117,14 +117,14 @@ public class Registro extends AppCompatActivity {
                 }
 
                 @Override
-                public void onCancelled(@NotNull DatabaseError databaseError) {
+                public void onCancelled(DatabaseError databaseError) {
                     Toast.makeText(Registro.this, R.string.Error_Base_de_Datos, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
             Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
         }
-
+      */
 
     }
 

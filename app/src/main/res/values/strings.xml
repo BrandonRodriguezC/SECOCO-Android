@@ -129,9 +129,16 @@
     <string name="sintomas_sentidos">¿Ha notado disminución del olfato o del sabor de los alimentos?</string>
     <string name="sintomas_cercania">¿Ha estado en contacto con alguien diagnosticado o sospechoso de covid-19 en los últimos días?</string>
     <string name="button">Enviar síntomas</string>
+    <string name="capital" />
+    <string name="tap_on_marker_instruction" />
     <string-array name="si_no">
         <item>Si</item>
         <item>No</item>
     </string-array>
-
+    <!-- Etiquetas para Reporte Resultados -->
+    <string-array name="resultado_examen">
+        <item>Positivo</item>
+        <item>Negativo</item>
+        <item>Pendiente</item>
+    </string-array>
 </resources>
