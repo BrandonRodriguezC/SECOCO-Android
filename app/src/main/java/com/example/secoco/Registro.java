@@ -1,25 +1,17 @@
 package com.example.secoco;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.secoco.entities.Usuario;
-import com.example.secoco.usuarios.persona.PersonaInicio;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,7 +34,6 @@ public class Registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
         getSupportActionBar().setTitle("Registro");
-
 
         //fecha nacimiento
         this.txt_fecha_nacimiento = (EditText) findViewById(R.id.txt_fecha_nacimiento);
@@ -108,7 +99,7 @@ public class Registro extends AppCompatActivity {
         String localidad = getResources().getStringArray(R.array.LocalidadesIdentificador)[spinner2.getSelectedItemPosition()];
         String estado = spinner3.getSelectedItem().toString();
 
-        DatabaseReference usuarios = ref;
+       /* DatabaseReference usuarios = ref;
         if (contraseña.equals(contraseñaV)) {
             Query queryToGetData = ref.child(nombreUsuario);
             //-----------VERIFICAR CEDULA INSCRITA-------------
@@ -133,7 +124,7 @@ public class Registro extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
         }
-
+      */
 
     }
 

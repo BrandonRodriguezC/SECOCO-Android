@@ -1,6 +1,5 @@
 package com.example.secoco;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,18 +13,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.secoco.general.RequestAPI;
 import com.example.secoco.usuarios.erc_covid.ERCInicio;
 import com.example.secoco.usuarios.ere_covid.EREInicio;
 import com.example.secoco.usuarios.etda_covid.ETDAInicio;
 import com.example.secoco.usuarios.persona.PersonaInicio;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+/*import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;*/
 
 public class Ingreso extends AppCompatActivity implements View.OnClickListener {
 
