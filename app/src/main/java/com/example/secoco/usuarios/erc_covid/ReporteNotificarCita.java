@@ -1,6 +1,5 @@
 package com.example.secoco.usuarios.erc_covid;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.AutoTransition;
@@ -25,21 +23,12 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.secoco.R;
-import com.example.secoco.entities.Usuario;
-import com.example.secoco.entities.UsuarioAPI;
-import com.example.secoco.general.Email;
 import com.example.secoco.general.RequestAPI;
-import com.example.secoco.general.VariablesGenerales;
 import com.example.secoco.usuarios.erc_covid.recyclerView.AdaptadorRecyclerNotificarCita;
 import com.example.secoco.usuarios.erc_covid.recyclerView.Item;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -117,7 +106,7 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
             }
         } else if (view.getId() == btnEnviarMasivo.getId()) {
             String busqueda = tomarSintomas();
-            if(!busqueda.equals("000000")) {
+            if (!busqueda.equals("000000")) {
                 JSONObject request = new JSONObject();
                 try {
                     request.put("E", busqueda);
@@ -225,9 +214,7 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
                             JSONArray a = response.getJSONArray("listaUsuarios");
                             Gson gson = new Gson();
                             for (int i = 0; i < a.length(); i++) {
-                                String res = a.getJSONObject(i).toString();
-                                UsuarioAPI obj = gson.fromJson(res, UsuarioAPI.class);
-                                items.add(new Item(1, obj, txtFechaCita.getText().toString()));
+                                items.add(new Item(1, a.getJSONObject(i), txtFechaCita.getText().toString()));
                             }
                             actualizarItems();
                             progressDialog.dismiss();
@@ -271,7 +258,6 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
         busqueda = checkBoxs[5].isChecked() ? busqueda + "1" : busqueda + "0";
         return busqueda;
     }
-
 
 
 }

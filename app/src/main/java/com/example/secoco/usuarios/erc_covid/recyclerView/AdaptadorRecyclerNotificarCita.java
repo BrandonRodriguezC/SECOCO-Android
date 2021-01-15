@@ -76,7 +76,7 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
 
         private TextView lblNombre, lblCorreo, lblDocumento, lblLocalidad;
         private Button btnEnviarCorreo;
-        private UsuarioAPI usuario;
+        private JSONObject usuario;
         private String fecha;
 
         public ViewHolderCita(@NonNull View itemView) {
@@ -92,17 +92,9 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
             btnEnviarCorreo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    /*
-                    Email.enviarCorreoForeGround(view, new String[]{usuario.M}, "Citación para Prueba COVID-19",
-                            Email.mensajePersonalizado(view,
-                                    new String[]{usuario.N, usuario.I, fecha, usuario.E, usuario.D}));*/
-                    /*Email.enviarCorreoBackGround(view,
-                            new String[]{"pedroppax@gmail.com", "Pruebasecoco"},
-                            new String[] {usuario.M, "Citación para Prueba COVID-19", mensajePersonalizado(fecha),
-                                    "Actualizar Examen", "usuarios/Naturales/" + usuarioKey + "/X", "- S"});*/
                     JSONObject request = new JSONObject();
                     try {
-                        request.put("U", usuario.getU());
+                        request.put("U", usuario.getString("U"));
                         request.put("F", fecha);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -141,12 +133,16 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
             });
         }
 
-        public void setUsuario(UsuarioAPI usuario, String fecha) {
+        public void setUsuario(JSONObject usuario, String fecha) {
             this.usuario = usuario;
-            this.lblNombre.setText(usuario.getN());
-            this.lblCorreo.setText(usuario.getM());
-            this.lblDocumento.setText(usuario.getI());
-            this.lblLocalidad.setText(usuario.getZ());
+            try {
+                this.lblNombre.setText(usuario.getString("N"));
+                this.lblCorreo.setText(usuario.getString("M"));
+                this.lblDocumento.setText(usuario.getString("I"));
+                this.lblLocalidad.setText(usuario.getString("Z"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             this.fecha = fecha;
         }
 
