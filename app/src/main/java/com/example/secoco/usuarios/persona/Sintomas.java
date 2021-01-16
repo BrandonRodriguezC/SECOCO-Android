@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -12,17 +13,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.secoco.Ingreso;
 import com.example.secoco.R;
+import com.example.secoco.Registro;
+import com.example.secoco.general.RequestAPI;
 import com.example.secoco.general.ServicioUbicacion;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Sintomas extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private Button button;
+    private EditText txt_nombre_usuario;
     private Spinner spinner4, spinner5, spinner6, spinner7, spinner8, spinner9;
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private String resultado;
+    //private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public String resultado,nombreUsuario;
     //BARRA ----------------------
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -56,6 +67,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
         spinner8 = (Spinner) findViewById(R.id.spinner8);
         spinner9 = (Spinner) findViewById(R.id.spinner9);
         resultado = "";
+
         if (view.getId() == this.button.getId()) {
             //Organización de Preguntas de la que más impacto tiene a la que menos impacto
             //segun https://www.who.int/es/emergencies/diseases/novel-coronavirus-2019/advice-for-public/q-a-coronaviruses
@@ -95,9 +107,44 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
             } else {
                 resultado += 0;
             }
+            //Toast.makeText(this, resultado, Toast.LENGTH_SHORT).show();
+            //ENVIO
 
-            Toast.makeText(this, resultado, Toast.LENGTH_SHORT).show();
+            Intent persona = new Intent(Sintomas.this, PersonaInicio.class);
+            //Intent personax = new Intent(Sintomas.this, PersonaInicio.class);
+            String personaxx =persona.getStringExtra("USUARIO");
 
+            Toast.makeText(Sintomas.this, ""+personaxx, Toast.LENGTH_SHORT).show();
+
+            JSONObject request = new JSONObject();
+            try {
+                request.put("llave", personaxx);
+                request.put("estado", resultado);
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                    "https://secocobackend.glitch.me/ACTUALIZAR-SINTOMAS",
+                    request,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            //Intent persona = new Intent(Sintomas.this, PersonaInicio.class);
+                            persona.putExtra("USUARIO", personaxx);
+                            persona.putExtra("SINTOMAS",  resultado);
+                            startActivity(persona);
+                            finish();
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("Error");
+                        }
+                    });
+            jsonObjectRequest.setShouldCache(false);
+            RequestAPI.getInstance(this).add(jsonObjectRequest);
 
            /* //Envio
             String usuario = getIntent().getStringExtra("USUARIO");
