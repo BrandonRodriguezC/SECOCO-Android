@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SeCoCo">
-        <activity android:name=".usuarios.erc_covid.ReporteNotificarCita"></activity>
+        <activity android:name=".usuarios.ere_covid.ReportarResultados"></activity>
+        <activity android:name=".usuarios.ere_covid.ReporteZona"></activity>
+        <activity android:name=".usuarios.erc_covid.ReporteNotificarCita" />
         <activity android:name=".usuarios.persona.PersonaInicio" />
         <activity android:name=".CambioContrasena" />
         <activity android:name=".usuarios.etda_covid.ETDAInicio" />

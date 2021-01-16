@@ -2,22 +2,36 @@ package com.example.secoco.entities;
 
 public class Zona {
 
-    public String L, N, C;
+    private double Lon, Lat;
+    private String I;
 
-    public Zona() {
-
+    public Zona(double lonMa, double lonMi, double latMi, double latMa, String i, String n) {
+        Lon = lonMa;
+        Lat = latMi;
+        I = i;
     }
 
-    public Zona(String coordenadas, String nombre, String cuarentena) {
-        this.L = coordenadas;
-        this.N = nombre;
-        this.C = cuarentena;
+    public double getLonMa() {
+        return Lon;
     }
 
-    public double[] generarCoordenadas() {
-        String[] coor = this.L.split(" ");
-        //Retorna latitudMin = [0], longitudMin = [1], latitudMax = [2] y longitudMax = [3]
-        return new double[]{Double.parseDouble(coor[0]), Double.parseDouble(coor[1]), Double.parseDouble(coor[2]), Double.parseDouble(coor[3])};
+    public double getLatMi() {
+        return Lat;
     }
 
+    public String getI() {
+        return I;
+    }
+
+    public void setLonMa(double lon) {
+        Lon = lon;
+    }
+
+    public void setLatMi(double lat) {
+        Lat = lat;
+    }
+
+    public void setI(String I) {
+        this.I = I;
+    }
 }

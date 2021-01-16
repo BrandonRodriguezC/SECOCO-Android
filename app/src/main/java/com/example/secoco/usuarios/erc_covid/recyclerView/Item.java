@@ -3,14 +3,16 @@ package com.example.secoco.usuarios.erc_covid.recyclerView;
 import com.example.secoco.entities.UsuarioAPI;
 import com.example.secoco.usuarios.erc_covid.ReporteNotificarCita;
 
+import org.json.JSONObject;
+
 public class Item {
 
     private int tipo, tipoMensaje;
-    private UsuarioAPI usuario;
+    private JSONObject usuario;
     private ReporteNotificarCita reporteNotificarCita;
     private String fecha;
 
-    public Item(int tipo, UsuarioAPI usuario, String fecha) {
+    public Item(int tipo, JSONObject usuario, String fecha) {
         this.tipo = tipo;
         this.usuario = usuario;
         this.fecha = fecha;
@@ -26,7 +28,7 @@ public class Item {
         return tipo;
     }
 
-    public UsuarioAPI getUsuario() {
+    public JSONObject getUsuario() {
         return usuario;
     }
 

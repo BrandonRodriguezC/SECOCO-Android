@@ -1,5 +1,6 @@
 package com.example.secoco;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,15 +14,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.secoco.general.RequestAPI;
 import com.example.secoco.usuarios.erc_covid.ERCInicio;
 import com.example.secoco.usuarios.ere_covid.EREInicio;
 import com.example.secoco.usuarios.etda_covid.ETDAInicio;
 import com.example.secoco.usuarios.persona.PersonaInicio;
 
-/*import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;*/
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Ingreso extends AppCompatActivity implements View.OnClickListener {
 
@@ -89,7 +93,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
         if (!txt_usuario.equals("") && !txt_contrasena.equals("")) {
 
             //------------------------------------EVITAR CONSUMO DE RECURSOS -----
-            Intent nuevaActividad = null;
+            /*Intent nuevaActividad = null;
             if (txt_tipo_usuario.equals(opcionesSpinner[1])) {
                 //Toast.makeText(Ingreso.this, "ERC-COVID", Toast.LENGTH_SHORT).show();
                 nuevaActividad = new Intent(Ingreso.this, ERCInicio.class);
@@ -107,10 +111,10 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
                 nuevaActividad.putExtra("USUARIO", txt_usuario);
                 startActivity(nuevaActividad);
                 guardarCredenciales(txt_usuario, txt_contrasena, txt_tipo_usuario);
-            }
+            }*/
             //-------------------------------------------------------------------------------------
             // Login con Request to Node.js
-            /*ProgressDialog progressDialog = new ProgressDialog(Ingreso.this);
+            ProgressDialog progressDialog = new ProgressDialog(Ingreso.this);
             progressDialog.setCancelable(false);
             progressDialog.show();
             JSONObject request = new JSONObject();
@@ -171,7 +175,6 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
             );
             jsonObjectRequest.setShouldCache(false);
             RequestAPI.getInstance(this).add(jsonObjectRequest);
-            */
         } else {
             if (txt_usuario.equals(""))
                 txtUsuario.setError("Usuario Requerido");
