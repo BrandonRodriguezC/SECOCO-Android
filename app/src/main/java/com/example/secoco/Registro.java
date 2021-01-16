@@ -1,17 +1,28 @@
 package com.example.secoco;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.secoco.general.RequestAPI;
+import com.example.secoco.usuarios.persona.PersonaInicio;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -98,6 +109,57 @@ public class Registro extends AppCompatActivity {
         String tipo_id = spinner.getSelectedItem().toString();
         String localidad = getResources().getStringArray(R.array.LocalidadesIdentificador)[spinner2.getSelectedItemPosition()];
         String estado = spinner3.getSelectedItem().toString();
+
+        JSONObject request = new JSONObject();
+        try {
+
+            request.put("nombre", nombre);
+            request.put("apellido", apellido);
+            request.put("contraseña", contraseña);
+            request.put("correo", correo);
+            request.put("tipoID", tipo_id);
+            request.put("ID", id);
+            request.put("fechaNacimiento", fechaNacimiento);
+            request.put("localidad", localidad);
+            request.put("direccion", direccion);
+            request.put("usuario", nombreUsuario);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                "https://secocobackend.glitch.me/REGISTRO",
+                request,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String rta = response.getString("M");
+                            if(rta.equals("Usuario añadido!")){
+                                Intent inicio = new Intent(Registro.this, PersonaInicio.class);
+                                inicio.putExtra("USUARIO", nombreUsuario);
+                                startActivity(inicio);
+                                finish();
+                            }else{
+                                Toast.makeText(Registro.this,rta, Toast.LENGTH_SHORT ).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error");
+                    }
+                });
+        jsonObjectRequest.setShouldCache(false);
+        RequestAPI.getInstance(this).add(jsonObjectRequest);
+
 
        /* DatabaseReference usuarios = ref;
         if (contraseña.equals(contraseñaV)) {
