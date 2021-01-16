@@ -4,24 +4,12 @@
         android:id="@+id/nav_sintomas"
         android:icon="@drawable/icon_sintomas"
         android:title="Sintomas" />
-    <group>
 
+    <item
+        android:id="@+id/nav_mapa"
+        android:icon="@drawable/icon_mapa"
+        android:title="Mapa" />
 
-        <item
-            android:id="@+id/nav_zona"
-            android:icon="@drawable/icbn_zona"
-            android:title="Tu zona" />
-
-        <item
-            android:id="@+id/nav_mapa"
-            android:icon="@drawable/icon_mapa"
-            android:title="Mapa" />
-
-        <item
-            android:id="@+id/nav_historial"
-            android:icon="@drawable/icon_historial"
-            android:title="Historial" />
-    </group>
     <item android:title="Perfil">
 
         <menu>
@@ -37,7 +25,10 @@
                     android:id="@+id/nav_perfil"
                     android:icon="@drawable/icon_perfil"
                     android:title="Perfil" />
-
+                <item
+                    android:id="@+id/nav_desactivarUbicacion"
+                    android:icon="@drawable/icon_desactivar_localizacion"
+                    android:title="Desactivar ubicacion" />
             </group>
         </menu>
     </item>

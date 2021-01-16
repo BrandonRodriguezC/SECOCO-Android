@@ -1,22 +1,31 @@
 package com.example.secoco.usuarios.persona;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.secoco.Ingreso;
 import com.example.secoco.R;
+import com.example.secoco.general.ServicioUbicacion;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Sintomas extends AppCompatActivity implements View.OnClickListener {
+public class Sintomas extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private Button button;
     private Spinner spinner4, spinner5, spinner6, spinner7, spinner8, spinner9;
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private String resultado;
-
+    //BARRA ----------------------
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +37,14 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener 
 
         //Acción de Botones
         this.button.setOnClickListener(this);
+
+        //MENU LATERAL - RECORDAR IMPLEMENTS NavigationView.OnNavigationItemSelectedListener
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.bringToFront();
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
     }
 
     @Override
@@ -99,5 +116,44 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener 
                 }
             });*/
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+       if (item.toString().equals("Cerrar sesion")) {
+            ServicioUbicacion.finalizarServicio(this);
+            Intent login = new Intent(Sintomas.this, Ingreso.class);
+            startActivity(login);
+            finish();
+        }else if (item.toString().equals("Mapa")) {
+            Intent actividad = new Intent(Sintomas.this, Mapa.class);
+           actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
+           actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));
+           actividad.putExtra("ID", getIntent().getStringExtra("ID"));
+           actividad.putExtra("FECHA_NACIMIENTO", getIntent().getStringExtra("FECHA_NACIMIENTO"));
+           actividad.putExtra("CORREO", getIntent().getStringExtra("CORREO"));
+           actividad.putExtra("LOCALIDAD", getIntent().getStringExtra("LOCALIDAD"));
+           actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
+           actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
+           actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
+            startActivity(actividad);
+           finish();
+        }else if (item.toString().equals("Desactivar ubicacion")){
+            ServicioUbicacion.finalizarServicio(this);
+        }else if (item.toString().equals("Perfil")){
+           Intent actividad = new Intent(Sintomas.this, PersonaInicio.class);
+           actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
+           actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));
+           actividad.putExtra("ID", getIntent().getStringExtra("ID"));
+           actividad.putExtra("FECHA_NACIMIENTO", getIntent().getStringExtra("FECHA_NACIMIENTO"));
+           actividad.putExtra("CORREO", getIntent().getStringExtra("CORREO"));
+           actividad.putExtra("LOCALIDAD", getIntent().getStringExtra("LOCALIDAD"));
+           actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
+           actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
+           actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
+           startActivity(actividad);
+           finish();
+       }
+        return false;
     }
 }

@@ -34,7 +34,7 @@ public class Registro extends AppCompatActivity {
     private EditText txt_nombre, txt_apellido, txt_correo, txt_id,
             txt_fecha_nacimiento, txt_contrasena_r, txt_contrasena_rv, txt_direccion, txt_nombre_usuario;
     private Button boton_registro;
-    private Spinner spinner, spinner2, spinner3;
+    private Spinner spinner, spinner2;
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("usuarios/Naturales");
@@ -93,7 +93,6 @@ public class Registro extends AppCompatActivity {
 
         spinner = (Spinner) findViewById(R.id.spinner);
         spinner2 = (Spinner) findViewById(R.id.spinner2);
-        spinner3 = (Spinner) findViewById(R.id.spinner3);
 
         //textos
         String nombre = txt_nombre.getText().toString();
@@ -108,57 +107,69 @@ public class Registro extends AppCompatActivity {
         //spinners
         String tipo_id = spinner.getSelectedItem().toString();
         String localidad = getResources().getStringArray(R.array.LocalidadesIdentificador)[spinner2.getSelectedItemPosition()];
-        String estado = spinner3.getSelectedItem().toString();
+        String localidadTexto= spinner2.getSelectedItem().toString();
+        if(contraseña.equals(contraseñaV)){
+            JSONObject request = new JSONObject();
+            try {
 
-        JSONObject request = new JSONObject();
-        try {
-
-            request.put("nombre", nombre);
-            request.put("apellido", apellido);
-            request.put("contraseña", contraseña);
-            request.put("correo", correo);
-            request.put("tipoID", tipo_id);
-            request.put("ID", id);
-            request.put("fechaNacimiento", fechaNacimiento);
-            request.put("localidad", localidad);
-            request.put("direccion", direccion);
-            request.put("usuario", nombreUsuario);
+                request.put("nombre", nombre);
+                request.put("apellido", apellido);
+                request.put("contraseña", contraseña);
+                request.put("correo", correo);
+                request.put("tipoID", tipo_id);
+                request.put("ID", id);
+                request.put("fechaNacimiento", fechaNacimiento);
+                request.put("localidad", localidad);
+                request.put("direccion", direccion);
+                request.put("usuario", nombreUsuario);
 
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                "https://secocobackend.glitch.me/REGISTRO",
-                request,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            String rta = response.getString("M");
-                            if(rta.equals("Usuario añadido!")){
-                                Intent inicio = new Intent(Registro.this, PersonaInicio.class);
-                                inicio.putExtra("USUARIO", nombreUsuario);
-                                startActivity(inicio);
-                                finish();
-                            }else{
-                                Toast.makeText(Registro.this, rta , Toast.LENGTH_SHORT ).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                    "https://secocobackend.glitch.me/REGISTRO",
+                    request,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String rta = response.getString("M");
+                                if(rta.equals("Usuario añadido!")){
+                                    Intent inicio = new Intent(Registro.this, PersonaInicio.class);
+                                    inicio.putExtra("USUARIO", nombreUsuario);
+                                    inicio.putExtra("NOMBRE", nombre+ " "+apellido);
+                                    inicio.putExtra("ID", tipo_id+ " "+id);
+                                    inicio.putExtra("FECHA_NACIMIENTO", fechaNacimiento);
+                                    inicio.putExtra("CORREO", correo);
+                                    inicio.putExtra("LOCALIDAD", localidadTexto);
+                                    inicio.putExtra("DIRECCION", direccion);
+                                    inicio.putExtra("SINTOMAS", "111111");
+                                    inicio.putExtra("RESULTADO", "-");
+                                    startActivity(inicio);
+                                    finish();
+                                }else{
+                                    Toast.makeText(Registro.this, rta , Toast.LENGTH_SHORT ).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("Error");
+                        }
+                    });
+            jsonObjectRequest.setShouldCache(false);
+            RequestAPI.getInstance(this).add(jsonObjectRequest);
+        }else{
+            Toast.makeText(Registro.this, "Las contraseñas no coinciden" , Toast.LENGTH_SHORT ).show();
+        }
 
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("Error");
-                    }
-                });
-        jsonObjectRequest.setShouldCache(false);
-        RequestAPI.getInstance(this).add(jsonObjectRequest);
 
     }
 

@@ -185,37 +185,15 @@
             app:layout_constraintTop_toBottomOf="@+id/spinner2"
             tools:ignore="MissingConstraints" />
 
-        <TextView
-            android:id="@+id/pregunta"
-            android:layout_width="299dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="@string/registro_txt_pregunta"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_direccion" />
-
-        <Spinner
-            android:id="@+id/spinner3"
-            android:layout_width="300dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="12dp"
-            android:entries="@array/Estado"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.522"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pregunta" />
-
         <Button
             android:id="@+id/boton_registro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="16dp"
             android:text="@string/registro_txt_boton_registrar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner3" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_direccion" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

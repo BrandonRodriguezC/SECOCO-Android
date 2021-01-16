@@ -103,7 +103,6 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
-        navigationView.setCheckedItem(R.id.nav_mapa);
 
     }
 
@@ -318,14 +317,38 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
     //LISTENER MENU LATERAL ------------------------------
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.toString().equals("Sintomas")) {
-            Intent sintomas = new Intent(this, Sintomas.class);
-            sintomas.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
-            startActivity(sintomas);
-        } else if (item.toString().equals("Cerrar sesion")) {
+        if (item.toString().equals("Cerrar sesion")) {
             ServicioUbicacion.finalizarServicio(this);
             Intent login = new Intent(Mapa.this, Ingreso.class);
             startActivity(login);
+            finish();
+        }else if (item.toString().equals("Perfil")) {
+            Intent actividad = new Intent(Mapa.this, PersonaInicio.class);
+            actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
+            actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));
+            actividad.putExtra("ID", getIntent().getStringExtra("ID"));
+            actividad.putExtra("FECHA_NACIMIENTO", getIntent().getStringExtra("FECHA_NACIMIENTO"));
+            actividad.putExtra("CORREO", getIntent().getStringExtra("CORREO"));
+            actividad.putExtra("LOCALIDAD", getIntent().getStringExtra("LOCALIDAD"));
+            actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
+            actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
+            actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
+            startActivity(actividad);
+            finish();
+        }else if (item.toString().equals("Desactivar ubicacion")){
+            ServicioUbicacion.finalizarServicio(this);
+        }else if (item.toString().equals("Sintomas")){
+            Intent actividad = new Intent(Mapa.this, Sintomas.class);
+            actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
+            actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));
+            actividad.putExtra("ID", getIntent().getStringExtra("ID"));
+            actividad.putExtra("FECHA_NACIMIENTO", getIntent().getStringExtra("FECHA_NACIMIENTO"));
+            actividad.putExtra("CORREO", getIntent().getStringExtra("CORREO"));
+            actividad.putExtra("LOCALIDAD", getIntent().getStringExtra("LOCALIDAD"));
+            actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
+            actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
+            actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
+            startActivity(actividad);
             finish();
         }
         return false;

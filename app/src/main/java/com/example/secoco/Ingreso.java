@@ -150,6 +150,31 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
                                     progressDialog.dismiss();
                                     if (nuevaActividad != null) {
                                         nuevaActividad.putExtra("USUARIO", txt_usuario);
+                                        if(txt_tipo_usuario.equals(opcionesSpinner[0])){
+                                            nuevaActividad.putExtra("NOMBRE", response.getString("N"));
+                                            nuevaActividad.putExtra("ID", response.getString("ID"));
+                                            nuevaActividad.putExtra("FECHA_NACIMIENTO", response.getString("F"));
+                                            nuevaActividad.putExtra("CORREO", response.getString("M"));
+                                            String localidad =getResources().getStringArray(R.array.Localidades)[Integer.parseInt(response.getString("Z"))];
+                                            nuevaActividad.putExtra("LOCALIDAD",localidad );
+                                            nuevaActividad.putExtra("DIRECCION", response.getString("D"));
+                                            nuevaActividad.putExtra("SINTOMAS", response.getString("E"));
+                                            String examen = response.getString("X");
+                                            if(examen.equals("I")){
+                                                examen= "Inactivo";
+                                            }else if (examen.equals("A")){
+                                                examen= "Activo";
+                                            }else if (examen.equals("P")){
+                                                examen= "Pendiente a resultado";
+                                            }else if (examen.equals("N")){
+                                                examen= "Examen no tomado";
+                                            }else if (examen.equals("S")){
+                                                examen= "Examen solicitado";
+                                            }
+
+                                            nuevaActividad.putExtra("RESULTADO",examen);
+                                        }
+
                                         startActivity(nuevaActividad);
                                         guardarCredenciales(txt_usuario, txt_contrasena, txt_tipo_usuario);
                                         //Para cerrar la activity y que no puedan volver al LOGIN despues de LOGGEARSE
