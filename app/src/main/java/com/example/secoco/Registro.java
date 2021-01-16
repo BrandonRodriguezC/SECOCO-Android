@@ -142,7 +142,7 @@ public class Registro extends AppCompatActivity {
                                 startActivity(inicio);
                                 finish();
                             }else{
-                                Toast.makeText(Registro.this,rta, Toast.LENGTH_SHORT ).show();
+                                Toast.makeText(Registro.this, rta , Toast.LENGTH_SHORT ).show();
                             }
 
                         } catch (JSONException e) {
@@ -159,34 +159,6 @@ public class Registro extends AppCompatActivity {
                 });
         jsonObjectRequest.setShouldCache(false);
         RequestAPI.getInstance(this).add(jsonObjectRequest);
-
-
-       /* DatabaseReference usuarios = ref;
-        if (contraseña.equals(contraseñaV)) {
-            Query queryToGetData = ref.child(nombreUsuario);
-            //-----------VERIFICAR CEDULA INSCRITA-------------
-            queryToGetData.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (!dataSnapshot.exists()) {
-                        usuarios.child(nombreUsuario).setValue(new Usuario(nombre, apellido, correo, id, contraseña, direccion, tipo_id, localidad, estado, fechaNacimiento));
-                        Intent inicio = new Intent(Registro.this, PersonaInicio.class);
-                        startActivity(inicio);
-                        finish();
-                    } else {
-                        Toast.makeText(Registro.this, R.string.Error_Nombre_de_Usuario, Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Toast.makeText(Registro.this, R.string.Error_Base_de_Datos, Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
-        }
-      */
 
     }
 
