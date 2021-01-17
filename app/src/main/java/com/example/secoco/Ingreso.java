@@ -47,7 +47,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
         //Inicialización atributos
         this.txtUsuario = (EditText) findViewById(R.id.txt_usuario);
         this.txtContrasena = (EditText) findViewById(R.id.txt_contrasena);
-        this.spTipoUsuario = (Spinner) findViewById(R.id.sp_tipo_usuario);
+        this.spTipoUsuario = (Spinner) findViewById(R.id.txt_nueva_contrasena_confirmar);
         this.btnIngresar = (Button) findViewById(R.id.btn_ingresar);
         this.lblRegistro = (TextView) findViewById(R.id.lbl_registrar);
         this.lblContrasena = (TextView) findViewById(R.id.lbl_cambioContrasena);
@@ -240,8 +240,6 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void cambioContrasena() {
-        //Toca Agregarlo
-        Toast.makeText(this, "Cambiar Contraseña", Toast.LENGTH_SHORT).show();
         Intent cambioContrasena = new Intent(this, CambioContrasena.class);
         startActivity(cambioContrasena);
     }

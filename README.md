@@ -9,7 +9,6 @@ Funcionalidad completa para el ingreso de los diferentes usuarios del aplicativo
 con el servidor Node.js, con lo cual según sus permisos acceden a sus respectivas Activities. Por otro
 lado, esta funciona como intermediario para que el usuario pueda registrarse y cambiar su contraseña.
 
-
 ### Reporte Ubicación
 Se implementó la historia de usuario **Reporte Ubicación**, en donde al entrar al Activity
 de Persona Natural (PersonaInicio) automáticamente el aplicativo solicita y verifica
@@ -25,7 +24,16 @@ Funcionalidad para la búsqueda y solicitud de cita de los pacientes con posible
 con lo cual dependiendo del filtro realizado por la ERC y la fecha se envía un mensaje personalizado a
 los usuarios naturales del aplicativo y se actualiza el estado *X* dentro de la base de datos.
 
+### Reporte Zona
+Implementación del Activity **ReporteZona** en donde los usuarios del distrito pueden verificar en cada
+localidad las personas *Activas*, *InActivas*, *Solicitadas*, *Pendientes de Examen* y aquellas que no se les a
+solicitado el examen, pero no lo han tomado (*Examen No Tomado*). Por otro lado, esa funcionalidad posibilita
+comunicar a los residentes de la zona mediante un correo electrónico si se inicia la cuarentena,
+se elimina la cuarentena, continua la cuarentena o se continua sin cuarentena dependiendo del porcentaje
+de activos en la misma.
+
 ## Comentarios
+- Agregado de Cambio de Contraseña para los usuarios Naturales
 - Descentralización del Servicio que reporta la ubicación de usuario, con lo cual puede ser iniciado
 y finalizado desde cualquier activity del aplicativo SeCoCo
 - Actualización de Reporte Ubicación respecto a los nuevos parámetros de la base de datos

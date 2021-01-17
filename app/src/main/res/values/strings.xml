@@ -8,6 +8,12 @@
     <string name="main_lbl_registro"><u>Registro</u></string>
     <string name="main_lbl_cambio_contrasena"><u>Cambiar Contraseña</u></string>
 
+    <!-- Etiquetas para CambioContraseña-->
+    <string name="cambioContrasena_lbl_titulo">Cambio de Contraseña</string>
+    <string name="cambioContrasena_hint_nueva_contrasena">Ingrese su nueva Contraseña</string>
+    <string name="cambioContrasena_hint_nueva_confirmar_contrasena">Confirmar nueva Contraseña</string>
+    <string name="cambioContrasena_btn_cambiar_contrasena">Cambiar Contraseña</string>
+
     <!-- Etiquetas para Registro -->
     <string name="registro_lbl_registrate">Regístrate</string>
     <string name="registro_txt_nombre">Nombre</string>
@@ -106,6 +112,16 @@
 
     <!-- Etiquetas para usuarios.EREInicio-->
     <string name="ereInicio_nombre">ERE-COVID (Entidad que Reporta Examenes (Diagnosticos) Covid)</string>
+    <!-- Etiquetas para usuarios.EREReporteZona-->
+    <string name="reporteZona_lbl_activo">Activos</string>
+    <string name="reporteZona_lbl_inActivo">Inactivos</string>
+    <string name="reporteZona_lbl_solicitado">Solicitados</string>
+    <string name="reporteZona_lbl_pendientes">Pendientes</string>
+    <string name="reporteZona_lbl_examenNoTomado">Examen no Tomado</string>
+    <string name="reporteZona_lbl_totalPersonas">Total de Personas</string>
+
+
+    <string name="reporteZona_btn_estado_localidad">Actualizar Estado de Localidad</string>
 
     <!-- Etiquetas para usuarios.ETDAInicio-->
     <string name="etdaInicio_nombre">ETDA-COVID (Entidad que Toma las Decisiones de Aislamiento)</string>

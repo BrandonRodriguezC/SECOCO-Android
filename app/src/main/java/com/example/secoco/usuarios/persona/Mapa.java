@@ -131,6 +131,8 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
                         Toast.LENGTH_SHORT).show();
             }
         });
+        this.mapboxMap.getUiSettings().setAttributionEnabled(false);
+        this.mapboxMap.getUiSettings().setLogoEnabled(false);
     }
 
     @SuppressWarnings({"MissingPermission"})

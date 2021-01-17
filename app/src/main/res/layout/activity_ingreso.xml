@@ -63,10 +63,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sp_tipo_usuario" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_nueva_contrasena_confirmar" />
 
         <Spinner
-            android:id="@+id/sp_tipo_usuario"
+            android:id="@+id/txt_nueva_contrasena_confirmar"
             android:layout_width="310dp"
             android:layout_height="41dp"
             android:layout_marginTop="28dp"
