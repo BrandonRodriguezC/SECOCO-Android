@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -12,17 +13,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.secoco.Ingreso;
 import com.example.secoco.R;
+import com.example.secoco.Registro;
+import com.example.secoco.general.RequestAPI;
 import com.example.secoco.general.ServicioUbicacion;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Sintomas extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private Button button;
+    private EditText txt_nombre_usuario;
     private Spinner spinner4, spinner5, spinner6, spinner7, spinner8, spinner9;
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private String resultado;
+    //private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public String resultado,nombreUsuario;
     //BARRA ----------------------
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -56,6 +67,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
         spinner8 = (Spinner) findViewById(R.id.spinner8);
         spinner9 = (Spinner) findViewById(R.id.spinner9);
         resultado = "";
+
         if (view.getId() == this.button.getId()) {
             //Organización de Preguntas de la que más impacto tiene a la que menos impacto
             //segun https://www.who.int/es/emergencies/diseases/novel-coronavirus-2019/advice-for-public/q-a-coronaviruses
@@ -95,26 +107,45 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
             } else {
                 resultado += 0;
             }
+            //Toast.makeText(this, resultado, Toast.LENGTH_SHORT).show();
+            //ENVIO
 
-            Toast.makeText(this, resultado, Toast.LENGTH_SHORT).show();
 
+            String personUserName = getIntent().getStringExtra("USUARIO");
 
-           /* //Envio
-            String usuario = getIntent().getStringExtra("USUARIO");
-            //Toast.makeText(this, "Sintomas: "+getIntent().getStringExtra("USUARIO"), Toast.LENGTH_SHORT).show();
-            DatabaseReference ref = database.getReference("usuarios/Naturales/" + usuario + "/E");
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                    ref.setValue(resultado);
-                    Toast.makeText(Sintomas.this, "Sintomás Actualizados", Toast.LENGTH_SHORT).show();
-                }
+            //Toast.makeText(Sintomas.this, personUserName, Toast.LENGTH_SHORT).show();
+            Toast.makeText(Sintomas.this, "Sus sintomas se actualizaron", Toast.LENGTH_SHORT).show();
+            JSONObject request = new JSONObject();
+            try {
+                request.put("usuario", personUserName);
+                request.put("estado", resultado);
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT,
+                    "https://secocobackend.glitch.me/ACTUALIZAR-SINTOMAS",
+                    request,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
 
-                @Override
-                public void onCancelled(@NotNull DatabaseError databaseError) {
-                    Toast.makeText(Sintomas.this, R.string.Error_Base_de_Datos, Toast.LENGTH_SHORT).show();
-                }
-            });*/
+                            Intent persona = new Intent(Sintomas.this, PersonaInicio.class);
+                            persona.putExtra("USUARIO", personUserName);
+                            persona.putExtra("SINTOMAS",  resultado);
+                            startActivity(persona);
+                            finish();
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("Error");
+                        }
+                    });
+            jsonObjectRequest.setShouldCache(false);
+            RequestAPI.getInstance(this).add(jsonObjectRequest);
         }
     }
 
