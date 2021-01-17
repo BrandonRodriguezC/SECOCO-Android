@@ -113,8 +113,8 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
 
             String personUserName = getIntent().getStringExtra("USUARIO");
 
-            Toast.makeText(Sintomas.this, personUserName, Toast.LENGTH_SHORT).show();
-
+            //Toast.makeText(Sintomas.this, personUserName, Toast.LENGTH_SHORT).show();
+            Toast.makeText(Sintomas.this, "Sus sintomas se han actualizado", Toast.LENGTH_SHORT).show();
             JSONObject request = new JSONObject();
             try {
                 request.put("usuario", personUserName);
@@ -129,13 +129,11 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-
                             Intent persona = new Intent(Sintomas.this, PersonaInicio.class);
                             persona.putExtra("USUARIO", personUserName);
                             persona.putExtra("SINTOMAS",  resultado);
                             startActivity(persona);
                             finish();
-
                         }
                     },
                     new Response.ErrorListener() {
@@ -146,23 +144,6 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
                     });
             jsonObjectRequest.setShouldCache(false);
             RequestAPI.getInstance(this).add(jsonObjectRequest);
-
-           /* //Envio
-            String usuario = getIntent().getStringExtra("USUARIO");
-            //Toast.makeText(this, "Sintomas: "+getIntent().getStringExtra("USUARIO"), Toast.LENGTH_SHORT).show();
-            DatabaseReference ref = database.getReference("usuarios/Naturales/" + usuario + "/E");
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                    ref.setValue(resultado);
-                    Toast.makeText(Sintomas.this, "Sintomás Actualizados", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onCancelled(@NotNull DatabaseError databaseError) {
-                    Toast.makeText(Sintomas.this, R.string.Error_Base_de_Datos, Toast.LENGTH_SHORT).show();
-                }
-            });*/
         }
     }
 
