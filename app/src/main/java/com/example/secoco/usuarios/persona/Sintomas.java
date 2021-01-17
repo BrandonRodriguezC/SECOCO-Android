@@ -110,15 +110,14 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
             //Toast.makeText(this, resultado, Toast.LENGTH_SHORT).show();
             //ENVIO
 
-            Intent persona = new Intent(Sintomas.this, PersonaInicio.class);
-            //Intent personax = new Intent(Sintomas.this, PersonaInicio.class);
-            String personaxx =persona.getStringExtra("USUARIO");
 
-            Toast.makeText(Sintomas.this, ""+personaxx, Toast.LENGTH_SHORT).show();
+            String personUserName = getIntent().getStringExtra("USUARIO");
+
+            Toast.makeText(Sintomas.this, personUserName, Toast.LENGTH_SHORT).show();
 
             JSONObject request = new JSONObject();
             try {
-                request.put("llave", personaxx);
+                request.put("usuario", personUserName);
                 request.put("estado", resultado);
             }
             catch (JSONException e) {
@@ -130,11 +129,13 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            //Intent persona = new Intent(Sintomas.this, PersonaInicio.class);
-                            persona.putExtra("USUARIO", personaxx);
+
+                            Intent persona = new Intent(Sintomas.this, PersonaInicio.class);
+                            persona.putExtra("USUARIO", personUserName);
                             persona.putExtra("SINTOMAS",  resultado);
                             startActivity(persona);
                             finish();
+
                         }
                     },
                     new Response.ErrorListener() {
