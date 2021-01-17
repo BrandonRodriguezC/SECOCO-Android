@@ -114,7 +114,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
             String personUserName = getIntent().getStringExtra("USUARIO");
 
             //Toast.makeText(Sintomas.this, personUserName, Toast.LENGTH_SHORT).show();
-            Toast.makeText(Sintomas.this, "Sus sintomas se han actualizado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Sintomas.this, "Sus sintomas se actualizaron", Toast.LENGTH_SHORT).show();
             JSONObject request = new JSONObject();
             try {
                 request.put("usuario", personUserName);
@@ -129,11 +129,13 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+
                             Intent persona = new Intent(Sintomas.this, PersonaInicio.class);
                             persona.putExtra("USUARIO", personUserName);
                             persona.putExtra("SINTOMAS",  resultado);
                             startActivity(persona);
                             finish();
+
                         }
                     },
                     new Response.ErrorListener() {
