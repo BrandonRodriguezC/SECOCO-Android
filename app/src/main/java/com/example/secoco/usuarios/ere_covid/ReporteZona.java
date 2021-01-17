@@ -38,6 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -196,6 +197,7 @@ public class ReporteZona extends AppCompatActivity implements
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
+                                DecimalFormat format = new DecimalFormat("#.##");
                                 int total = response.getInt("A") + response.getInt("I")
                                         + response.getInt("S") + response.getInt("P")
                                         + response.getInt("N");
@@ -213,11 +215,11 @@ public class ReporteZona extends AppCompatActivity implements
                                 cambiarColor(porcNoExamen, lblExamenNoTomado);
 
                                 lblTitulo.setText(puntos.get(0).getProperty("N").getAsString());
-                                lblActivos.setText(response.getInt("A") + " - " + (porcActivos * 100) + "%");
-                                lblInactivos.setText(response.getInt("I") + " - " + (porcInactivos * 100) + "%");
-                                lblSolicitado.setText(response.getInt("S") + " - " + (porcSolicitados * 100) + "%");
-                                lblPendientes.setText(response.getInt("P") + " - " + (porcPendientes * 100) + "%");
-                                lblExamenNoTomado.setText(response.getInt("N") + " - " + (porcNoExamen * 100) + "%");
+                                lblActivos.setText(response.getInt("A") + " - " + format.format((porcActivos * 100)) + "%");
+                                lblInactivos.setText(response.getInt("I") + " - " + format.format((porcInactivos * 100)) + "%");
+                                lblSolicitado.setText(response.getInt("S") + " - " + format.format((porcSolicitados * 100)) + "%");
+                                lblPendientes.setText(response.getInt("P") + " - " + format.format((porcPendientes * 100)) + "%");
+                                lblExamenNoTomado.setText(response.getInt("N") + " - " + format.format((porcNoExamen * 100)) + "%");
                                 lblTotal.setText(total + " - 100%");
                                 visibilidadTarjetaFiltro(true);
                                 Z = puntos.get(0).getProperty("I").getAsString();
