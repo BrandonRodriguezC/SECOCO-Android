@@ -123,7 +123,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
             catch (JSONException e) {
                 e.printStackTrace();
             }
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT,
                     "https://secocobackend.glitch.me/ACTUALIZAR-SINTOMAS",
                     request,
                     new Response.Listener<JSONObject>() {
