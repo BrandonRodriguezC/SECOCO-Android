@@ -106,6 +106,7 @@ public class Registro extends AppCompatActivity {
         String nombreUsuario = txt_nombre_usuario.getText().toString();
         //spinners
         String tipo_id = spinner.getSelectedItem().toString();
+        int zona = spinner2.getSelectedItemPosition();
         String localidad = getResources().getStringArray(R.array.LocalidadesIdentificador)[spinner2.getSelectedItemPosition()];
         String localidadTexto= spinner2.getSelectedItem().toString();
         if(contraseña.equals(contraseñaV)){
@@ -146,6 +147,7 @@ public class Registro extends AppCompatActivity {
                                     inicio.putExtra("DIRECCION", direccion);
                                     inicio.putExtra("SINTOMAS", "111111");
                                     inicio.putExtra("RESULTADO", "-");
+                                    inicio.putExtra("ZONA", zona+"");
                                     startActivity(inicio);
                                     finish();
                                 }else{

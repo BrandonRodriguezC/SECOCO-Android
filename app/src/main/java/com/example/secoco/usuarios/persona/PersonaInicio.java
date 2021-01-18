@@ -182,6 +182,7 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
             actividad.putExtra("DIRECCION", direccion);
             actividad.putExtra("SINTOMAS", sintomas);
             actividad.putExtra("RESULTADO",resultado);
+            actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
             startActivity(actividad);
             finish();
         } else if (item.toString().equals("Cerrar sesion")) {
@@ -200,6 +201,7 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
             actividad.putExtra("DIRECCION", direccion);
             actividad.putExtra("SINTOMAS", sintomas);
             actividad.putExtra("RESULTADO",resultado);
+            actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
             startActivity(actividad);
             finish();
         }else if (item.toString().equals("Desactivar ubicacion")){

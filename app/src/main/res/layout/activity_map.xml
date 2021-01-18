@@ -16,9 +16,11 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:visibility="visible"
+        android:visibility="gone"
         app:headerLayout="@layout/header_menu"
-        app:menu="@menu/menu" />
+        app:menu="@menu/menu" >
+
+    </com.google.android.material.navigation.NavigationView>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,13 +28,24 @@
         android:layout_height="match_parent">
 
         <Button
+            android:id="@+id/bnt_Manejo_aislamiento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Tu zona"
+            app:layout_constraintBottom_toTopOf="@+id/btn_Historial_Desplazamientos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
             android:id="@+id/btn_Historial_Desplazamientos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:text="Historial Desplazamientos"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.89"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.cardview.widget.CardView
@@ -49,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="#000000"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
         </androidx.cardview.widget.CardView>
 

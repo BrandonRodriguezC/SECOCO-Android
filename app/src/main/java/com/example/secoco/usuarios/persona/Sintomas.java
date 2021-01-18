@@ -19,11 +19,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.secoco.Ingreso;
 import com.example.secoco.R;
-import com.example.secoco.Registro;
 import com.example.secoco.general.RequestAPI;
 import com.example.secoco.general.ServicioUbicacion;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -167,6 +165,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
            actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
            actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
            actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
+           actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
             startActivity(actividad);
            finish();
         }else if (item.toString().equals("Desactivar ubicacion")){
@@ -182,6 +181,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
            actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
            actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
            actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
+           actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
            startActivity(actividad);
            finish();
        }

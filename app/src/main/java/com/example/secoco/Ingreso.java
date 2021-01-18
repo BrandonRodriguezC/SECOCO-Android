@@ -155,6 +155,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
                                             nuevaActividad.putExtra("ID", response.getString("ID"));
                                             nuevaActividad.putExtra("FECHA_NACIMIENTO", response.getString("F"));
                                             nuevaActividad.putExtra("CORREO", response.getString("M"));
+                                            nuevaActividad.putExtra("ZONA", response.getString("Z"));
                                             String localidad =getResources().getStringArray(R.array.Localidades)[Integer.parseInt(response.getString("Z"))];
                                             nuevaActividad.putExtra("LOCALIDAD",localidad );
                                             nuevaActividad.putExtra("DIRECCION", response.getString("D"));

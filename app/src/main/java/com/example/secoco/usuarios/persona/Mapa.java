@@ -61,7 +61,7 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
     private MapboxMap mapboxMap;
     private PermissionsManager permissionsManager;
     private LocationComponent locationComponent;
-    private Button button;
+    private Button btn1, btn2;
     private DirectionsRoute currentRoute;
 
     // MAPBOX --------------------
@@ -88,11 +88,19 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
         tarjeta= findViewById(R.id.tarjeta);
-        button = (Button) findViewById(R.id.btn_Historial_Desplazamientos);
-        button.setOnClickListener(new View.OnClickListener() {
+        btn1 = (Button) findViewById(R.id.btn_Historial_Desplazamientos);
+        btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 historicoDesplazamientos(getIntent().getStringExtra("USUARIO"));
+            }
+        });
+
+        btn2 = (Button) findViewById(R.id.bnt_Manejo_aislamiento);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                manejoAislamiento(getIntent().getStringExtra("ZONA"));
             }
         });
 
@@ -278,28 +286,33 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
         RequestAPI.getInstance(this).add(jsonObjectRequest);
     }
 
-    private void manejoAislamiento(String usuario) {
+    private void manejoAislamiento(String localidad) {
+
         JSONObject request = new JSONObject();
         try {
-            request.put("usuario", usuario);
+            request.put("Z", localidad);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                "https://secocobackend.glitch.me/HISTORIAL-DESPLAZAMIENTOS",
+                "https://secocobackend.glitch.me/MANEJO-AISLAMIENTO",
                 request,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            double total = response.getDouble("Total");
                             double activos = response.getDouble("Activos");
                             double posibles = response.getDouble("Posibles");
                             double latMin = Double.parseDouble(response.getString("LatMin"));
                             double lonMin = Double.parseDouble(response.getString("LonMin"));
                             double latMax = Double.parseDouble(response.getString("LatMax"));
                             double lonMax = Double.parseDouble(response.getString("LonMax"));
-                            System.out.println(total + " " + activos + " " + posibles + " " + latMin + ":" + lonMin + ":" + latMax + ":" + lonMax);
+                            TextView reporte = findViewById(R.id.tarjeta_fecha);
+                            reporte.setText("En tu localidad el "+ String.format("%.2f", activos*100)+"% son activos, el "+String.format("%.2f", posibles*100)+"% es sospechoso y el "+ String.format("%.2f", (1-(activos+posibles)))+ "% son inactivos, según estos datos tú decides si aplicar aislamiento preventivo");
+                            if(tarjeta.getVisibility()== View.INVISIBLE){
+                                tarjeta.setVisibility(View.VISIBLE);
+                            }
+                            System.out.println( activos + " " + posibles + " " + latMin + ":" + lonMin + ":" + latMax + ":" + lonMax);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -335,6 +348,7 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
             actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
             actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
             actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
+            actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
             startActivity(actividad);
             finish();
         }else if (item.toString().equals("Desactivar ubicacion")){
@@ -350,6 +364,7 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
             actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
             actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
             actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
+            actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
             startActivity(actividad);
             finish();
         }
