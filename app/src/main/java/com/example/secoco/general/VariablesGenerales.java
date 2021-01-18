@@ -15,11 +15,5 @@ public class VariablesGenerales {
     //Su estructura esta dada por una regla de 3 en donde 0.00001 en latitud o longitud equivale a 1.11 metros
     public static final double RANGO_MAXIMO_GPS = 1 * 0.00001 / 1.11;
 
-    /*---------------------Variables generales de Analisis de Contaminados------------------------*/
-    public static final double DISTANCIA_MAXIMA_ENTRE_PERSONAS = 5 * 0.00001 / 1.11;
-
-
-    /*---------------------------Credenciales Envio Correos (Provicional)-------------------------*/
-    public static String [] EMAIL_ORIGEN = {"pedroppax@gmail.com", "Pruebasecoco"};
 
 }

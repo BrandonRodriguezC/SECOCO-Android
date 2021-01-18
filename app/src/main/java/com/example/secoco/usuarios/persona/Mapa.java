@@ -69,14 +69,14 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
     private static final String ICON_ID = "ICON_ID";
     private static final String LAYER_ID = "LAYER_ID";
 
-    List<Feature> symbolLayerIconFeatureList = new ArrayList<Feature>();
-    List<UbicacionAPI> ubicaciones = new ArrayList<UbicacionAPI>();
+    private List<Feature> symbolLayerIconFeatureList = new ArrayList<Feature>();
+    private List<UbicacionAPI> ubicaciones = new ArrayList<UbicacionAPI>();
 
-    CardView tarjeta ;
+    private CardView tarjeta;
 
     //BARRA ----------------------
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
 
     @Override
@@ -87,7 +87,7 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-        tarjeta= findViewById(R.id.tarjeta);
+        tarjeta = findViewById(R.id.tarjeta);
         btn1 = (Button) findViewById(R.id.btn_Historial_Desplazamientos);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,8 +135,6 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
 
                 mapboxMap.addOnMapClickListener(Mapa.this);
                 enableLocationComponent(mapboxMap.getStyle());
-                Toast.makeText(Mapa.this, R.string.tap_on_marker_instruction,
-                        Toast.LENGTH_SHORT).show();
             }
         });
         this.mapboxMap.getUiSettings().setAttributionEnabled(false);
@@ -220,7 +218,7 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
 
     @Override
     public boolean onMapClick(@NonNull LatLng point) {
-        if(tarjeta.getVisibility()!= View.INVISIBLE){
+        if (tarjeta.getVisibility() != View.INVISIBLE) {
             tarjeta.setVisibility(View.INVISIBLE);
         }
         return handleClickIcon(mapboxMap.getProjection().toScreenLocation(point));
@@ -233,8 +231,8 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
             TextView fecha = findViewById(R.id.tarjeta_fecha);
             int i = features.get(0).getProperty("I").getAsInt();
             UbicacionAPI obj = ubicaciones.get(i);
-            fecha.setText("Fecha: "+ obj.F+"\nHora inicio: "+ (int)obj.HI/100+ ":"+(int)obj.HI%100+"\nHora final: "+ (int)obj.HF/100+ ":"+(int)obj.HF%100);
-            if(tarjeta.getVisibility()== View.INVISIBLE){
+            fecha.setText("Fecha: " + obj.F + "\nHora inicio: " + (int) obj.HI / 100 + ":" + (int) obj.HI % 100 + "\nHora final: " + (int) obj.HF / 100 + ":" + (int) obj.HF % 100);
+            if (tarjeta.getVisibility() == View.INVISIBLE) {
                 tarjeta.setVisibility(View.VISIBLE);
             }
             return true;
@@ -308,11 +306,14 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
                             double latMax = Double.parseDouble(response.getString("LatMax"));
                             double lonMax = Double.parseDouble(response.getString("LonMax"));
                             TextView reporte = findViewById(R.id.tarjeta_fecha);
-                            reporte.setText("En tu localidad el "+ String.format("%.2f", activos*100)+"% son activos, el "+String.format("%.2f", posibles*100)+"% es sospechoso y el "+ String.format("%.2f", (1-(activos+posibles)))+ "% son inactivos, según estos datos tú decides si aplicar aislamiento preventivo");
-                            if(tarjeta.getVisibility()== View.INVISIBLE){
+                            reporte.setText("En tu localidad el " + String.format("%.2f", activos * 100) + "% de las personas inscritas " +
+                                    "a SeCoCo son activas de COVID-19, el " + String.format("%.2f", posibles * 100) + "% son sospechosas y el " +
+                                    String.format("%.2f", (1 - (activos + posibles)) * 100) + "% son inactivas, según estos datos tú decides si " +
+                                    "aplicar aislamiento preventivo");
+                            if (tarjeta.getVisibility() == View.INVISIBLE) {
                                 tarjeta.setVisibility(View.VISIBLE);
                             }
-                            System.out.println( activos + " " + posibles + " " + latMin + ":" + lonMin + ":" + latMax + ":" + lonMax);
+                            System.out.println(activos + " " + posibles + " " + latMin + ":" + lonMin + ":" + latMax + ":" + lonMax);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -337,7 +338,7 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
             Intent login = new Intent(Mapa.this, Ingreso.class);
             startActivity(login);
             finish();
-        }else if (item.toString().equals("Perfil")) {
+        } else if (item.toString().equals("Perfil")) {
             Intent actividad = new Intent(Mapa.this, PersonaInicio.class);
             actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
             actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));
@@ -351,9 +352,9 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
             actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
             startActivity(actividad);
             finish();
-        }else if (item.toString().equals("Desactivar ubicacion")){
+        } else if (item.toString().equals("Desactivar ubicacion")) {
             ServicioUbicacion.finalizarServicio(this);
-        }else if (item.toString().equals("Sintomas")){
+        } else if (item.toString().equals("Sintomas")) {
             Intent actividad = new Intent(Mapa.this, Sintomas.class);
             actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
             actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));
