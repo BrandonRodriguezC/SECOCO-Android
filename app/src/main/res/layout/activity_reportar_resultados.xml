@@ -1,31 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".usuarios.persona.Mapa"
-    tools:openDrawer="start">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:visibility="gone"
-        app:headerLayout="@layout/header_menu"
-        app:menu="@menu/menu" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".usuarios.ere_covid.ReportarResultados">
 
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".usuario.ere_covid.ReportarResultados"
-            >
      <EditText
         android:id="@+id/tf_reporte_resultados_Cedula"
         android:layout_width="220dp"
@@ -103,5 +87,5 @@
         app:layout_constraintStart_toStartOf="@+id/lbl_reporte_resultados_Cedula"
         app:layout_constraintTop_toBottomOf="@+id/lbl_reporte_resultados_Cedula" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.drawerlayout.widget.DrawerLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
