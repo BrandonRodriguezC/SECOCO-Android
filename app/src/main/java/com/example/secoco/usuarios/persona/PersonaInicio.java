@@ -207,6 +207,21 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         }else if (item.toString().equals("Desactivar ubicacion")){
             ServicioUbicacion.finalizarServicio(this);
         }
+        else if (item.toString().equals("Reportar Resultados")){
+            Intent actividad = new Intent(PersonaInicio.this, PersonaInicio.class);
+            actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
+            actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));
+            actividad.putExtra("ID", getIntent().getStringExtra("ID"));
+            actividad.putExtra("FECHA_NACIMIENTO", getIntent().getStringExtra("FECHA_NACIMIENTO"));
+            actividad.putExtra("CORREO", getIntent().getStringExtra("CORREO"));
+            actividad.putExtra("LOCALIDAD", getIntent().getStringExtra("LOCALIDAD"));
+            actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
+            actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
+            actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
+            actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
+            startActivity(actividad);
+            finish();
+        }
         return false;
     }
 

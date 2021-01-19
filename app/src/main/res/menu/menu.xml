@@ -6,6 +6,10 @@
         android:title="Sintomas" />
 
     <item
+        android:id="@+id/nav_Reporte_Resultado"
+        android:icon="@drawable/icon_resultados"
+        android:title="Reporte Resultado" />
+    <item
         android:id="@+id/nav_mapa"
         android:icon="@drawable/icon_mapa"
         android:title="Mapa" />

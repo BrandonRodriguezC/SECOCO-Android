@@ -30,7 +30,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
     private Button button;
     private EditText txt_nombre_usuario;
     private Spinner spinner4, spinner5, spinner6, spinner7, spinner8, spinner9;
-    //private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+
     public String resultado,nombreUsuario;
     //BARRA ----------------------
     DrawerLayout drawerLayout;
@@ -111,7 +111,6 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
 
             String personUserName = getIntent().getStringExtra("USUARIO");
 
-            //Toast.makeText(Sintomas.this, personUserName, Toast.LENGTH_SHORT).show();
             Toast.makeText(Sintomas.this, "Sus sintomas se actualizaron", Toast.LENGTH_SHORT).show();
             JSONObject request = new JSONObject();
             try {
@@ -171,6 +170,21 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
         }else if (item.toString().equals("Desactivar ubicacion")){
             ServicioUbicacion.finalizarServicio(this);
         }else if (item.toString().equals("Perfil")){
+           Intent actividad = new Intent(Sintomas.this, PersonaInicio.class);
+           actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
+           actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));
+           actividad.putExtra("ID", getIntent().getStringExtra("ID"));
+           actividad.putExtra("FECHA_NACIMIENTO", getIntent().getStringExtra("FECHA_NACIMIENTO"));
+           actividad.putExtra("CORREO", getIntent().getStringExtra("CORREO"));
+           actividad.putExtra("LOCALIDAD", getIntent().getStringExtra("LOCALIDAD"));
+           actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
+           //actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
+           actividad.putExtra("SINTOMAS", resultado);
+           actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
+           actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
+           startActivity(actividad);
+           finish();
+       }else if (item.toString().equals("Reportar Resultados")){
            Intent actividad = new Intent(Sintomas.this, PersonaInicio.class);
            actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
            actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));

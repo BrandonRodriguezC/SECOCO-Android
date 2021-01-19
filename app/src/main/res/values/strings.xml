@@ -25,6 +25,7 @@
         <item>T.I.</item>
         <item>R.C.</item>
     </string-array>
+
     <string name="registro_txt_numero_id">No. id</string>
     <string name="registro_txt_fecha_nacimiento">Fecha de nacimiento</string>
     <string name="registro_txt_usuario">Nombre de Usuario</string>
@@ -151,10 +152,17 @@
         <item>Si</item>
         <item>No</item>
     </string-array>
+
     <!-- Etiquetas para Reporte Resultados -->
+    <string name="reporte_resultados_cedula">Cédula</string>
+    <string name="reporte_resultados_resultados">Resultado</string>
+    <string name="reporte_resultados_enviar">Enviar</string>
+    <string name="reporte_envio_de_resultados">Envio de Resultados</string>
     <string-array name="resultado_examen">
-        <item>Positivo</item>
-        <item>Negativo</item>
+        <item>Activo</item>
+        <item>Inactivo</item>
+        <item>Solicitado</item>
         <item>Pendiente</item>
+        <item>Examen no tomado</item>
     </string-array>
 </resources>
