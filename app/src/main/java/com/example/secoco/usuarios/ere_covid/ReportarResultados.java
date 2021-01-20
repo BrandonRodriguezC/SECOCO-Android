@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.secoco.Ingreso;
 import com.example.secoco.R;
+import com.example.secoco.Registro;
 import com.example.secoco.general.RequestAPI;
 import com.example.secoco.general.ServicioUbicacion;
 import com.example.secoco.usuarios.persona.Mapa;
@@ -26,6 +27,7 @@ import com.example.secoco.usuarios.persona.PersonaInicio;
 import com.example.secoco.usuarios.persona.Sintomas;
 import com.google.android.material.navigation.NavigationView;
 
+import org.jetbrains.annotations.TestOnly;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,9 +57,9 @@ public class ReportarResultados extends AppCompatActivity implements View.OnClic
         spn_reporte_resultados_TipoID = (Spinner) findViewById(R.id.spn_reporte_resultados_TipoID);
         spn_reporte_resultados_Resultado = (Spinner) findViewById(R.id.spn_reporte_resultados_Resultado);
 
-        String id= spn_reporte_resultados_TipoID.getSelectedItem().toString()+" "+ tf_reporte_resultados_Cedula.getText();
+        String tipoid= spn_reporte_resultados_TipoID.getSelectedItem().toString();
+        String cedula= tf_reporte_resultados_Cedula.getText().toString();
         String resultado= spn_reporte_resultados_Resultado.getSelectedItem().toString();
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
         resultadoAbr="";
         if (resultado.equals("Activo")){
@@ -71,31 +73,28 @@ public class ReportarResultados extends AppCompatActivity implements View.OnClic
         }else if (resultado.equals("Examen no tomado")){
             resultadoAbr="N";
         }
-        //Toast.makeText(this, "El resultado ingresado fue '"+resultado+"'", Toast.LENGTH_SHORT).show();
-
         //ENVIO
-        String cedula =id;
         JSONObject request = new JSONObject();
-
         try {
-            request.put("id", cedula);
+            request.put("tipoID", tipoid);
+            request.put("ID", cedula);
             request.put("resultado", resultadoAbr);
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                "https://secocobackend.glitch.me/REPORTAR-RESULTADOS",
+                "https://secocobackend.glitch.me/RESULTADO-EXAMEN",
                 request,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
-                        Intent persona = new Intent(ReportarResultados.this, PersonaInicio.class);
-                        persona.putExtra("USUARIO", cedula);
-                        persona.putExtra("RESULTADO",  resultadoAbr);
-                        startActivity(persona);
-                        finish();
+                        try {
+                            String rt = response.getString("X");
+                            Toast.makeText(ReportarResultados.this, rt, Toast.LENGTH_SHORT ).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
