@@ -165,4 +165,6 @@
         <item>Pendiente</item>
         <item>Examen no tomado</item>
     </string-array>
+    <string name="button_aislamiento">Consultar movimiento de pacientes con aislamiento</string>
+
 </resources>
