@@ -28,6 +28,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".usuarios.persona.Mapa">
 
         <com.mapbox.mapboxsdk.maps.MapView
             android:id="@+id/mapView"
@@ -41,6 +48,7 @@
             mapbox:mapbox_cameraTargetLng="-74.06531231647179"
             mapbox:mapbox_cameraZoom="10" />
 
+        </FrameLayout>
         <Button
             android:id="@+id/bnt_Manejo_aislamiento"
             android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package com.example.secoco.usuarios.persona;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -41,6 +42,8 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.style.layers.Layer;
+import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 
@@ -78,6 +81,10 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
+
+    //POLIGONOS -------------------------
+    private Style estilo;
+    private Layer capa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,10 +124,9 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
-        mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/mapbox/cjf4m44iw0uza2spb3q0a7s41")
+        mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/brandonrodriguez/ckk77d7ny04dn18o4cz1ccvcz")
                 .withImage(ICON_ID, BitmapFactory.decodeResource(
                         Mapa.this.getResources(), R.drawable.mapbox_marker_icon_default))
-
                 .withSource(new GeoJsonSource(SOURCE_ID,
                         FeatureCollection.fromFeatures(symbolLayerIconFeatureList)))
                 .withLayer(new SymbolLayer(LAYER_ID, SOURCE_ID)
@@ -129,10 +135,12 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
                                 iconAllowOverlap(true),
                                 iconIgnorePlacement(true)
                         )
-                ), new Style.OnStyleLoaded() {
+                )
+
+                , new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
-
+                Mapa.this.estilo = style;
                 mapboxMap.addOnMapClickListener(Mapa.this);
                 enableLocationComponent(mapboxMap.getStyle());
             }
@@ -220,6 +228,8 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
     public boolean onMapClick(@NonNull LatLng point) {
         if (tarjeta.getVisibility() != View.INVISIBLE) {
             tarjeta.setVisibility(View.INVISIBLE);
+            capa.setProperties(PropertyFactory.fillOpacity((float)0));
+
         }
         return handleClickIcon(mapboxMap.getProjection().toScreenLocation(point));
     }
@@ -301,19 +311,25 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
                         try {
                             double activos = response.getDouble("Activos");
                             double posibles = response.getDouble("Posibles");
-                            double latMin = Double.parseDouble(response.getString("LatMin"));
-                            double lonMin = Double.parseDouble(response.getString("LonMin"));
-                            double latMax = Double.parseDouble(response.getString("LatMax"));
-                            double lonMax = Double.parseDouble(response.getString("LonMax"));
+                            capa = estilo.getLayer(localidad+" P");
+                            capa.setProperties(PropertyFactory.fillOpacity((float)0.8));
+                            if(activos+posibles > 0.6){
+                                capa.setProperties(PropertyFactory.fillColor(Color.parseColor("#D1001C")));
+                            }else if (activos+posibles > 0.3){
+                                capa.setProperties(PropertyFactory.fillColor(Color.parseColor("#F9C70C")));
+                            }else {
+                                capa.setProperties(PropertyFactory.fillColor(Color.parseColor("#006A4E")));
+                            }
                             TextView reporte = findViewById(R.id.tarjeta_fecha);
                             reporte.setText("En tu localidad el " + String.format("%.2f", activos * 100) + "% de las personas inscritas " +
                                     "a SeCoCo son activas de COVID-19, el " + String.format("%.2f", posibles * 100) + "% son sospechosas y el " +
                                     String.format("%.2f", (1 - (activos + posibles)) * 100) + "% son inactivas, según estos datos tú decides si " +
                                     "aplicar aislamiento preventivo");
+                            //Layer localidad =
                             if (tarjeta.getVisibility() == View.INVISIBLE) {
                                 tarjeta.setVisibility(View.VISIBLE);
                             }
-                            System.out.println(activos + " " + posibles + " " + latMin + ":" + lonMin + ":" + latMax + ":" + lonMax);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
