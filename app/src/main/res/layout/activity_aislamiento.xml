@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".usuarios.etda_covid.Aislamiento">
+
+        <TextView
+            android:id="@+id/consult_mov"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="Movimiento en pacientes con aislamiento "
+
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/select_localidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="Seleccione la localidad "
+
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/consult_mov"
+            app:layout_constraintTop_toBottomOf="@+id/consult_mov"
+            tools:ignore="MissingConstraints" />
+
+        <Spinner
+            android:id="@+id/spiner_localidad"
+            android:layout_width="350dp"
+            android:layout_height="45dp"
+            android:entries="@array/Localidades"
+            android:prompt="@string/registro_txt_localidad"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/select_localidad" />
+
+        <Button
+            android:id="@+id/boton_ais"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="68dp"
+            android:layout_marginLeft="68dp"
+
+            android:layout_marginTop="28dp"
+            android:onClick="boton_ais"
+            android:text="Enviar cambios"
+            app:layout_constraintStart_toStartOf="@+id/consult_mov"
+            app:layout_constraintTop_toBottomOf="@+id/spiner_localidad" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_aisla"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/boton_ais"
+            tools:layout_editor_absoluteX="0dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
