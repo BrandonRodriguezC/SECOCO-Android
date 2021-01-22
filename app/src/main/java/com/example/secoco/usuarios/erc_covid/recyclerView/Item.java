@@ -1,6 +1,5 @@
 package com.example.secoco.usuarios.erc_covid.recyclerView;
 
-import com.example.secoco.entities.UsuarioAPI;
 import com.example.secoco.usuarios.erc_covid.ReporteNotificarCita;
 
 import org.json.JSONObject;

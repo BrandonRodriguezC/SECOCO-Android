@@ -3,7 +3,7 @@ package com.example.secoco.entities;
 public class UbicacionAPI {
     public double Lat, Lon;
     public String F;
-    public int HI, HF,Z;
+    public int HI, HF, Z;
 
     public UbicacionAPI(String latitud, String longitud, String fecha, String horaInicio, String horaFin, String Z) {
         this.Lat = Double.parseDouble(latitud);
@@ -11,7 +11,7 @@ public class UbicacionAPI {
         this.F = fecha;
         this.HI = Integer.parseInt(horaInicio);
         this.HF = Integer.parseInt(horaFin);
-        this.Z= Integer.parseInt(Z);
+        this.Z = Integer.parseInt(Z);
     }
 
     public double getLat() {
