@@ -59,10 +59,9 @@ public class ReporteZona extends AppCompatActivity implements
         OnMapReadyCallback, MapboxMap.OnMapClickListener, View.OnClickListener {
 
     private static final String SOURCE_ID = "SOURCE_ID";
-    private String ICONO_CUARENTENA = "ICONO_CUARENTENA";
-    private String ICONO_NO_CUARENTENA = "ICONO_NO_CUARENTENA";
     private static final String PROPIEDAD_ICONO = "ICONOS";
     private static final String LAYER_ID = "LAYER_ID";
+    private String ICONO_CUARENTENA = "ICONO_CUARENTENA", ICONO_NO_CUARENTENA = "ICONO_NO_CUARENTENA", Z, C;
     private MapView mapView;
     private MapboxMap mapboxMap;
     private List<Feature> puntosLocalidades;
@@ -70,7 +69,6 @@ public class ReporteZona extends AppCompatActivity implements
     private Button btnEstadoLocalidad;
     private CardView cardViewZona;
     private ConstraintLayout consActivity;
-    private String Z, C;
     private double P;
 
     //Reporte Resultado

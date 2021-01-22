@@ -15,11 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SeCoCo">
-        <activity android:name=".usuarios.ere_covid.ReporteZona"/>
-        <activity android:name=".usuarios.erc_covid.ReporteNotificarCita"/>
+        <activity android:name=".usuarios.ere_covid.ReporteZona" />
+        <activity android:name=".usuarios.erc_covid.ReporteNotificarCita" />
         <activity android:name=".usuarios.persona.PersonaInicio" />
         <activity android:name=".CambioContrasena" />
         <activity android:name=".usuarios.etda_covid.ETDAInicio" />
+        <activity android:name=".usuarios.etda_covid.Aislamiento" />
         <activity android:name=".usuarios.persona.Mapa" />
         <activity android:name=".Registro" />
         <activity android:name=".usuarios.persona.Sintomas" />

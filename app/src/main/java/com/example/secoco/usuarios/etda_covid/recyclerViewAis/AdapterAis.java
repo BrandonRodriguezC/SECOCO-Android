@@ -1,4 +1,5 @@
 package com.example.secoco.usuarios.etda_covid.recyclerViewAis;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,7 @@ public class AdapterAis extends RecyclerView.Adapter<AdapterAis.ViewHolderDatos>
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderDatos holder, int position) {
-        ViewHolderDatos asignarDatos = (ViewHolderDatos)holder;
+        ViewHolderDatos asignarDatos = (ViewHolderDatos) holder;
         holder.setUsuario(datos.get(position).getUsuario(), datos.get(position).getLocalidad());
     }
 
@@ -55,7 +56,7 @@ public class AdapterAis extends RecyclerView.Adapter<AdapterAis.ViewHolderDatos>
     }
 
     public class ViewHolderDatos extends RecyclerView.ViewHolder {
-        private TextView usr_ais,nombre_ais, correo_ais, cedula_ais, fecha_ais;
+        private TextView usr_ais, nombre_ais, correo_ais, cedula_ais, fecha_ais;
         private Button boton_ais;
         private JSONObject usuario_ais;
         private Spinner localidad_ais;
@@ -71,8 +72,10 @@ public class AdapterAis extends RecyclerView.Adapter<AdapterAis.ViewHolderDatos>
             this.correo_ais = (TextView) itemView.findViewById(R.id.item_correo_ais);
             this.cedula_ais = (TextView) itemView.findViewById(R.id.item_cedula_ais);
             this.localidad_ais = (Spinner) itemView.findViewById(R.id.spiner_localidad);
-            this.locali =localidad_ais.getSelectedItem().toString();
+            this.locali = localidad_ais.getSelectedItem().toString();
             //Accion de Botones
+
+            //ESTO DEBE ESTAR EN LA CLASE AISLAMIENTO (GUIESE DE REPORTENOTIFICARCITA)
             boton_ais.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -90,9 +93,9 @@ public class AdapterAis extends RecyclerView.Adapter<AdapterAis.ViewHolderDatos>
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     try {
-                                        String  puedoEnviar = response.getString("Z");
-                                            Toast.makeText(view.getContext(), "El correo han sido enviado"
-                                                    , Toast.LENGTH_SHORT).show();
+                                        String puedoEnviar = response.getString("Z");
+                                        Toast.makeText(view.getContext(), "El correo han sido enviado"
+                                                , Toast.LENGTH_SHORT).show();
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -113,22 +116,22 @@ public class AdapterAis extends RecyclerView.Adapter<AdapterAis.ViewHolderDatos>
             });
         }
 
-            public void setUsuario(JSONObject usuario,String localidad) {
-                this.usuario_ais=usuario;
-                try {
-                    this.usr_ais.setText(usuario.getString("USUARIO"));
-                    this.nombre_ais.setText(usuario.getString("N"));
-                    this.correo_ais.setText(usuario.getString("M"));
-                    this.cedula_ais.setText(usuario.getString("I"));
-                    this.fecha_ais.setText(usuario.getString("F"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                this.locali = localidad;
+        public void setUsuario(JSONObject usuario, String localidad) {
+            this.usuario_ais = usuario;
+            try {
+                this.usr_ais.setText(usuario.getString("USUARIO"));
+                this.nombre_ais.setText(usuario.getString("N"));
+                this.correo_ais.setText(usuario.getString("M"));
+                this.cedula_ais.setText(usuario.getString("I"));
+                this.fecha_ais.setText(usuario.getString("F"));
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            this.locali = localidad;
+        }
 
-        }
-        }
+    }
+}
 
 
 
