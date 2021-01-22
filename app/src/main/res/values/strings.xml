@@ -92,7 +92,7 @@
 
     <!--Etiquetas para usuarios.erc_covid.ReporteNotificacion-->
     <string name="reporteNotificacion_txt_titulo">Notificación de Citas</string>
-    <string name="reporteNotificacion_txt_filtro">Seleccione los síntomas para filtrar:</string>
+    <string name="reporteNotificacion_txt_filtro">Seleccione los síntomas para filtrar los usuarios:</string>
     <string name="reporteNotificacion_check_dif_respirar">Dificultad para Respirar</string>
     <string name="reporteNotificacion_check_fatiga">Fatiga</string>
     <string name="reporteNotificacion_check_fiebre">Fiebre</string>
@@ -154,10 +154,11 @@
     </string-array>
 
     <!-- Etiquetas para Reporte Resultados -->
-    <string name="reporte_resultados_cedula">Cédula</string>
-    <string name="reporte_resultados_resultados">Resultado</string>
+    <string name="reporte_resultados_cedula">Documento de Identidad:</string>
+    <string name="reporte_resultados_cedula_numero">Numero</string>
+    <string name="reporte_resultados_resultados">Resultado Examen COVID-19:</string>
     <string name="reporte_resultados_enviar">Enviar</string>
-    <string name="reporte_envio_de_resultados">Envio de Resultados</string>
+    <string name="reporte_envio_de_resultados">Envio y Actualización de Resultados</string>
     <string-array name="resultado_examen">
         <item>Activo</item>
         <item>Inactivo</item>
@@ -165,4 +166,9 @@
         <item>Pendiente</item>
         <item>Examen no tomado</item>
     </string-array>
+    <string name="reporte_zona_btn_mostrar_reporte_resultados">Reportar Resultado</string>
+
+
+    <string name="button_aislamiento">Consultar movimiento de pacientes con aislamiento</string>
+
 </resources>

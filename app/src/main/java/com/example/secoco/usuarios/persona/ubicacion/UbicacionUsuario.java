@@ -21,6 +21,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.secoco.Ingreso;
+import com.example.secoco.R;
 import com.example.secoco.general.RequestAPI;
 import com.example.secoco.general.VariablesGenerales;
 import com.google.android.gms.location.LocationCallback;
@@ -80,14 +82,14 @@ public class UbicacionUsuario extends Service {
     private void inicioServicio() {
         String id_canal = "id_notificación";
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent intent = new Intent();
+        Intent intent = new Intent(getApplicationContext(), Ingreso.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT
         );
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), id_canal);
         builder.setContentTitle("SeCoCo");
-        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
+        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
         builder.setContentText("Analizando su Ubicación");
         builder.setAutoCancel(false);
         builder.setContentIntent(pendingIntent);
@@ -129,7 +131,7 @@ public class UbicacionUsuario extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        throw new UnsupportedOperationException("Todavia no ha sido implementado");
+        throw new UnsupportedOperationException("Sin Implementar");
     }
 
     static class HiloUbicacionUsuario extends Thread {
@@ -139,7 +141,6 @@ public class UbicacionUsuario extends Service {
         private final long intervalo;
         private final String usuario;
         private boolean estaVivo;
-        private int ultimoIndiceUbicacion;
         private Context context;
 
         public HiloUbicacionUsuario(long intervalo, double rangoMaximo, String usuario, Context context) {

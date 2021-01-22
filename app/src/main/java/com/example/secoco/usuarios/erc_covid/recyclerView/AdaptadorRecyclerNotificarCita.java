@@ -2,6 +2,7 @@ package com.example.secoco.usuarios.erc_covid.recyclerView;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,9 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.secoco.R;
-import com.example.secoco.entities.Usuario;
-import com.example.secoco.entities.UsuarioAPI;
-import com.example.secoco.general.Email;
 import com.example.secoco.general.RequestAPI;
 import com.example.secoco.usuarios.erc_covid.ReporteNotificarCita;
 
@@ -29,9 +27,11 @@ import java.util.ArrayList;
 
 public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    ArrayList<Item> items;
+    protected ArrayList<Item> items;
+    protected ReporteNotificarCita reporteNotificarCita;
 
-    public AdaptadorRecyclerNotificarCita(ArrayList<Item> items) {
+    public AdaptadorRecyclerNotificarCita(ReporteNotificarCita reporteNotificarCita, ArrayList<Item> items) {
+        this.reporteNotificarCita = reporteNotificarCita;
         this.items = items;
     }
 
@@ -152,6 +152,7 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
 
         private TextView lblMensaje;
         private ReporteNotificarCita reporteNotificarCita;
+        private MenuItem item;
 
         public ViewHolderNoEncotrado(@NonNull View itemView) {
             super(itemView);

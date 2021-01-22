@@ -8,8 +8,8 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_no_encontrado"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_margin="10dp"
+        android:layout_height="135dp"
+        android:layout_margin="5dp"
         card_view:cardCornerRadius="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

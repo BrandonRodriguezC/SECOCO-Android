@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".usuarios.erc_covid.ReporteNotificarCita">
+
+    <item
+        android:id="@+id/filtro"
+        android:icon="@drawable/icon_menu_filtro_abrir"
+        android:title=""
+        app:showAsAction="always" />
+</menu>

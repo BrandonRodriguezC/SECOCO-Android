@@ -7,14 +7,14 @@
     android:id="@+id/cns_reporte_zona"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".usuarios.erc_covid.ERCInicio">
+    tools:context=".usuarios.ere_covid.ReporteZona">
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         mapbox:mapbox_cameraTargetLat="4.60971"
-        mapbox:mapbox_cameraTargetLng="-74.13175"
+        mapbox:mapbox_cameraTargetLng="-74.10075"
         mapbox:mapbox_cameraZoom="11.221700784018921" />
     <!--- mapbox:mapbox_cameraBearing="300" -->
 
@@ -23,11 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:visibility="visible"
+        android:visibility="gone"
         card_view:cardCornerRadius="10dp"
-        mapbox:layout_constraintBottom_toBottomOf="parent"
-        mapbox:layout_constraintEnd_toEndOf="parent"
-        mapbox:layout_constraintStart_toStartOf="parent">
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -45,12 +45,12 @@
                 android:text="TextView"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.498"
-                mapbox:layout_constraintStart_toStartOf="parent"
-                mapbox:layout_constraintTop_toTopOf="parent"
-                mapbox:layout_constraintVertical_bias="0.039" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.498"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintVertical_bias="0.039" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -58,12 +58,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/reporteZona_lbl_activo"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.064"
-                mapbox:layout_constraintStart_toStartOf="parent"
-                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_titulo"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.064"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_titulo"
+                card_view:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/reporte_zona_txt_activos"
@@ -72,12 +72,12 @@
                 android:gravity="center"
                 android:text="TextView"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.456"
-                mapbox:layout_constraintStart_toEndOf="@+id/textView4"
-                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_titulo"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.456"
+                card_view:layout_constraintStart_toEndOf="@+id/textView4"
+                card_view:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_titulo"
+                card_view:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -85,12 +85,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/reporteZona_lbl_inActivo"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.064"
-                mapbox:layout_constraintStart_toStartOf="parent"
-                mapbox:layout_constraintTop_toBottomOf="@+id/textView4"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.064"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/textView4"
+                card_view:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/reporte_zona_txt_inactivos"
@@ -99,12 +99,12 @@
                 android:gravity="center"
                 android:text="TextView"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.456"
-                mapbox:layout_constraintStart_toEndOf="@+id/textView6"
-                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_activos"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.456"
+                card_view:layout_constraintStart_toEndOf="@+id/textView6"
+                card_view:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_activos"
+                card_view:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -112,12 +112,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/reporteZona_lbl_solicitado"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.064"
-                mapbox:layout_constraintStart_toStartOf="parent"
-                mapbox:layout_constraintTop_toBottomOf="@+id/textView6"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.064"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/textView6"
+                card_view:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/reporte_zona_txt_solicitados"
@@ -126,12 +126,12 @@
                 android:gravity="center"
                 android:text="TextView"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.456"
-                mapbox:layout_constraintStart_toEndOf="@+id/textView7"
-                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_inactivos"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.456"
+                card_view:layout_constraintStart_toEndOf="@+id/textView7"
+                card_view:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_inactivos"
+                card_view:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -139,12 +139,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/reporteZona_lbl_pendientes"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.064"
-                mapbox:layout_constraintStart_toStartOf="parent"
-                mapbox:layout_constraintTop_toBottomOf="@+id/textView7"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.064"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/textView7"
+                card_view:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/reporte_zona_txt_pendientes"
@@ -153,12 +153,12 @@
                 android:gravity="center"
                 android:text="TextView"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.456"
-                mapbox:layout_constraintStart_toEndOf="@+id/textView8"
-                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_solicitados"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.456"
+                card_view:layout_constraintStart_toEndOf="@+id/textView8"
+                card_view:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_solicitados"
+                card_view:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -166,12 +166,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/reporteZona_lbl_examenNoTomado"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.064"
-                mapbox:layout_constraintStart_toStartOf="parent"
-                mapbox:layout_constraintTop_toBottomOf="@+id/textView8"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.064"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/textView8"
+                card_view:layout_constraintVertical_bias="0.0" />
 
 
             <TextView
@@ -181,12 +181,12 @@
                 android:gravity="center"
                 android:text="TextView"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.456"
-                mapbox:layout_constraintStart_toEndOf="@+id/textView9"
-                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_pendientes"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.456"
+                card_view:layout_constraintStart_toEndOf="@+id/textView9"
+                card_view:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_pendientes"
+                card_view:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -194,12 +194,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/reporteZona_lbl_totalPersonas"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.064"
-                mapbox:layout_constraintStart_toStartOf="parent"
-                mapbox:layout_constraintTop_toBottomOf="@+id/textView9"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.064"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/textView9"
+                card_view:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/reporte_zona_txt_total"
@@ -208,28 +208,158 @@
                 android:gravity="center"
                 android:text="TextView"
                 android:textStyle="bold"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintHorizontal_bias="0.456"
-                mapbox:layout_constraintStart_toEndOf="@+id/textView11"
-                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_examenNoTomado"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.456"
+                card_view:layout_constraintStart_toEndOf="@+id/textView11"
+                card_view:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_examenNoTomado"
+                card_view:layout_constraintVertical_bias="0.0" />
 
             <Button
                 android:id="@+id/btn_estado_localidad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/reporteZona_btn_estado_localidad"
-                mapbox:layout_constraintBottom_toBottomOf="parent"
-                mapbox:layout_constraintEnd_toEndOf="parent"
-                mapbox:layout_constraintStart_toStartOf="parent"
-                mapbox:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_total"
-                mapbox:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/reporte_zona_txt_total"
+                card_view:layout_constraintVertical_bias="0.0" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_reporte_resultados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:padding="10dp"
+        android:visibility="gone"
+        card_view:cardCornerRadius="10dp"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toTopOf="@+id/mapView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+
+            <TextView
+                android:id="@+id/lbl_reporte_resultados_Titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:ems="12"
+                android:gravity="center"
+                android:text="@string/reporte_envio_de_resultados"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.5"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintVertical_bias="0.027" />
+
+            <TextView
+                android:id="@+id/lbl_reporte_resultados_Cedula"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/reporte_resultados_cedula"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.127"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/lbl_reporte_resultados_Titulo"
+                card_view:layout_constraintVertical_bias="0.0" />
+
+            <Spinner
+                android:id="@+id/spn_reporte_resultados_TipoID"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginTop="3dp"
+                android:entries="@array/Cedula"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.183"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/lbl_reporte_resultados_Cedula"
+                card_view:layout_constraintVertical_bias="0.0" />
+
+            <EditText
+                android:id="@+id/tf_reporte_resultados_Cedula"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:autofillHints=""
+                android:ems="8"
+                android:hint="@string/reporte_resultados_cedula_numero"
+                android:inputType="number"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.352"
+                card_view:layout_constraintStart_toEndOf="@+id/spn_reporte_resultados_TipoID"
+                card_view:layout_constraintTop_toBottomOf="@+id/lbl_reporte_resultados_Cedula"
+                card_view:layout_constraintVertical_bias="0.007" />
+
+            <TextView
+                android:id="@+id/lbl_reporte_resultados_Resultado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/reporte_resultados_resultados"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.143"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/spn_reporte_resultados_TipoID"
+                card_view:layout_constraintVertical_bias="0.0" />
+
+            <Spinner
+                android:id="@+id/spn_reporte_resultados_Resultado"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginTop="3dp"
+                android:entries="@array/resultado_examen"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.5"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/lbl_reporte_resultados_Resultado"
+                card_view:layout_constraintVertical_bias="0.017" />
+
+            <Button
+                android:id="@+id/btn_reporte_resultados_Envio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="@string/reporte_resultados_enviar"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.5"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/spn_reporte_resultados_Resultado"
+                card_view:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <Button
+        android:id="@+id/btn_mostrar_reporte_resultado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="@string/reporte_zona_btn_mostrar_reporte_resultados"
+        mapbox:layout_constraintBottom_toBottomOf="@+id/mapView"
+        mapbox:layout_constraintEnd_toEndOf="parent"
+        mapbox:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

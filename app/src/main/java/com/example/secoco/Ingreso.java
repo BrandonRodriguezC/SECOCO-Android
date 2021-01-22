@@ -19,8 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.secoco.general.RequestAPI;
-import com.example.secoco.usuarios.erc_covid.ERCInicio;
-import com.example.secoco.usuarios.ere_covid.EREInicio;
+import com.example.secoco.usuarios.erc_covid.ReporteNotificarCita;
+import com.example.secoco.usuarios.ere_covid.ReporteZona;
 import com.example.secoco.usuarios.etda_covid.ETDAInicio;
 import com.example.secoco.usuarios.persona.PersonaInicio;
 
@@ -33,8 +33,6 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
     private EditText txtUsuario, txtContrasena;
     private Button btnIngresar;
     private TextView lblRegistro, lblContrasena;
-    //Eliminar
-    //private DatabaseReference baseDatos;
     private Spinner spTipoUsuario;
     private String[] opcionesSpinner;
     private Intent nuevaActividad;
@@ -127,13 +125,13 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
                     nuevaActividad = new Intent(Ingreso.this, PersonaInicio.class);
                 } else if (txt_tipo_usuario.equals(opcionesSpinner[1])) {
                     request.put("T", "U_DIAGNOSTICO");
-                    nuevaActividad = new Intent(Ingreso.this, ERCInicio.class);
+                    nuevaActividad = new Intent(Ingreso.this, ReporteNotificarCita.class);
                 } else if (txt_tipo_usuario.equals(opcionesSpinner[2])) {
                     request.put("T", "U_SEGUIMIENTO");
                     nuevaActividad = new Intent(Ingreso.this, ETDAInicio.class);
                 } else if (txt_tipo_usuario.equals(opcionesSpinner[3])) {
                     request.put("T", "U_DISTRITO");
-                    nuevaActividad = new Intent(Ingreso.this, EREInicio.class);
+                    nuevaActividad = new Intent(Ingreso.this, ReporteZona.class);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -150,30 +148,30 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
                                     progressDialog.dismiss();
                                     if (nuevaActividad != null) {
                                         nuevaActividad.putExtra("USUARIO", txt_usuario);
-                                        if(txt_tipo_usuario.equals(opcionesSpinner[0])){
+                                        if (txt_tipo_usuario.equals(opcionesSpinner[0])) {
                                             nuevaActividad.putExtra("NOMBRE", response.getString("N"));
                                             nuevaActividad.putExtra("ID", response.getString("ID"));
                                             nuevaActividad.putExtra("FECHA_NACIMIENTO", response.getString("F"));
                                             nuevaActividad.putExtra("CORREO", response.getString("M"));
                                             nuevaActividad.putExtra("ZONA", response.getString("Z"));
-                                            String localidad =getResources().getStringArray(R.array.Localidades)[Integer.parseInt(response.getString("Z"))];
-                                            nuevaActividad.putExtra("LOCALIDAD",localidad );
+                                            String localidad = getResources().getStringArray(R.array.Localidades)[Integer.parseInt(response.getString("Z"))];
+                                            nuevaActividad.putExtra("LOCALIDAD", localidad);
                                             nuevaActividad.putExtra("DIRECCION", response.getString("D"));
                                             nuevaActividad.putExtra("SINTOMAS", response.getString("E"));
                                             String examen = response.getString("X");
-                                            if(examen.equals("I")){
-                                                examen= "Inactivo";
-                                            }else if (examen.equals("A")){
-                                                examen= "Activo";
-                                            }else if (examen.equals("P")){
-                                                examen= "Pendiente a resultado";
-                                            }else if (examen.equals("N")){
-                                                examen= "Examen no tomado";
-                                            }else if (examen.equals("S")){
-                                                examen= "Examen solicitado";
+                                            if (examen.equals("I")) {
+                                                examen = "Inactivo";
+                                            } else if (examen.equals("A")) {
+                                                examen = "Activo";
+                                            } else if (examen.equals("P")) {
+                                                examen = "Pendiente a resultado";
+                                            } else if (examen.equals("N")) {
+                                                examen = "Examen no tomado";
+                                            } else if (examen.equals("S")) {
+                                                examen = "Examen solicitado";
                                             }
 
-                                            nuevaActividad.putExtra("RESULTADO",examen);
+                                            nuevaActividad.putExtra("RESULTADO", examen);
                                         }
 
                                         startActivity(nuevaActividad);

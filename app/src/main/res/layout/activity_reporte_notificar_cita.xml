@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,20 +9,7 @@
         android:id="@+id/cns_a"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         tools:context=".usuarios.erc_covid.ReporteNotificarCita">
-
-        <Button
-            android:id="@+id/btn_filtro"
-            android:layout_marginTop="6dp"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="@drawable/icon_menu_filtro_abrir"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.927"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.001" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_filtro"
@@ -34,7 +20,7 @@
             android:layout_marginRight="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_filtro">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -43,8 +29,10 @@
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
-                    android:layout_height="26dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:ems="15"
+                    android:gravity="center"
                     android:text="@string/reporteNotificacion_txt_filtro"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -172,13 +160,15 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_usuarios"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
+            android:layout_height="450dp"
+            android:layout_marginTop="3dp"
+            android:layout_margin="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.481"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_filtro" />
+            app:layout_constraintTop_toBottomOf="@+id/card_filtro"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/btn_enviar_masivo"

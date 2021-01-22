@@ -13,6 +13,8 @@ import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mapbox.mapboxsdk.style.expressions.Expression.get;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.literal;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.match;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.stop;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.textAllowOverlap;
@@ -54,7 +59,9 @@ public class ReporteZona extends AppCompatActivity implements
         OnMapReadyCallback, MapboxMap.OnMapClickListener, View.OnClickListener {
 
     private static final String SOURCE_ID = "SOURCE_ID";
-    private static final String RED_ICON_ID = "RED_ICON_ID";
+    private String ICONO_CUARENTENA = "ICONO_CUARENTENA";
+    private String ICONO_NO_CUARENTENA = "ICONO_NO_CUARENTENA";
+    private static final String PROPIEDAD_ICONO = "ICONOS";
     private static final String LAYER_ID = "LAYER_ID";
     private MapView mapView;
     private MapboxMap mapboxMap;
@@ -65,6 +72,14 @@ public class ReporteZona extends AppCompatActivity implements
     private ConstraintLayout consActivity;
     private String Z, C;
     private double P;
+
+    //Reporte Resultado
+    private Button btnReportarResultado, btnMostrarReporteResultado;
+    private EditText tf_reporte_resultados_Cedula;
+    private Spinner spn_reporte_resultados_TipoID, spn_reporte_resultados_Resultado;
+    private String resultadoAbr;
+    private CardView cardViewResultado;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +98,23 @@ public class ReporteZona extends AppCompatActivity implements
         this.lblExamenNoTomado = (TextView) findViewById(R.id.reporte_zona_txt_examenNoTomado);
         this.lblTotal = (TextView) findViewById(R.id.reporte_zona_txt_total);
         this.btnEstadoLocalidad = (Button) findViewById(R.id.btn_estado_localidad);
+        //Reporte Resultado
+        this.btnReportarResultado = (Button) findViewById(R.id.btn_reporte_resultados_Envio);
+        this.tf_reporte_resultados_Cedula = (EditText) findViewById(R.id.tf_reporte_resultados_Cedula);
+        this.spn_reporte_resultados_TipoID = (Spinner) findViewById(R.id.spn_reporte_resultados_TipoID);
+        this.spn_reporte_resultados_Resultado = (Spinner) findViewById(R.id.spn_reporte_resultados_Resultado);
+        this.btnMostrarReporteResultado = (Button) findViewById(R.id.btn_mostrar_reporte_resultado);
+
 
         this.consActivity = (ConstraintLayout) findViewById(R.id.cns_reporte_zona);
         this.cardViewZona = (CardView) findViewById(R.id.card_zona);
+        this.cardViewResultado = (CardView) findViewById(R.id.card_reporte_resultados);
 
         //Acción Botones
         this.btnEstadoLocalidad.setOnClickListener(this);
+        //Acción de Botones - Reporte Resultado
+        this.btnReportarResultado.setOnClickListener(this);
+        this.btnMostrarReporteResultado.setOnClickListener(this);
 
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -103,11 +129,16 @@ public class ReporteZona extends AppCompatActivity implements
             @Override
             public void onStyleLoaded(@NonNull Style style) {
                 mapboxMap.addOnMapClickListener(ReporteZona.this);
-                style.addImage(RED_ICON_ID, BitmapFactory.decodeResource(
+                style.addImage(ICONO_CUARENTENA, BitmapFactory.decodeResource(
                         ReporteZona.this.getResources(), R.drawable.mapbox_marker_icon_default));
+                style.addImage(ICONO_NO_CUARENTENA, BitmapFactory.decodeResource(
+                        ReporteZona.this.getResources(), R.drawable.map_marker_light));
                 style.addSource(new GeoJsonSource(SOURCE_ID));
                 style.addLayer(new SymbolLayer(LAYER_ID, SOURCE_ID).withProperties(
-                        iconImage(RED_ICON_ID),
+                        iconImage(match(
+                                get(PROPIEDAD_ICONO), literal(ICONO_CUARENTENA),
+                                stop(ICONO_NO_CUARENTENA, ICONO_NO_CUARENTENA),
+                                stop(ICONO_CUARENTENA, ICONO_CUARENTENA))),
                         iconAllowOverlap(true),
                         textOffset(new Float[]{0f, -2.5f}),
                         textIgnorePlacement(true),
@@ -120,7 +151,6 @@ public class ReporteZona extends AppCompatActivity implements
         });
         this.mapboxMap.getUiSettings().setAttributionEnabled(false);
         this.mapboxMap.getUiSettings().setLogoEnabled(false);
-
     }
 
     @Override
@@ -128,17 +158,27 @@ public class ReporteZona extends AppCompatActivity implements
         return accionIcono(mapboxMap.getProjection().toScreenLocation(point));
     }
 
-    public void visibilidadTarjetaFiltro(boolean visibilidad) {
+    public void visibilidadTarjetaFiltro(boolean visibilidad, String tarjeta) {
         if (visibilidad) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 TransitionManager.beginDelayedTransition(consActivity, new AutoTransition());
             }
-            cardViewZona.setVisibility(View.VISIBLE);
+            if (tarjeta.equals("Reporte Zona")) {
+                cardViewZona.setVisibility(View.VISIBLE);
+                btnMostrarReporteResultado.setVisibility(View.GONE);
+            } else if (tarjeta.equals("Reporte Resultado")) {
+                cardViewResultado.setVisibility(View.VISIBLE);
+            }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 TransitionManager.beginDelayedTransition(consActivity, new AutoTransition());
             }
-            cardViewZona.setVisibility(View.GONE);
+            if (tarjeta.equals("Reporte Zona")) {
+                cardViewZona.setVisibility(View.GONE);
+                btnMostrarReporteResultado.setVisibility(View.VISIBLE);
+            } else if (tarjeta.equals("Reporte Resultado")) {
+                cardViewResultado.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -158,6 +198,13 @@ public class ReporteZona extends AppCompatActivity implements
                                         Point.fromLngLat(zona.getDouble("Lon"), zona.getDouble("Lat")));
                                 puntoLocalidad.addStringProperty("I", zona.getString("I"));
                                 puntoLocalidad.addStringProperty("N", zona.getString("N"));
+                                System.out.println(zona.getString("C"));
+                                if(zona.getString("C").equals("A")){
+                                    puntoLocalidad.addStringProperty(PROPIEDAD_ICONO, ICONO_CUARENTENA);
+                                }else{
+                                    puntoLocalidad.addStringProperty(PROPIEDAD_ICONO, ICONO_NO_CUARENTENA);
+                                }
+
                                 puntosLocalidades.add(puntoLocalidad);
                             }
                             GeoJsonSource geoJsonSource = mapboxMap.getStyle().getSourceAs(SOURCE_ID);
@@ -175,7 +222,7 @@ public class ReporteZona extends AppCompatActivity implements
                     }
                 });
 
-        jsonObjectRequest.setShouldCache(true);
+        jsonObjectRequest.setShouldCache(false);
         RequestAPI.getInstance(this).add(jsonObjectRequest);
     }
 
@@ -183,7 +230,8 @@ public class ReporteZona extends AppCompatActivity implements
     private boolean accionIcono(PointF punto) {
         List<Feature> puntos = mapboxMap.queryRenderedFeatures(punto, LAYER_ID);
         if (!puntos.isEmpty()) {
-            visibilidadTarjetaFiltro(false);
+            visibilidadTarjetaFiltro(false, "Reporte Resultado");
+            visibilidadTarjetaFiltro(false, "Reporte Zona");
             JSONObject request = new JSONObject();
             try {
                 request.put("Z", puntos.get(0).getProperty("I").getAsString());
@@ -221,7 +269,7 @@ public class ReporteZona extends AppCompatActivity implements
                                 lblPendientes.setText(response.getInt("P") + " - " + format.format((porcPendientes * 100)) + "%");
                                 lblExamenNoTomado.setText(response.getInt("N") + " - " + format.format((porcNoExamen * 100)) + "%");
                                 lblTotal.setText(total + " - 100%");
-                                visibilidadTarjetaFiltro(true);
+                                visibilidadTarjetaFiltro(true, "Reporte Zona");
                                 Z = puntos.get(0).getProperty("I").getAsString();
                                 C = porcActivos > 50 ? "A" : "I";
                                 P = porcActivos;
@@ -240,7 +288,8 @@ public class ReporteZona extends AppCompatActivity implements
             RequestAPI.getInstance(this).add(jsonObjectRequest);
             return true;
         } else {
-            visibilidadTarjetaFiltro(false);
+            visibilidadTarjetaFiltro(false, "Reporte Zona");
+            visibilidadTarjetaFiltro(false, "Reporte Resultado");
             return false;
         }
     }
@@ -249,7 +298,6 @@ public class ReporteZona extends AppCompatActivity implements
     public void onClick(View view) {
         if (view.getId() == btnEstadoLocalidad.getId()) {
             JSONObject request = new JSONObject();
-            System.out.println("Entro");
             try {
                 request.put("PA", P);
                 request.put("Z", Z);
@@ -275,6 +323,64 @@ public class ReporteZona extends AppCompatActivity implements
             );
             jsonObjectRequest.setShouldCache(false);
             RequestAPI.getInstance(this).add(jsonObjectRequest);
+        } else if (view.getId() == btnReportarResultado.getId()) {
+            if (!tf_reporte_resultados_Cedula.getText().toString().equals("")) {
+                String tipoid = spn_reporte_resultados_TipoID.getSelectedItem().toString();
+                String cedula = tf_reporte_resultados_Cedula.getText().toString();
+                String resultado = spn_reporte_resultados_Resultado.getSelectedItem().toString();
+
+                resultadoAbr = "";
+                if (resultado.equals("Activo")) {
+                    resultadoAbr = "A";
+                } else if (resultado.equals("Inactivo")) {
+                    resultadoAbr = "I";
+                } else if (resultado.equals("Solicitado")) {
+                    resultadoAbr = "S";
+                } else if (resultado.equals("Pendiente")) {
+                    resultadoAbr = "P";
+                } else if (resultado.equals("Examen no tomado")) {
+                    resultadoAbr = "N";
+                }
+                //ENVIO
+                JSONObject request = new JSONObject();
+                try {
+                    request.put("tipoID", tipoid);
+                    request.put("ID", cedula);
+                    request.put("resultado", resultadoAbr);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                        "https://secocobackend.glitch.me/RESULTADO-EXAMEN",
+                        request,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    String rt = response.getString("X");
+                                    Toast.makeText(ReporteZona.this, rt, Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                System.out.println("Error");
+                            }
+                        });
+                jsonObjectRequest.setShouldCache(false);
+                RequestAPI.getInstance(this).add(jsonObjectRequest);
+            } else {
+                tf_reporte_resultados_Cedula.setError("Cédula Requerida");
+            }
+        } else if (view.getId() == btnMostrarReporteResultado.getId()) {
+            if (cardViewResultado.getVisibility() == View.GONE) {
+                visibilidadTarjetaFiltro(true, "Reporte Resultado");
+            } else if (cardViewResultado.getVisibility() == View.VISIBLE) {
+                visibilidadTarjetaFiltro(false, "Reporte Resultado");
+            }
         }
     }
 

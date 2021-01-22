@@ -1,5 +1,6 @@
 package com.example.secoco.usuarios.erc_covid;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,6 +14,8 @@ import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,8 +31,6 @@ import com.example.secoco.R;
 import com.example.secoco.general.RequestAPI;
 import com.example.secoco.usuarios.erc_covid.recyclerView.AdaptadorRecyclerNotificarCita;
 import com.example.secoco.usuarios.erc_covid.recyclerView.Item;
-import com.google.firebase.database.DatabaseReference;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,9 +44,9 @@ import java.util.Calendar;
 public class ReporteNotificarCita extends AppCompatActivity implements View.OnClickListener {
 
     //Atributos
-    private DatabaseReference baseDatos;
+    private MenuItem menuItem;
     private CheckBox[] checkBoxs;
-    private Button btnBuscarUsuarios, btnEnviarMasivo, btnFiltro;
+    private Button btnBuscarUsuarios, btnEnviarMasivo;
     private ArrayList<Item> items;
     private RecyclerView recyclerView;
     private AdaptadorRecyclerNotificarCita adaptador;
@@ -61,7 +62,6 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
 
         //Inicialización de Atributos
         this.cnsActivity = (ConstraintLayout) findViewById(R.id.cns_a);
-        this.btnFiltro = (Button) findViewById(R.id.btn_filtro);
 
         this.cardViewFiltro = (CardView) findViewById(R.id.card_filtro);
         this.checkBoxs = new CheckBox[]{(CheckBox) findViewById(R.id.ch_contacto_sospechoso),
@@ -77,19 +77,18 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
 
         this.recyclerView = (RecyclerView) findViewById(R.id.recycler_usuarios);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        this.items = new ArrayList<Item>();
+        this.items = new ArrayList<>();
+        this.items.add(new Item(0, 0, ReporteNotificarCita.this));
         this.items.add(new Item(0, 0, ReporteNotificarCita.this));
         this.items.add(new Item(0, 0, ReporteNotificarCita.this));
 
-        this.adaptador = new AdaptadorRecyclerNotificarCita(items);
+        this.adaptador = new AdaptadorRecyclerNotificarCita(this, items);
         this.recyclerView.setAdapter(adaptador);
 
         //Acciones de Botones
         this.btnBuscarUsuarios.setOnClickListener(this);
         this.btnEnviarMasivo.setOnClickListener(this);
-        this.btnFiltro.setOnClickListener(this);
         this.txtFechaCita.setOnClickListener(this);
-
     }
 
 
@@ -98,7 +97,6 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
         if (view.getId() == btnBuscarUsuarios.getId()) {
             if (!txtFechaCita.getText().toString().equals("")) {
                 obtenerPersonasconSintomas(tomarSintomas(), 100);
-
                 visibilidadTarjetaFiltro(false);
             } else {
                 Toast.makeText(ReporteNotificarCita.this,
@@ -145,8 +143,6 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
                 RequestAPI.getInstance(this).add(jsonObjectRequest);
             }
 
-        } else if (view.getId() == btnFiltro.getId()) {
-            visibilidadTarjetaFiltro(true);
         } else if (view.getId() == txtFechaCita.getId()) {
             Calendar fechaActual = Calendar.getInstance();
             int dia = fechaActual.get(Calendar.DAY_OF_MONTH), mes = fechaActual.get(Calendar.MONTH), anio = fechaActual.get(Calendar.YEAR);
@@ -182,13 +178,13 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
                 TransitionManager.beginDelayedTransition(cnsActivity, new AutoTransition());
             }
             cardViewFiltro.setVisibility(View.VISIBLE);
-            btnFiltro.setBackgroundResource(R.drawable.icon_menu_filtro_cerrar);
+            this.menuItem.setIcon(R.drawable.icon_menu_filtro_cerrar);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 TransitionManager.beginDelayedTransition(cnsActivity, new AutoTransition());
             }
             cardViewFiltro.setVisibility(View.GONE);
-            btnFiltro.setBackgroundResource(R.drawable.icon_menu_filtro_abrir);
+            this.menuItem.setIcon(R.drawable.icon_menu_filtro_abrir);
         }
     }
 
@@ -212,7 +208,6 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
                         try {
                             items.clear();
                             JSONArray a = response.getJSONArray("listaUsuarios");
-                            Gson gson = new Gson();
                             for (int i = 0; i < a.length(); i++) {
                                 items.add(new Item(1, a.getJSONObject(i), txtFechaCita.getText().toString()));
                             }
@@ -259,5 +254,20 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
         return busqueda;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_notificar_cita, menu);
+        this.menuItem = menu.getItem(0);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == this.menuItem.getItemId()){
+            visibilidadTarjetaFiltro(true);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

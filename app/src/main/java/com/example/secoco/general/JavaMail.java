@@ -47,9 +47,12 @@ public class JavaMail extends AsyncTask<String, Void, Void> {
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.socketFactory.port", "465");
         properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.ssl.enable", "true");
 
         properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         properties.put("mail.smtp.auth", "true");
+
+
 
         sesion = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -64,12 +67,6 @@ public class JavaMail extends AsyncTask<String, Void, Void> {
             mimeMessage.setSubject(asunto);
             mimeMessage.setText(mensaje);
             Transport.send(mimeMessage);
-            // Aqui se debe poner que respuesta se debe agregar dependiendo del activity
-            /*activity.runOnUiThread(new Runnable() {
-                public void run() {
-                    Toast.makeText(activity, "Hola Esta funcionando", Toast.LENGTH_SHORT).show();
-                }
-            });*/
             if (strings.length > 3) {
                 actualizarInformacion(strings[3], strings[4], strings[5]);
             }
