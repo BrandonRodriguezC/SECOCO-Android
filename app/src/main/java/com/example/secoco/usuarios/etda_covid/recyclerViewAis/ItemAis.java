@@ -5,27 +5,16 @@ import com.example.secoco.usuarios.etda_covid.Aislamiento;
 import org.json.JSONObject;
 
 public class ItemAis {
-    private String localidad;
-    private Aislamiento aislamiento;
-
-    //ESTO ESTA RARO
-    private JSONObject usuario;
-
+    private JSONObject localidad;
     //Contructor
-    public ItemAis(String localidad, Aislamiento aislamiento) {
+    public ItemAis(JSONObject localidad) {
         this.localidad = localidad;
-        this.aislamiento = aislamiento;
+
     }
 
-    public String getLocalidad() {
+    public JSONObject getLocalidad() {
         return localidad;
     }
 
-    public JSONObject getUsuario() {
-        return usuario;
-    }
 
-    public Aislamiento getAislamiento() {
-        return aislamiento;
-    }
 }
