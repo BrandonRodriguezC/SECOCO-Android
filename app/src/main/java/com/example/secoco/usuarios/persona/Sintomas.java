@@ -31,7 +31,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
     private EditText txt_nombre_usuario;
     private Spinner spinner4, spinner5, spinner6, spinner7, spinner8, spinner9;
 
-    public String resultado,nombreUsuario;
+    public String resultado, nombreUsuario;
     //BARRA ----------------------
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -116,8 +116,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
             try {
                 request.put("usuario", personUserName);
                 request.put("estado", resultado);
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT,
@@ -129,7 +128,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
 
                             Intent persona = new Intent(Sintomas.this, PersonaInicio.class);
                             persona.putExtra("USUARIO", personUserName);
-                            persona.putExtra("SINTOMAS",  resultado);
+                            persona.putExtra("SINTOMAS", resultado);
                             startActivity(persona);
                             finish();
 
@@ -148,43 +147,43 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-       if (item.toString().equals("Cerrar sesion")) {
+        if (item.toString().equals("Cerrar sesion")) {
             ServicioUbicacion.finalizarServicio(this);
             Intent login = new Intent(Sintomas.this, Ingreso.class);
             startActivity(login);
             finish();
-        }else if (item.toString().equals("Mapa")) {
+        } else if (item.toString().equals("Mapa")) {
             Intent actividad = new Intent(Sintomas.this, Mapa.class);
-           actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
-           actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));
-           actividad.putExtra("ID", getIntent().getStringExtra("ID"));
-           actividad.putExtra("FECHA_NACIMIENTO", getIntent().getStringExtra("FECHA_NACIMIENTO"));
-           actividad.putExtra("CORREO", getIntent().getStringExtra("CORREO"));
-           actividad.putExtra("LOCALIDAD", getIntent().getStringExtra("LOCALIDAD"));
-           actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
-           actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
-           actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
-           actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
+            actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
+            actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));
+            actividad.putExtra("ID", getIntent().getStringExtra("ID"));
+            actividad.putExtra("FECHA_NACIMIENTO", getIntent().getStringExtra("FECHA_NACIMIENTO"));
+            actividad.putExtra("CORREO", getIntent().getStringExtra("CORREO"));
+            actividad.putExtra("LOCALIDAD", getIntent().getStringExtra("LOCALIDAD"));
+            actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
+            actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
+            actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
+            actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
             startActivity(actividad);
-           finish();
-        }else if (item.toString().equals("Desactivar ubicacion")){
+            finish();
+        } else if (item.toString().equals("Desactivar ubicacion")) {
             ServicioUbicacion.finalizarServicio(this);
-        }else if (item.toString().equals("Perfil")){
-           Intent actividad = new Intent(Sintomas.this, PersonaInicio.class);
-           actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
-           actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));
-           actividad.putExtra("ID", getIntent().getStringExtra("ID"));
-           actividad.putExtra("FECHA_NACIMIENTO", getIntent().getStringExtra("FECHA_NACIMIENTO"));
-           actividad.putExtra("CORREO", getIntent().getStringExtra("CORREO"));
-           actividad.putExtra("LOCALIDAD", getIntent().getStringExtra("LOCALIDAD"));
-           actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
-           //actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
-           actividad.putExtra("SINTOMAS", resultado);
-           actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
-           actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
-           startActivity(actividad);
-           finish();
-       }
+        } else if (item.toString().equals("Perfil")) {
+            Intent actividad = new Intent(Sintomas.this, PersonaInicio.class);
+            actividad.putExtra("USUARIO", getIntent().getStringExtra("USUARIO"));
+            actividad.putExtra("NOMBRE", getIntent().getStringExtra("NOMBRE"));
+            actividad.putExtra("ID", getIntent().getStringExtra("ID"));
+            actividad.putExtra("FECHA_NACIMIENTO", getIntent().getStringExtra("FECHA_NACIMIENTO"));
+            actividad.putExtra("CORREO", getIntent().getStringExtra("CORREO"));
+            actividad.putExtra("LOCALIDAD", getIntent().getStringExtra("LOCALIDAD"));
+            actividad.putExtra("DIRECCION", getIntent().getStringExtra("DIRECCION"));
+            //actividad.putExtra("SINTOMAS", getIntent().getStringExtra("SINTOMAS"));
+            actividad.putExtra("SINTOMAS", resultado);
+            actividad.putExtra("RESULTADO", getIntent().getStringExtra("RESULTADO"));
+            actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
+            startActivity(actividad);
+            finish();
+        }
         return false;
     }
 }

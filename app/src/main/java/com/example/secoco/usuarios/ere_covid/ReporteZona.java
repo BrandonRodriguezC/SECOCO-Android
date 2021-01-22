@@ -122,15 +122,15 @@ public class ReporteZona extends AppCompatActivity implements
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
-        mapboxMap.setMaxZoomPreference(11.221700784018922);
+        /*mapboxMap.setMaxZoomPreference(11.221700784018922);*/
         mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/mapbox/cjf4m44iw0uza2spb3q0a7s41"), new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
                 mapboxMap.addOnMapClickListener(ReporteZona.this);
                 style.addImage(ICONO_CUARENTENA, BitmapFactory.decodeResource(
-                        ReporteZona.this.getResources(), R.drawable.mapbox_marker_icon_default));
+                        ReporteZona.this.getResources(), R.drawable.c4));
                 style.addImage(ICONO_NO_CUARENTENA, BitmapFactory.decodeResource(
-                        ReporteZona.this.getResources(), R.drawable.map_marker_light));
+                        ReporteZona.this.getResources(), R.drawable.nc4));
                 style.addSource(new GeoJsonSource(SOURCE_ID));
                 style.addLayer(new SymbolLayer(LAYER_ID, SOURCE_ID).withProperties(
                         iconImage(match(
@@ -158,28 +158,31 @@ public class ReporteZona extends AppCompatActivity implements
 
     public void visibilidadTarjetaFiltro(boolean visibilidad, String tarjeta) {
         if (visibilidad) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                TransitionManager.beginDelayedTransition(consActivity, new AutoTransition());
-            }
-            if (tarjeta.equals("Reporte Zona")) {
-                cardViewZona.setVisibility(View.VISIBLE);
+            if (tarjeta.equals("Reporte Zona") && cardViewZona.getVisibility() == View.GONE) {
+                transicion();
                 btnMostrarReporteResultado.setVisibility(View.GONE);
-            } else if (tarjeta.equals("Reporte Resultado")) {
+                cardViewZona.setVisibility(View.VISIBLE);
+            } else if (tarjeta.equals("Reporte Resultado") && cardViewResultado.getVisibility() == View.GONE) {
+                transicion();
                 cardViewResultado.setVisibility(View.VISIBLE);
             }
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                TransitionManager.beginDelayedTransition(consActivity, new AutoTransition());
-            }
-            if (tarjeta.equals("Reporte Zona")) {
+            if (tarjeta.equals("Reporte Zona") && cardViewZona.getVisibility() == View.VISIBLE) {
+                transicion();
                 cardViewZona.setVisibility(View.GONE);
                 btnMostrarReporteResultado.setVisibility(View.VISIBLE);
-            } else if (tarjeta.equals("Reporte Resultado")) {
+            } else if (tarjeta.equals("Reporte Resultado") && cardViewResultado.getVisibility() == View.VISIBLE) {
+                transicion();
                 cardViewResultado.setVisibility(View.GONE);
             }
         }
     }
 
+    private void transicion() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            TransitionManager.beginDelayedTransition(consActivity, new AutoTransition());
+        }
+    }
 
     private void cargarZonas() {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
@@ -196,10 +199,9 @@ public class ReporteZona extends AppCompatActivity implements
                                         Point.fromLngLat(zona.getDouble("Lon"), zona.getDouble("Lat")));
                                 puntoLocalidad.addStringProperty("I", zona.getString("I"));
                                 puntoLocalidad.addStringProperty("N", zona.getString("N"));
-                                System.out.println(zona.getString("C"));
-                                if(zona.getString("C").equals("A")){
+                                if (zona.getString("C").equals("A")) {
                                     puntoLocalidad.addStringProperty(PROPIEDAD_ICONO, ICONO_CUARENTENA);
-                                }else{
+                                } else {
                                     puntoLocalidad.addStringProperty(PROPIEDAD_ICONO, ICONO_NO_CUARENTENA);
                                 }
 
@@ -254,11 +256,11 @@ public class ReporteZona extends AppCompatActivity implements
                                         porcPendientes = response.getInt("P") / divisor,
                                         porcNoExamen = response.getInt("N") / divisor;
 
-                                cambiarColor(porcActivos, lblActivos);
-                                cambiarColor(porcInactivos, lblInactivos);
-                                cambiarColor(porcSolicitados, lblSolicitado);
-                                cambiarColor(porcPendientes, lblPendientes);
-                                cambiarColor(porcNoExamen, lblExamenNoTomado);
+                                cambiarColor(porcActivos, lblActivos, false);
+                                cambiarColor(porcInactivos, lblInactivos, true);
+                                cambiarColor(porcSolicitados, lblSolicitado, true);
+                                cambiarColor(porcPendientes, lblPendientes, false);
+                                cambiarColor(porcNoExamen, lblExamenNoTomado, false);
 
                                 lblTitulo.setText(puntos.get(0).getProperty("N").getAsString());
                                 lblActivos.setText(response.getInt("A") + " - " + format.format((porcActivos * 100)) + "%");
@@ -383,17 +385,30 @@ public class ReporteZona extends AppCompatActivity implements
     }
 
 
-    private void cambiarColor(double porcentaje, TextView text) {
+    private void cambiarColor(double porcentaje, TextView text, boolean reverso) {
         if (porcentaje < 0.25) {
-            text.setTextColor(getResources().getColor(R.color.bajo));
+            if(!reverso)
+                text.setTextColor(getResources().getColor(R.color.bajo));
+            else
+                text.setTextColor(getResources().getColor(R.color.alto));
         } else if (porcentaje >= 0.25 && porcentaje < 0.5) {
-            text.setTextColor(getResources().getColor(R.color.medio_bajo));
+            if(!reverso)
+                text.setTextColor(getResources().getColor(R.color.medio_bajo));
+            else
+                text.setTextColor(getResources().getColor(R.color.medio_alto));
         } else if (porcentaje >= 0.5 && porcentaje < 0.75) {
-            text.setTextColor(getResources().getColor(R.color.medio_alto));
+            if(!reverso)
+                text.setTextColor(getResources().getColor(R.color.medio_alto));
+            else
+                text.setTextColor(getResources().getColor(R.color.medio_bajo));
         } else if (porcentaje >= 0.75 && porcentaje <= 1) {
-            text.setTextColor(getResources().getColor(R.color.alto));
+            if(!reverso)
+                text.setTextColor(getResources().getColor(R.color.alto));
+            else
+                text.setTextColor(getResources().getColor(R.color.bajo));
         }
     }
+
 
     @Override
     public void onResume() {

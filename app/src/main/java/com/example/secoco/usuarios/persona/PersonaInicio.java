@@ -29,27 +29,28 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
     private Button btnMapa;
 
     int sintomasEntero;
-    String usuario, nombre, id,fechaNacimiento, correo, localidad, direccion, sintomas, resultado;
+    String usuario, nombre, id, fechaNacimiento, correo, localidad, direccion, sintomas, resultado;
 
     //BARRA ----------------------
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persona_inicio);
-        sintomasEntero=0;
-         usuario = getIntent().getStringExtra("USUARIO");
-         nombre = getIntent().getStringExtra("NOMBRE");
-         id = getIntent().getStringExtra("ID");
-         fechaNacimiento = getIntent().getStringExtra("FECHA_NACIMIENTO");
-         correo = getIntent().getStringExtra("CORREO");
-         localidad = getIntent().getStringExtra("LOCALIDAD");
-         direccion = getIntent().getStringExtra("DIRECCION");
+        sintomasEntero = 0;
+        usuario = getIntent().getStringExtra("USUARIO");
+        nombre = getIntent().getStringExtra("NOMBRE");
+        id = getIntent().getStringExtra("ID");
+        fechaNacimiento = getIntent().getStringExtra("FECHA_NACIMIENTO");
+        correo = getIntent().getStringExtra("CORREO");
+        localidad = getIntent().getStringExtra("LOCALIDAD");
+        direccion = getIntent().getStringExtra("DIRECCION");
 
-         sintomas = getIntent().getStringExtra("SINTOMAS");
+        sintomas = getIntent().getStringExtra("SINTOMAS");
 
-         resultado = getIntent().getStringExtra("RESULTADO");
+        resultado = getIntent().getStringExtra("RESULTADO");
 
         TextView usuarioTV = (TextView) findViewById(R.id.persona_inicio_Usuario);
         TextView nombreTV = (TextView) findViewById(R.id.persona_inicio_Nombre);
@@ -76,45 +77,45 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         localidadTV.setText(localidad);
         direccionTV.setText(direccion);
 
-        if (sintomas.charAt(0)=='1'){
+        if (sintomas.charAt(0) == '1') {
             contactoTV.setText("Contacto");
-        }else {
+        } else {
             sintomasEntero++;
             contactoTV.setText("");
         }
-        if (sintomas.charAt(1)=='1'){
+        if (sintomas.charAt(1) == '1') {
             respriacionTV.setText("Ahogo");
-        }else {
+        } else {
             sintomasEntero++;
             respriacionTV.setText("");
         }
-        if (sintomas.charAt(2)=='1'){
+        if (sintomas.charAt(2) == '1') {
             fatigaTV.setText("Desaliento");
-        }else {
+        } else {
             sintomasEntero++;
             fatigaTV.setText("");
         }
-        if (sintomas.charAt(3)=='1'){
+        if (sintomas.charAt(3) == '1') {
             fiebreTV.setText("Fiebre");
-        }else {
+        } else {
             sintomasEntero++;
             fiebreTV.setText("");
         }
-        if (sintomas.charAt(4)=='1'){
+        if (sintomas.charAt(4) == '1') {
             tosTV.setText("Tos");
-        }else {
+        } else {
             sintomasEntero++;
             tosTV.setText("");
         }
-        if (sintomas.charAt(5)=='1'){
+        if (sintomas.charAt(5) == '1') {
             sentidosTV.setText("Perdida de olfato y gusto");
-        }else {
+        } else {
             sintomasEntero++;
             sentidosTV.setText("");
         }
 
 
-        if(sintomasEntero>0){
+        if (sintomasEntero > 0) {
             contactoTV.setText("No registra sintomas");
         }
         resultadoTV.setText(resultado);
@@ -154,10 +155,10 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 ServicioUbicacion.verificarGPS(this);
             } else {
-                if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                             VariablesGenerales.CODIGO_REQUEST_EXITOSO);
-                }else{
+                } else {
                     Toast.makeText(PersonaInicio.this, "Permisos de Acceso a la Ubicación Denegados",
                             Toast.LENGTH_SHORT).show();
                     Intent ingreso = new Intent(PersonaInicio.this, Ingreso.class);
@@ -178,10 +179,10 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
             actividad.putExtra("ID", id);
             actividad.putExtra("FECHA_NACIMIENTO", fechaNacimiento);
             actividad.putExtra("CORREO", correo);
-            actividad.putExtra("LOCALIDAD",localidad );
+            actividad.putExtra("LOCALIDAD", localidad);
             actividad.putExtra("DIRECCION", direccion);
             actividad.putExtra("SINTOMAS", sintomas);
-            actividad.putExtra("RESULTADO",resultado);
+            actividad.putExtra("RESULTADO", resultado);
             actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
             startActivity(actividad);
             finish();
@@ -190,27 +191,26 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
             Intent login = new Intent(PersonaInicio.this, Ingreso.class);
             startActivity(login);
             finish();
-        }else if (item.toString().equals("Mapa")) {
+        } else if (item.toString().equals("Mapa")) {
             Intent actividad = new Intent(PersonaInicio.this, Mapa.class);
             actividad.putExtra("USUARIO", usuario);
             actividad.putExtra("NOMBRE", nombre);
             actividad.putExtra("ID", id);
             actividad.putExtra("FECHA_NACIMIENTO", fechaNacimiento);
             actividad.putExtra("CORREO", correo);
-            actividad.putExtra("LOCALIDAD",localidad );
+            actividad.putExtra("LOCALIDAD", localidad);
             actividad.putExtra("DIRECCION", direccion);
             actividad.putExtra("SINTOMAS", sintomas);
-            actividad.putExtra("RESULTADO",resultado);
+            actividad.putExtra("RESULTADO", resultado);
             actividad.putExtra("ZONA", getIntent().getStringExtra("ZONA"));
             startActivity(actividad);
             finish();
-        }else if (item.toString().equals("Desactivar ubicacion")){
+        } else if (item.toString().equals("Desactivar ubicacion")) {
             ServicioUbicacion.finalizarServicio(this);
         }
 
         return false;
     }
-
 
 
 }

@@ -263,7 +263,7 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == this.menuItem.getItemId()){
+        if (item.getItemId() == this.menuItem.getItemId()) {
             visibilidadTarjetaFiltro(true);
             return true;
         }

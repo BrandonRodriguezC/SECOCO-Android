@@ -15,6 +15,7 @@ public class ETDAInicio extends AppCompatActivity implements View.OnClickListene
     //Atributos
     private TextView lblUsuario;
     private Button reporteAislamiento;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +27,9 @@ public class ETDAInicio extends AppCompatActivity implements View.OnClickListene
         this.reporteAislamiento = (Button) findViewById(R.id.boton_aislamiento);
         this.reporteAislamiento.setOnClickListener(this);
     }
+
     public void onClick(View view) {
-            Intent ailamiento = new Intent(ETDAInicio.this, Aislamiento.class);
-            startActivity(ailamiento);
+        Intent ailamiento = new Intent(ETDAInicio.this, Aislamiento.class);
+        startActivity(ailamiento);
     }
 }

@@ -23,8 +23,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import static android.content.Intent.getIntent;
-
 public class AdapterAis extends RecyclerView.Adapter<AdapterAis.ViewHolderDatos> {
 
 

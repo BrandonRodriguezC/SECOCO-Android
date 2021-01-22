@@ -18,8 +18,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.secoco.general.RequestAPI;
 import com.example.secoco.usuarios.persona.PersonaInicio;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,10 +33,6 @@ public class Registro extends AppCompatActivity {
             txt_fecha_nacimiento, txt_contrasena_r, txt_contrasena_rv, txt_direccion, txt_nombre_usuario;
     private Button boton_registro;
     private Spinner spinner, spinner2;
-
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference ref = database.getReference("usuarios/Naturales");
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +54,8 @@ public class Registro extends AppCompatActivity {
                         fechaActual.set(Calendar.YEAR, year);
                         fechaActual.set(Calendar.MINUTE, month);
                         fechaActual.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                            DateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
-                            txt_fecha_nacimiento.setText(formatoFecha.format(fechaActual.getTime()));
+                        DateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+                        txt_fecha_nacimiento.setText(formatoFecha.format(fechaActual.getTime()));
 
                     }
                 }, anio, mes, dia);
@@ -77,7 +71,6 @@ public class Registro extends AppCompatActivity {
             }
         });
     }
-
 
 
     public void boton_registro() {
@@ -108,8 +101,8 @@ public class Registro extends AppCompatActivity {
         String tipo_id = spinner.getSelectedItem().toString();
         int zona = spinner2.getSelectedItemPosition();
         String localidad = getResources().getStringArray(R.array.LocalidadesIdentificador)[spinner2.getSelectedItemPosition()];
-        String localidadTexto= spinner2.getSelectedItem().toString();
-        if(contraseña.equals(contraseñaV)){
+        String localidadTexto = spinner2.getSelectedItem().toString();
+        if (contraseña.equals(contraseñaV)) {
             JSONObject request = new JSONObject();
             try {
 
@@ -136,22 +129,22 @@ public class Registro extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             try {
                                 String rta = response.getString("M");
-                                if(rta.equals("Usuario añadido!")){
+                                if (rta.equals("Usuario añadido!")) {
                                     Intent inicio = new Intent(Registro.this, PersonaInicio.class);
                                     inicio.putExtra("USUARIO", nombreUsuario);
-                                    inicio.putExtra("NOMBRE", nombre+ " "+apellido);
-                                    inicio.putExtra("ID", tipo_id+ " "+id);
+                                    inicio.putExtra("NOMBRE", nombre + " " + apellido);
+                                    inicio.putExtra("ID", tipo_id + " " + id);
                                     inicio.putExtra("FECHA_NACIMIENTO", fechaNacimiento);
                                     inicio.putExtra("CORREO", correo);
                                     inicio.putExtra("LOCALIDAD", localidadTexto);
                                     inicio.putExtra("DIRECCION", direccion);
                                     inicio.putExtra("SINTOMAS", "111111");
                                     inicio.putExtra("RESULTADO", "-");
-                                    inicio.putExtra("ZONA", zona+"");
+                                    inicio.putExtra("ZONA", zona + "");
                                     startActivity(inicio);
                                     finish();
-                                }else{
-                                    Toast.makeText(Registro.this, rta , Toast.LENGTH_SHORT ).show();
+                                } else {
+                                    Toast.makeText(Registro.this, rta, Toast.LENGTH_SHORT).show();
                                 }
 
                             } catch (JSONException e) {
@@ -168,8 +161,8 @@ public class Registro extends AppCompatActivity {
                     });
             jsonObjectRequest.setShouldCache(false);
             RequestAPI.getInstance(this).add(jsonObjectRequest);
-        }else{
-            Toast.makeText(Registro.this, "Las contraseñas no coinciden" , Toast.LENGTH_SHORT ).show();
+        } else {
+            Toast.makeText(Registro.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
         }
 
 
