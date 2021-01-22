@@ -115,7 +115,7 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         }
 
 
-        if (sintomasEntero > 0) {
+        if (sintomasEntero == 6) {
             contactoTV.setText("No registra sintomas");
         }
         resultadoTV.setText(resultado);
