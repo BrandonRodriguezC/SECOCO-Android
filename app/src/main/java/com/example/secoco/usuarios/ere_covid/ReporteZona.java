@@ -65,7 +65,6 @@ public class ReporteZona extends AppCompatActivity implements
     private MapView mapView;
     private MapboxMap mapboxMap;
     private List<Feature> puntosLocalidades;
-    private Feature puntoSeleccionado;
     private TextView lblTitulo, lblActivos, lblInactivos, lblSolicitado, lblPendientes, lblExamenNoTomado, lblTotal;
     private Button btnEstadoLocalidad;
     private CardView cardViewZona;
@@ -157,34 +156,6 @@ public class ReporteZona extends AppCompatActivity implements
         return accionIcono(mapboxMap.getProjection().toScreenLocation(point));
     }
 
-    public void visibilidadTarjetaFiltro(boolean visibilidad, String tarjeta) {
-        if (visibilidad) {
-            if (tarjeta.equals("Reporte Zona") && cardViewZona.getVisibility() == View.GONE) {
-                transicion();
-                btnMostrarReporteResultado.setVisibility(View.GONE);
-                cardViewZona.setVisibility(View.VISIBLE);
-            } else if (tarjeta.equals("Reporte Resultado") && cardViewResultado.getVisibility() == View.GONE) {
-                transicion();
-                cardViewResultado.setVisibility(View.VISIBLE);
-            }
-        } else {
-            if (tarjeta.equals("Reporte Zona") && cardViewZona.getVisibility() == View.VISIBLE) {
-                transicion();
-                cardViewZona.setVisibility(View.GONE);
-                btnMostrarReporteResultado.setVisibility(View.VISIBLE);
-            } else if (tarjeta.equals("Reporte Resultado") && cardViewResultado.getVisibility() == View.VISIBLE) {
-                transicion();
-                cardViewResultado.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    private void transicion() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            TransitionManager.beginDelayedTransition(consActivity, new AutoTransition());
-        }
-    }
-
     private void cargarZonas() {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 "https://secocobackend.glitch.me/ZONAS",
@@ -238,7 +209,6 @@ public class ReporteZona extends AppCompatActivity implements
             visibilidadTarjetaFiltro(false, "Reporte Resultado");
             visibilidadTarjetaFiltro(false, "Reporte Zona");
             JSONObject request = new JSONObject();
-            this.puntoSeleccionado = puntos.get(0);
             try {
                 request.put("Z", puntos.get(0).getProperty("I").getAsString());
             } catch (JSONException e) {
@@ -436,6 +406,34 @@ public class ReporteZona extends AppCompatActivity implements
                 text.setTextColor(getResources().getColor(R.color.alto));
             else
                 text.setTextColor(getResources().getColor(R.color.bajo));
+        }
+    }
+
+    public void visibilidadTarjetaFiltro(boolean visibilidad, String tarjeta) {
+        if (visibilidad) {
+            if (tarjeta.equals("Reporte Zona") && cardViewZona.getVisibility() == View.GONE) {
+                transicion();
+                btnMostrarReporteResultado.setVisibility(View.GONE);
+                cardViewZona.setVisibility(View.VISIBLE);
+            } else if (tarjeta.equals("Reporte Resultado") && cardViewResultado.getVisibility() == View.GONE) {
+                transicion();
+                cardViewResultado.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (tarjeta.equals("Reporte Zona") && cardViewZona.getVisibility() == View.VISIBLE) {
+                transicion();
+                cardViewZona.setVisibility(View.GONE);
+                btnMostrarReporteResultado.setVisibility(View.VISIBLE);
+            } else if (tarjeta.equals("Reporte Resultado") && cardViewResultado.getVisibility() == View.VISIBLE) {
+                transicion();
+                cardViewResultado.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void transicion() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            TransitionManager.beginDelayedTransition(consActivity, new AutoTransition());
         }
     }
 
