@@ -17,18 +17,18 @@ public class ServicioUbicacion {
 
     public static void verificarGPS(AppCompatActivity activity) {
         PackageManager packageManager = activity.getPackageManager();
-        if(packageManager.hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
             LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
             if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 iniciarServicio(activity);
             } else {
                 mensajeGPS(activity, "Error de GPS",
-                        "El GPS no se encuentra Activo, favor activarlo e Intentar de Nuevo", "Intentar de Nuevo", true ).show();
+                        "El GPS no se encuentra Activo, favor activarlo e Intentar de Nuevo", "Intentar de Nuevo", true).show();
             }
-        }else{
+        } else {
             mensajeGPS(activity, "GPS no Encontrado",
                     "Lamentablemente el dispositivo no cuenta con GPS, por lo cual se pierde la " +
-                    "funcionalidad del aplicativo", "Salir", false).show();
+                            "funcionalidad del aplicativo", "Salir", false).show();
         }
     }
 
@@ -66,7 +66,7 @@ public class ServicioUbicacion {
         }
     }
 
-    public static AlertDialog.Builder mensajeGPS(AppCompatActivity activity, String titulo, String mensaje, String boton, boolean intentarDeNuevo){
+    public static AlertDialog.Builder mensajeGPS(AppCompatActivity activity, String titulo, String mensaje, String boton, boolean intentarDeNuevo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(titulo)
                 .setMessage(mensaje)
