@@ -65,6 +65,7 @@ public class ReporteZona extends AppCompatActivity implements
     private MapView mapView;
     private MapboxMap mapboxMap;
     private List<Feature> puntosLocalidades;
+    private Feature puntoSeleccionado;
     private TextView lblTitulo, lblActivos, lblInactivos, lblSolicitado, lblPendientes, lblExamenNoTomado, lblTotal;
     private Button btnEstadoLocalidad;
     private CardView cardViewZona;
@@ -207,8 +208,7 @@ public class ReporteZona extends AppCompatActivity implements
 
                                 puntosLocalidades.add(puntoLocalidad);
                             }
-                            GeoJsonSource geoJsonSource = mapboxMap.getStyle().getSourceAs(SOURCE_ID);
-                            geoJsonSource.setGeoJson(FeatureCollection.fromFeatures(puntosLocalidades));
+                            cargarZonasLocal();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             System.out.println("Error de Transformación");
@@ -226,6 +226,11 @@ public class ReporteZona extends AppCompatActivity implements
         RequestAPI.getInstance(this).add(jsonObjectRequest);
     }
 
+    private void cargarZonasLocal() {
+        GeoJsonSource geoJsonSource = mapboxMap.getStyle().getSourceAs(SOURCE_ID);
+        geoJsonSource.setGeoJson(FeatureCollection.fromFeatures(puntosLocalidades));
+    }
+
     //Agregar un ProcessDialog
     private boolean accionIcono(PointF punto) {
         List<Feature> puntos = mapboxMap.queryRenderedFeatures(punto, LAYER_ID);
@@ -233,6 +238,7 @@ public class ReporteZona extends AppCompatActivity implements
             visibilidadTarjetaFiltro(false, "Reporte Resultado");
             visibilidadTarjetaFiltro(false, "Reporte Zona");
             JSONObject request = new JSONObject();
+            this.puntoSeleccionado = puntos.get(0);
             try {
                 request.put("Z", puntos.get(0).getProperty("I").getAsString());
             } catch (JSONException e) {
@@ -271,7 +277,7 @@ public class ReporteZona extends AppCompatActivity implements
                                 lblTotal.setText(total + " - 100%");
                                 visibilidadTarjetaFiltro(true, "Reporte Zona");
                                 Z = puntos.get(0).getProperty("I").getAsString();
-                                C = porcActivos > 50 ? "A" : "I";
+                                C = porcActivos > 0.5 ? "A" : "I";
                                 P = porcActivos;
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -311,7 +317,31 @@ public class ReporteZona extends AppCompatActivity implements
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            Toast.makeText(ReporteZona.this, "Se ha reportado a los residentes", Toast.LENGTH_SHORT).show();
+                            try {
+                                if (response.getInt("E") == 1) {
+                                    int indexLocalidad = -1, i = 0;
+                                    boolean encontrado = false;
+                                    while (!encontrado && i < puntosLocalidades.size()) {
+                                        if (puntosLocalidades.get(i).getProperty("I").getAsString().equals(Z)) {
+                                            indexLocalidad = i;
+                                            encontrado = true;
+                                        }
+                                        i++;
+                                    }
+                                    if (indexLocalidad != -1) {
+                                        if (C.equals("A")) {
+                                            puntosLocalidades.get(indexLocalidad).addStringProperty(PROPIEDAD_ICONO, ICONO_CUARENTENA);
+                                        } else {
+                                            puntosLocalidades.get(indexLocalidad).addStringProperty(PROPIEDAD_ICONO, ICONO_NO_CUARENTENA);
+                                        }
+                                    }
+                                    cargarZonasLocal();
+                                    Toast.makeText(ReporteZona.this, "Se ha reportado a los residentes", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                         }
                     },
                     new Response.ErrorListener() {
@@ -387,22 +417,22 @@ public class ReporteZona extends AppCompatActivity implements
 
     private void cambiarColor(double porcentaje, TextView text, boolean reverso) {
         if (porcentaje < 0.25) {
-            if(!reverso)
+            if (!reverso)
                 text.setTextColor(getResources().getColor(R.color.bajo));
             else
                 text.setTextColor(getResources().getColor(R.color.alto));
         } else if (porcentaje >= 0.25 && porcentaje < 0.5) {
-            if(!reverso)
+            if (!reverso)
                 text.setTextColor(getResources().getColor(R.color.medio_bajo));
             else
                 text.setTextColor(getResources().getColor(R.color.medio_alto));
         } else if (porcentaje >= 0.5 && porcentaje < 0.75) {
-            if(!reverso)
+            if (!reverso)
                 text.setTextColor(getResources().getColor(R.color.medio_alto));
             else
                 text.setTextColor(getResources().getColor(R.color.medio_bajo));
         } else if (porcentaje >= 0.75 && porcentaje <= 1) {
-            if(!reverso)
+            if (!reverso)
                 text.setTextColor(getResources().getColor(R.color.alto));
             else
                 text.setTextColor(getResources().getColor(R.color.bajo));
