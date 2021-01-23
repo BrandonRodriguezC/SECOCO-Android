@@ -76,10 +76,50 @@ public class Aislamiento extends AppCompatActivity implements View.OnClickListen
 
             spinner = (Spinner) findViewById(R.id.spiner_localidad);
             locali = spinner.getSelectedItem().toString();
+            String locali_numero ="";
             JSONObject request = new JSONObject();
-
+            if(locali.equals("Usaquén")){
+                locali_numero="1";
+            }else if(locali.equals("Antonio Nariño")){
+                locali_numero="15";}
+            else if(locali.equals("Barrios Unidos")){
+                locali_numero="12";}
+            else if(locali.equals("Bosa")){
+                locali_numero="7";}
+            else if(locali.equals("Chapinero")){
+                locali_numero="2";}
+            else if(locali.equals("Ciudad Bolívar")){
+                locali_numero="19";}
+            else if(locali.equals("Engativá")){
+                locali_numero="10";}
+            else if(locali.equals("Fontibón")){
+                locali_numero="9";}
+            else if(locali.equals("Kennedy")){
+                locali_numero="8";}
+            else if(locali.equals("La Candelaria")){
+                locali_numero="17";}
+            else if(locali.equals("Los Mártires")){
+                locali_numero="16";}
+            else if(locali.equals("Puente Aranda")){
+                locali_numero="14";}
+            else if(locali.equals("Rafael Uribe Uribe")){
+                locali_numero="18";}
+            else if(locali.equals("San Cristóbal")){
+                locali_numero="4";}
+            else if(locali.equals("Santa Fe")){
+                locali_numero="3";}
+            else if(locali.equals("Suba")){
+                locali_numero="11";}
+            else if(locali.equals("Sumapaz")){
+                locali_numero="1";}
+            else if(locali.equals("Teusaquillo")){
+                locali_numero="13";}
+            else if(locali.equals("Tunjuelito")){
+                locali_numero="6";}
+            else if(locali.equals("Usme")){
+                locali_numero="5";}
             try {
-                request.put("Z", spinner);
+                request.put("Z", locali_numero);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
