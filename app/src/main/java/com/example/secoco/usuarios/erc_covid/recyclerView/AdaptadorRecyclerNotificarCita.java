@@ -2,7 +2,6 @@ package com.example.secoco.usuarios.erc_covid.recyclerView;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -128,7 +127,6 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
                             });
                     jsonObjectRequest.setShouldCache(false);
                     RequestAPI.getInstance(view.getContext()).add(jsonObjectRequest);
-
                 }
             });
         }
@@ -152,7 +150,6 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
 
         private TextView lblMensaje;
         private ReporteNotificarCita reporteNotificarCita;
-        private MenuItem item;
 
         public ViewHolderNoEncotrado(@NonNull View itemView) {
             super(itemView);
