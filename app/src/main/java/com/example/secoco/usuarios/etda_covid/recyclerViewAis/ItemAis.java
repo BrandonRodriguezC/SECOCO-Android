@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 public class ItemAis {
     private JSONObject localidad;
+
     //Contructor
     public ItemAis(JSONObject localidad) {
         this.localidad = localidad;

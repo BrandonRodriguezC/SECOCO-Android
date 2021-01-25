@@ -17,8 +17,7 @@ import org.json.JSONObject;
 
 public class AdapterAis extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-
-    ArrayList<ItemAis> datos;
+    private ArrayList<ItemAis> datos;
 
     //Esta bien
     public AdapterAis(ArrayList<ItemAis> datos) {
@@ -55,7 +54,6 @@ public class AdapterAis extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.cedula_ais = (TextView) itemView.findViewById(R.id.item_cedula_ais);
             this.usr_ais = (TextView) itemView.findViewById(R.id.item_usuario_ais);
             this.fecha_ais = (TextView) itemView.findViewById(R.id.item_fecha_ais);
-
         }
 
         public void setLocali(JSONObject localidad) {
@@ -72,6 +70,7 @@ public class AdapterAis extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 e.printStackTrace();
             }
         }
+
     }
 
 }

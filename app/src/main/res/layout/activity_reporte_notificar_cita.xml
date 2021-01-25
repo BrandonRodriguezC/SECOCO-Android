@@ -15,9 +15,9 @@
             android:id="@+id/card_filtro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -130,15 +130,15 @@
                     android:id="@+id/txt_fecha_cita"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
+                    android:autofillHints=""
                     android:focusable="false"
                     android:gravity="center"
+                    android:inputType="date"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView5"
-                    app:layout_constraintVertical_bias="0.0"
-                    android:autofillHints=""
-                    android:inputType="date" />
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <Button
                     android:id="@+id/btn_buscar_usuarios"
@@ -163,8 +163,8 @@
             android:id="@+id/recycler_usuarios"
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            android:layout_marginTop="3dp"
             android:layout_margin="2dp"
+            android:layout_marginTop="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

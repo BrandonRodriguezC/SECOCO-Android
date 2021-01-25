@@ -60,10 +60,6 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
         this.btnIngresar.setOnClickListener(this);
         this.lblRegistro.setOnClickListener(this);
         this.lblContrasena.setOnClickListener(this);
-
-        //Inicialización de Base de Datos
-        //Eliminar
-        //this.baseDatos = FirebaseDatabase.getInstance().getReference("usuarios");
     }
 
     @Override
@@ -77,41 +73,12 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    /*Los tipos de usuario son
-            - Persona (persona natural (Paciente))
-            - ERE-COVID (Entidad que Reporta Examenes (Diagnosticos) Covid )
-            - ERC-COVID (Entidad que Reporta Contactos Covid)
-            - ETDA-COVID (Entidad que Toma las Decisiones de Aislamiento)
-    */
     public void ingresar() {
         String txt_usuario = txtUsuario.getText().toString();
         String txt_contrasena = txtContrasena.getText().toString();
         String txt_tipo_usuario = spTipoUsuario.getSelectedItem().toString();
 
         if (!txt_usuario.equals("") && !txt_contrasena.equals("")) {
-
-            //------------------------------------EVITAR CONSUMO DE RECURSOS -----
-            /*Intent nuevaActividad = null;
-            if (txt_tipo_usuario.equals(opcionesSpinner[1])) {
-                //Toast.makeText(Ingreso.this, "ERC-COVID", Toast.LENGTH_SHORT).show();
-                nuevaActividad = new Intent(Ingreso.this, ERCInicio.class);
-            } else if (txt_tipo_usuario.equals(opcionesSpinner[3])) {
-                //Toast.makeText(Ingreso.this, "ERE-COVID", Toast.LENGTH_SHORT).show();
-                nuevaActividad = new Intent(Ingreso.this, EREInicio.class);
-            } else if (txt_tipo_usuario.equals(opcionesSpinner[2])) {
-                //Toast.makeText(Ingreso.this, "ETDA-COVID", Toast.LENGTH_SHORT).show();
-                nuevaActividad = new Intent(Ingreso.this, ETDAInicio.class);
-            } else if (txt_tipo_usuario.equals(opcionesSpinner[0])) {
-                //Toast.makeText(Ingreso.this, "Persona", Toast.LENGTH_SHORT).show();
-                nuevaActividad = new Intent(Ingreso.this, PersonaInicio.class);
-            }
-            if (nuevaActividad != null) {
-                nuevaActividad.putExtra("USUARIO", txt_usuario);
-                startActivity(nuevaActividad);
-                guardarCredenciales(txt_usuario, txt_contrasena, txt_tipo_usuario);
-            }*/
-            //-------------------------------------------------------------------------------------
-            // Login con Request to Node.js
             ProgressDialog progressDialog = new ProgressDialog(Ingreso.this);
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -204,8 +171,6 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
                 txtUsuario.setError("Usuario Requerido");
             if (txt_contrasena.equals(""))
                 txtContrasena.setError("Contraseña Requerida");
-            //Toast.makeText(this, "Favor Ingrese los Campos", Toast.LENGTH_SHORT).show();
-
         }
     }
 

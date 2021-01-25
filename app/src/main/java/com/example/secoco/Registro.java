@@ -72,7 +72,6 @@ public class Registro extends AppCompatActivity {
         });
     }
 
-
     public void boton_registro() {
         txt_nombre = (EditText) findViewById(R.id.txt_nombre);
         txt_apellido = (EditText) findViewById(R.id.txt_apellido);
@@ -164,9 +163,6 @@ public class Registro extends AppCompatActivity {
         } else {
             Toast.makeText(Registro.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
         }
-
-
     }
-
 
 }

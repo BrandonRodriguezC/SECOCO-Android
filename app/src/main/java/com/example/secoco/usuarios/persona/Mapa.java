@@ -81,7 +81,6 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
-
     //POLIGONOS -------------------------
     private Style estilo;
     private Layer capa;
@@ -118,7 +117,6 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
-
     }
 
     @Override
@@ -329,7 +327,6 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
                                     "a SeCoCo son activas de COVID-19, el " + String.format("%.2f", posibles * 100) + "% son sospechosas y el " +
                                     String.format("%.2f", (1 - (activos + posibles)) * 100) + "% son inactivas, según estos datos tú decides si " +
                                     "aplicar aislamiento preventivo");
-                            //Layer localidad =
                             if (tarjeta.getVisibility() == View.INVISIBLE) {
                                 tarjeta.setVisibility(View.VISIBLE);
                             }

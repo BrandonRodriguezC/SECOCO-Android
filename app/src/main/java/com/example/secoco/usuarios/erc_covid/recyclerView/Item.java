@@ -8,7 +8,6 @@ public class Item {
 
     private int tipo, tipoMensaje;
     private JSONObject usuario;
-    private ReporteNotificarCita reporteNotificarCita;
     private String fecha;
 
     public Item(int tipo, JSONObject usuario, String fecha) {
@@ -17,10 +16,9 @@ public class Item {
         this.fecha = fecha;
     }
 
-    public Item(int tipo, int mensaje, ReporteNotificarCita reporteNotificarCita) {
+    public Item(int tipo, int mensaje) {
         this.tipo = tipo;
         this.tipoMensaje = mensaje;
-        this.reporteNotificarCita = reporteNotificarCita;
     }
 
     public int getTipo() {
@@ -37,9 +35,5 @@ public class Item {
 
     public String getFecha() {
         return fecha;
-    }
-
-    public ReporteNotificarCita getReporteNotificarCita() {
-        return reporteNotificarCita;
     }
 }

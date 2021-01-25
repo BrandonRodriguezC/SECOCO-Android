@@ -32,9 +32,7 @@ public class Aislamiento extends AppCompatActivity implements View.OnClickListen
     private ArrayList<ItemAis> itemAis;
     private Button btnEnviar;
 
-    private JSONObject localidad;//xd
     private Spinner spinner;
-    private String locali;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +49,9 @@ public class Aislamiento extends AppCompatActivity implements View.OnClickListen
         recyclerView.setAdapter(adaptador);
 
         spinner = (Spinner) findViewById(R.id.spiner_localidad);
-        locali = spinner.getSelectedItem().toString();
         btnEnviar = (Button) findViewById(R.id.boton_ais);
+
         btnEnviar.setOnClickListener(this);
-
-
     }
 
 

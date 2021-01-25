@@ -78,9 +78,9 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
         this.recyclerView = (RecyclerView) findViewById(R.id.recycler_usuarios);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.items = new ArrayList<>();
-        this.items.add(new Item(0, 0, ReporteNotificarCita.this));
-        this.items.add(new Item(0, 0, ReporteNotificarCita.this));
-        this.items.add(new Item(0, 0, ReporteNotificarCita.this));
+        this.items.add(new Item(0, 0));
+        this.items.add(new Item(0, 0));
+        this.items.add(new Item(0, 0));
 
         this.adaptador = new AdaptadorRecyclerNotificarCita(this, items);
         this.recyclerView.setAdapter(adaptador);
@@ -237,8 +237,8 @@ public class ReporteNotificarCita extends AppCompatActivity implements View.OnCl
 
     private void actualizarItems() {
         if (items.size() == 0) {
-            items.add(new Item(0, 1, ReporteNotificarCita.this));
-            items.add(new Item(0, 1, ReporteNotificarCita.this));
+            items.add(new Item(0, 1));
+            items.add(new Item(0, 1));
         }
         adaptador.notifyDataSetChanged();
     }

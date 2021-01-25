@@ -54,7 +54,7 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == 0) {
             ViewHolderNoEncotrado holderNoEncotrado = (ViewHolderNoEncotrado) holder;
-            holderNoEncotrado.setMensaje(items.get(position).getTipoMensaje(), items.get(position).getReporteNotificarCita());
+            holderNoEncotrado.setMensaje(items.get(position).getTipoMensaje());
         } else {
             ViewHolderCita holderUsuario = (ViewHolderCita) holder;
             holderUsuario.setUsuario(items.get(position).getUsuario(), items.get(position).getFecha());
@@ -86,6 +86,13 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
             this.lblDocumento = (TextView) itemView.findViewById(R.id.txt_documento_item_list);
             this.lblLocalidad = (TextView) itemView.findViewById(R.id.txt_localidad_item_list);
             this.btnEnviarCorreo = (Button) itemView.findViewById(R.id.btn_enviar_correo);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    reporteNotificarCita.visibilidadTarjetaFiltro(true);
+                }
+            });
 
             //Accion de Botones
             btnEnviarCorreo.setOnClickListener(new View.OnClickListener() {
@@ -143,13 +150,11 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
             }
             this.fecha = fecha;
         }
-
     }
 
     public class ViewHolderNoEncotrado extends RecyclerView.ViewHolder {
 
         private TextView lblMensaje;
-        private ReporteNotificarCita reporteNotificarCita;
 
         public ViewHolderNoEncotrado(@NonNull View itemView) {
             super(itemView);
@@ -165,13 +170,12 @@ public class AdaptadorRecyclerNotificarCita extends RecyclerView.Adapter<Recycle
         }
 
         @SuppressLint("ResourceType")
-        public void setMensaje(int tipoMensaje, ReporteNotificarCita reporteNotificarCita) {
+        public void setMensaje(int tipoMensaje) {
             if (tipoMensaje == 0) {
                 lblMensaje.setText(R.string.reporteNotificacion_lbl_mensaje_buscar);
             } else if (tipoMensaje == 1) {
                 lblMensaje.setText(R.string.reporteNotificacion_lbl_mensaje_no_encotrado);
             }
-            this.reporteNotificarCita = reporteNotificarCita;
         }
     }
 

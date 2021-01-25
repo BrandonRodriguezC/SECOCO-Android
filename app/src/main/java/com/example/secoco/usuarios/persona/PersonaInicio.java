@@ -28,8 +28,8 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
     private Button btnUbicacion;
     private Button btnMapa;
 
-    int sintomasEntero;
-    String usuario, nombre, id, fechaNacimiento, correo, localidad, direccion, sintomas, resultado;
+    private int sintomasEntero;
+    private String usuario, nombre, id, fechaNacimiento, correo, localidad, direccion, sintomas, resultado;
 
     //BARRA ----------------------
     DrawerLayout drawerLayout;
@@ -208,7 +208,6 @@ public class PersonaInicio extends AppCompatActivity implements View.OnClickList
         } else if (item.toString().equals("Desactivar ubicacion")) {
             ServicioUbicacion.finalizarServicio(this);
         }
-
         return false;
     }
 

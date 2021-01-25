@@ -105,12 +105,7 @@ public class Sintomas extends AppCompatActivity implements View.OnClickListener,
             } else {
                 resultado += 0;
             }
-            //Toast.makeText(this, resultado, Toast.LENGTH_SHORT).show();
-            //ENVIO
-
-
             String personUserName = getIntent().getStringExtra("USUARIO");
-
             Toast.makeText(Sintomas.this, "Sus sintomas se actualizaron", Toast.LENGTH_SHORT).show();
             JSONObject request = new JSONObject();
             try {

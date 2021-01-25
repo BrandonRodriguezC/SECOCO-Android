@@ -122,7 +122,6 @@ public class ReporteZona extends AppCompatActivity implements
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
-        /*mapboxMap.setMaxZoomPreference(11.221700784018922);*/
         mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/mapbox/cjf4m44iw0uza2spb3q0a7s41"), new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
@@ -436,7 +435,6 @@ public class ReporteZona extends AppCompatActivity implements
             TransitionManager.beginDelayedTransition(consActivity, new AutoTransition());
         }
     }
-
 
     @Override
     public void onResume() {
