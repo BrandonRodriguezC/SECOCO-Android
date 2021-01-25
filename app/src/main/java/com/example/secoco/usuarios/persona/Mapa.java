@@ -107,7 +107,7 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                manejoAislamiento(getIntent().getStringExtra("ZONA"));
+                manejoAislamiento();
             }
         });
 
@@ -294,11 +294,13 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
         RequestAPI.getInstance(this).add(jsonObjectRequest);
     }
 
-    private void manejoAislamiento(String localidad) {
-
+    private void manejoAislamiento() {
         JSONObject request = new JSONObject();
         try {
-            request.put("Z", localidad);
+            double latitud = locationComponent.getLastKnownLocation().getLatitude();
+            double longitud = locationComponent.getLastKnownLocation().getLongitude();
+            request.put("Latitud", latitud);
+            request.put("Longitud", longitud);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -311,6 +313,8 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback, Mapbo
                         try {
                             double activos = response.getDouble("Activos");
                             double posibles = response.getDouble("Posibles");
+
+                            String localidad = response.getString("Localidad");
                             capa = estilo.getLayer(localidad+" P");
                             capa.setProperties(PropertyFactory.fillOpacity((float)0.8));
                             if(activos+posibles > 0.6){
