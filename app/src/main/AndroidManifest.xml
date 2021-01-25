@@ -19,7 +19,6 @@
         <activity android:name=".usuarios.erc_covid.ReporteNotificarCita" />
         <activity android:name=".usuarios.persona.PersonaInicio" />
         <activity android:name=".CambioContrasena" />
-        <activity android:name=".usuarios.etda_covid.ETDAInicio" />
         <activity android:name=".usuarios.etda_covid.Aislamiento" />
         <activity android:name=".usuarios.persona.Mapa" />
         <activity android:name=".Registro" />

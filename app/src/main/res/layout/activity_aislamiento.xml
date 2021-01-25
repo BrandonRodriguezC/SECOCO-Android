@@ -17,6 +17,7 @@
             android:layout_marginTop="24dp"
             android:gravity="center"
             android:text="Movimiento en pacientes con aislamiento "
+            android:textStyle="bold"
 
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +29,7 @@
             android:id="@+id/select_localidad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="40dp"
             android:gravity="center"
             android:text="Seleccione la localidad "
 
@@ -43,6 +44,7 @@
             android:id="@+id/spiner_localidad"
             android:layout_width="350dp"
             android:layout_height="45dp"
+            android:layout_marginTop="8dp"
             android:entries="@array/Localidades"
             android:prompt="@string/registro_txt_localidad"
             app:layout_constraintEnd_toEndOf="parent"

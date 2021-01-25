@@ -21,7 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.secoco.general.RequestAPI;
 import com.example.secoco.usuarios.erc_covid.ReporteNotificarCita;
 import com.example.secoco.usuarios.ere_covid.ReporteZona;
-import com.example.secoco.usuarios.etda_covid.ETDAInicio;
+import com.example.secoco.usuarios.etda_covid.Aislamiento;
 import com.example.secoco.usuarios.persona.PersonaInicio;
 
 import org.json.JSONException;
@@ -128,7 +128,7 @@ public class Ingreso extends AppCompatActivity implements View.OnClickListener {
                     nuevaActividad = new Intent(Ingreso.this, ReporteNotificarCita.class);
                 } else if (txt_tipo_usuario.equals(opcionesSpinner[2])) {
                     request.put("T", "U_SEGUIMIENTO");
-                    nuevaActividad = new Intent(Ingreso.this, ETDAInicio.class);
+                    nuevaActividad = new Intent(Ingreso.this, Aislamiento.class);
                 } else if (txt_tipo_usuario.equals(opcionesSpinner[3])) {
                     request.put("T", "U_DISTRITO");
                     nuevaActividad = new Intent(Ingreso.this, ReporteZona.class);
