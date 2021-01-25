@@ -32,7 +32,7 @@ public class Aislamiento extends AppCompatActivity implements View.OnClickListen
     private ArrayList<ItemAis> itemAis;
     private Button btnEnviar;
 
-    private JSONObject localidad;
+    private JSONObject localidad;//xd
     private Spinner spinner;
     private String locali;
 
